@@ -1,0 +1,186 @@
+{
+  "extensionName": {
+    "message": "ChatGPT vers Notion",
+    "description": "Name of the extension."
+  },
+  "extensionDescription": {
+    "message": "Sauvegardez vos discussions avec ChatGPT directement dans Notion!",
+    "description": "Description of the extension."
+  },
+  "errConnect": {
+    "message": "Conntectez-vous à notion en cliquant sur l'icône de l'extension.",
+    "description": "Error message when user is not connected to Notion."
+  },
+  "nav_settings": {
+    "message": "Réglages",
+    "description": "Settings page title."
+  },
+  "nav_about": {
+    "message": "A propos",
+    "description": "About page title."
+  },
+  "nav_home": {
+    "message": "Notion",
+    "description": "Home page title."
+  },
+  "authenticating": {
+    "message": "Connexion à Notion",
+    "description": "Authenticating message."
+  },
+  "index_errRegister": {
+    "message": "Enregistez une base de données dans les réglages pour commencer",
+    "description": "Error message when no database is registered."
+  },
+  "index_saveTo": {
+    "message": "Enregistrer sous",
+    "description": "Save to label."
+  },
+  "index_saveFullChat": {
+    "message": "Enregistrer la page",
+    "description": "Save button text."
+  },
+  "index_discussionSaved": {
+    "message": "Enregistré !",
+    "description": "Success message when discussion is saved."
+  },
+  "save_pageTitle": {
+    "message": "Page",
+    "description": "Page title label."
+  },
+  "save_prompt": {
+    "message": "Question",
+    "description": "Prompt label."
+  },
+  "save_answer": {
+    "message": "Réponse",
+    "description": "Answer label."
+  },
+  "save_saveTo": {
+    "message": "Enregistrer sous",
+    "description": "Save to label."
+  },
+  "save_save": {
+    "message": "Enregistrer",
+    "description": "Save button text."
+  },
+  "save_saved": {
+    "message": "Enregistré !",
+    "description": "Success message when discussion is saved."
+  },
+  "save_noTag": {
+    "message": "Aucun",
+    "description": "No tag label."
+  },
+  "save_error": {
+    "message": "Il y a eu une erreur",
+    "description": "Error message when discussion fails to save."
+  },
+  "save_unauthorized": {
+    "message": "Sauvegarde non autorisée par Notion",
+    "description": "Unauthorized message."
+  },
+  "save_generateHeadings" : {
+    "message": "Générer les titres et le sommaire",
+    "description": "Generate headings label."
+  },
+  "settings_noLinkedDb": {
+    "message": "Pas de BDD reliée",
+    "description": "No linked database message."
+  },
+  "settings_linkedDatabases": {
+    "message": "Bases de données",
+    "description": "Linked databases title."
+  },
+  "settings_remove": {
+    "message": "Suppr",
+    "description": "Remove"
+  },
+  "settings_searchPlaceholder": {
+    "message": "Rechercher une BDD",
+    "description": "Search placeholder."
+  },
+  "settings_slowSearch": {
+    "message": "La recherche de pages/bases de données peut prendre un certain temps...",
+    "description": "Slow search message."
+  },
+  "settings_noDBFound": {
+    "message": "Aucune base de données trouvée, cela peut être dû au fait que Notion n'a pas encore synchronisé vos BDD avec l'intégration.",
+    "description": "No database found message."
+  },
+  "settings_noUrlProperty": {
+    "message": "Ajoutez une propriété URL à cette BDD dans Notion pour l'utiliser",
+    "description": "No URL property message."
+  },
+  "settings_exampleDB": {
+    "message": "Voir un exemple de base de donnée compatible avec l'extension",
+    "description": "Example database message."
+  },
+  "settings_errUnauthorized": {
+    "message": "Accès refusé par Notion, essayez de relancer l'extension (depuis chrome://extensions/) ou réinstallez-la (cf. la FAQ)",
+    "description": "Unauthorized message."
+  },
+  "dbsettings_loading": {
+    "message": "Chargement de la base de données",
+    "description": "Loading database message."
+  },
+  "dbsettings_tagsProperty": {
+    "message": "Propriété des mots clés",
+    "description": "Tags property label."
+  },
+  "dbsettings_tags": {
+    "message": "Mots clés",
+    "description": "Tags label."
+  },
+  "dbsettings_explainer": {
+    "message": "À l'enregistrement d'une discussion, vous pourrez choisir un de ces mots clés pour la page nouvellement créée",
+    "description": "Tags explainer."
+  },
+  "dbsettings_noTags": {
+    "message": "Cette BDD n'a pas de mots clés (propriétés sélection)",
+    "description": "No tags message."
+  },
+  "dbsettings_noOptions": {
+    "message": "Il n'y a pas de mots-clés associés, vous pouvez néanmoins effectuer vos enregistrements sans mots-clés",
+    "description": "No options message."
+  },
+  "wrongpage_goTo": {
+    "message": "Allez sur le site de",
+    "description": "Go to label."
+  },
+  "wrongpage_chatgpt": {
+    "message": "ChatGPT",
+    "description": "ChatGPT page label."
+  },
+  "wrongpage_toUse": {
+    "message": "pour utiliser cette extension",
+    "description": "To use this extension label."
+  },
+  "about_extensionBy": {
+    "message": "est une extension développée par",
+    "description": "Extension by label."
+  },
+  "about_suggestionsIssues": {
+    "message": "Un problème ou une suggestion ?",
+    "description": "Suggestion/issue CTA."
+  },
+  "about_FAQ": {
+    "message": "Lire la FAQ.",
+    "description": "FAQ CTA."
+  },
+  "about_github": {
+    "message": "Consulter le GitHub de l'extension.",
+    "description": "GitHub CTA."
+  },
+  "about_pinIcon": {
+    "message": "Icône d'épingle par",
+    "description": "Pin icon label."
+  },
+  "about_pinLicense": {
+    "message": "sous licence CC BY 3.0",
+    "description": "Pin icon licence label."
+  },
+  "notion_tableofcontents": {
+    "message": "Sommaire",
+    "description": "Table of contents label."
+  }
+}

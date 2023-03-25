@@ -1,0 +1,186 @@
+{
+  "extensionName": {
+    "message": "ChatGPT to Notion",
+    "description": "Name of the extension."
+  },
+  "extensionDescription": {
+    "message": "Save your discussions with ChatGPT directly into Notion!",
+    "description": "Description of the extension."
+  },
+  "errConnect": {
+    "message": "Connect yourself to Notion by clicking on the extension's icon.",
+    "description": "Error message when user is not connected to Notion."
+  },
+  "nav_settings": {
+    "message": "Settings",
+    "description": "Settings page title."
+  },
+  "nav_about": {
+    "message": "About",
+    "description": "About page title."
+  },
+  "nav_home": {
+    "message": "Home",
+    "description": "Home page title."
+  },
+  "authenticating": {
+    "message": "Authenticating to Notion",
+    "description": "Authenticating message."
+  },
+  "index_errRegister": {
+    "message": "Please register a database in the settings",
+    "description": "Error message when no database is registered."
+  },
+  "index_saveTo": {
+    "message": "Save to:",
+    "description": "Save to label."
+  },
+  "index_saveFullChat": {
+    "message": "Save full chat",
+    "description": "Save button text."
+  },
+  "index_discussionSaved": {
+    "message": "Discussion saved!",
+    "description": "Success message when discussion is saved."
+  },
+  "save_pageTitle": {
+    "message": "Page title",
+    "description": "Page title label."
+  },
+  "save_prompt": {
+    "message": "Prompt",
+    "description": "Prompt label."
+  },
+  "save_answer": {
+    "message": "Answer",
+    "description": "Answer label."
+  },
+  "save_saveTo": {
+    "message": "Save to:",
+    "description": "Save to label."
+  },
+  "save_save": {
+    "message": "Save",
+    "description": "Save button text."
+  },
+  "save_saved": {
+    "message": "Saved!",
+    "description": "Success message when discussion is saved."
+  },
+  "save_noTag": {
+    "message": "No tag",
+    "description": "No tag label."
+  },
+  "save_error": {
+    "message": "Save failed",
+    "description": "Error message when discussion fails to save."
+  },
+  "save_unauthorized": {
+    "message": "Save unauthorized by Notion",
+    "description": "Unauthorized message."
+  },
+  "save_generateHeadings" : {
+    "message": "Generate headings & table of contents",
+    "description": "Generate headings label."
+  },
+  "settings_noLinkedDb": {
+    "message": "No linked DB",
+    "description": "No linked database message."
+  },
+  "settings_linkedDatabases": {
+    "message": "Linked databases",
+    "description": "Linked databases title."
+  },
+  "settings_remove": {
+    "message": "Remove",
+    "description": "Remove"
+  },
+  "settings_searchPlaceholder": {
+    "message": "Search a database",
+    "description": "Search placeholder."
+  },
+  "settings_slowSearch": {
+    "message": "Searching pages/DBs can be quite slow...",
+    "description": "Slow search message."
+  },
+  "settings_noDBFound": {
+    "message": "No database found, this might be because Notion hasn't synced them with the integration yet.",
+    "description": "No database found message."
+  },
+  "settings_noUrlProperty": {
+    "message": "Add an URL proprty to this DB inside Notion to use it",
+    "description": "No URL property message."
+  },
+  "settings_exampleDB": {
+    "message": "Here's an example database compatible with the extension",
+    "description": "Example database message."
+  },
+  "settings_errUnauthorized": {
+    "message": "Access was denied by Notion, please reload the extension (inside chrome://extensions/) or reinstall it (see FAQ)",
+    "description": "Unauthorized message."
+  },
+  "dbsettings_loading": {
+    "message": "Loading database",
+    "description": "Loading database message."
+  },
+  "dbsettings_tagsProperty": {
+    "message": "Tags property",
+    "description": "Tags property label."
+  },
+  "dbsettings_tags": {
+    "message": "Tags",
+    "description": "Tags label."
+  },
+  "dbsettings_explainer": {
+    "message": "Upon saving a chat, you'll be prompted to choose one of these tags for the newly created Notion page",
+    "description": "Tags explainer."
+  },
+  "dbsettings_noTags": {
+    "message": "This database doesn't have any tags (select/multiselect properties)",
+    "description": "No tags message."
+  },
+  "dbsettings_noOptions": {
+    "message": "This tag doesn't have any options, although you can save a discussion without choosing a tag",
+    "description": "No options message."
+  },
+  "wrongpage_goTo": {
+    "message": "Go to",
+    "description": "Go to label."
+  },
+  "wrongpage_chatgpt": {
+    "message": "ChatGPT's page",
+    "description": "ChatGPT page label."
+  },
+  "wrongpage_toUse": {
+    "message": "to start doing fancy stuff",
+    "description": "To use this extension label."
+  },
+  "about_extensionBy": {
+    "message": "is an extension developped by",
+    "description": "Extension by label."
+  },
+  "about_suggestionsIssues": {
+    "message": "Got any suggestion/issue?",
+    "description": "Suggestion/issue label."
+  },
+  "about_FAQ": {
+    "message": "Read the FAQ.",
+    "description": "FAQ CTA."
+  },
+  "about_github": {
+    "message": "Check out the extension's GitHub.",
+    "description": "GitHub CTA."
+  },
+  "about_pinIcon": {
+    "message": "Pin icon made by",
+    "description": "Pin icon label."
+  },
+  "about_pinLicense": {
+    "message": "is licensed by CC BY 3.0",
+    "description": "Pin icon licence label."
+  },
+  "notion_tableofcontents": {
+    "message": "Table of contents",
+    "description": "Table of contents label."
+  }
+}
