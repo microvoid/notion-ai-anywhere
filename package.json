@@ -3,7 +3,7 @@
   "displayName": "Notion AI Anywhere",
   "version": "1.0.0",
   "description": "notion-ai-anywhere",
-  "author": "Smackgg",
+  "author": "smackgg",
   "scripts": {
     "dev": "plasmo dev",
     "build": "plasmo build",

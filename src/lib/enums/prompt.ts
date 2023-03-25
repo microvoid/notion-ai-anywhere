@@ -1,9 +1,35 @@
-export enum ConstEnum {
-  DEFAULT_ENGINE = "default-engine",
-  NOTION_SPACE_ID = "notion-space-id",
-  USED_NOTION_SPACE = "used-notion-space",
-  NOTION_SPACES = "notion-spaces",
-  CHATGPT_API_KEY = "chatgpt-api-key"
+import {
+  Bars2Icon,
+  Bars4Icon,
+  BoltIcon,
+  ChartPieIcon,
+  CheckIcon,
+  DocumentMagnifyingGlassIcon,
+  DocumentTextIcon,
+  LanguageIcon,
+  PencilIcon,
+  QuestionMarkCircleIcon,
+  SparklesIcon
+} from "@heroicons/react/24/outline"
+
+export interface ISelectionMenu {
+  label: string
+  icon?: React.ForwardRefExoticComponent<
+    React.SVGProps<SVGSVGElement> & {
+      title?: string | undefined
+      titleId?: string | undefined
+    }
+  >
+  value: string
+  options?: {
+    label: string
+    value: string
+  }[]
+}
+
+export interface ISelectionMenuMap {
+  label: string
+  list: ISelectionMenu[]
 }
 
 export enum PromptTypeEnum {
@@ -22,96 +48,73 @@ export enum PromptTypeEnum {
   SimplifyLanguage = "simplifyLanguage"
 }
 
-export const PromptTypeOptions = [
-  { label: "📝 Topic Writing", value: PromptTypeEnum.TopicWriting },
-  { label: "🆘 Custom Prompt", value: PromptTypeEnum.HelpMeWrite },
-  { label: "🚀 Continue Writing", value: PromptTypeEnum.ContinueWriting },
-  { label: "🎭 Change Tone", value: PromptTypeEnum.ChangeTone },
-  { label: "📝 Summarize", value: PromptTypeEnum.Summarize },
-  { label: "🔧 Improve Writing", value: PromptTypeEnum.ImproveWriting },
-  {
-    label: "📖 Fix Spelling/Grammar",
-    value: PromptTypeEnum.FixSpellingGrammar
-  },
-  { label: "🌐 Translate", value: PromptTypeEnum.Translate },
-  { label: "❓ Explain This", value: PromptTypeEnum.ExplainThis },
-  { label: "📏 Make Longer", value: PromptTypeEnum.MakeLonger },
-  { label: "📐 Make Shorter", value: PromptTypeEnum.MakeShorter },
-  { label: "📋 Find Action Items", value: PromptTypeEnum.FindActionItems },
-  { label: "🗣️ Simplify Language", value: PromptTypeEnum.SimplifyLanguage }
-  //   { label: "🔪 Help Me Edit", value: PromptTypeEnum.HelpMeEdit }
-]
-
-export enum TopicEnum {
-  brainstormIdeas = "brainstormIdeas",
-  blogPost = "blogPost",
-  outline = "outline",
-  socialMediaPost = "socialMediaPost",
-  pressRelease = "pressRelease",
-  creativeStory = "creativeStory",
-  essay = "essay",
-  poem = "poem",
-  meetingAgenda = "meetingAgenda",
-  prosConsList = "prosConsList",
-  jobDescription = "jobDescription",
-  salesEmail = "salesEmail",
-  recruitingEmail = "recruitingEmail"
+export enum ToneEnum {
+  professional = "professional",
+  casual = "casual",
+  straightforward = "straightforward",
+  confident = "confident",
+  friendly = "friendly"
 }
 
-export const TopicOptions = [
+export const ToneOptions = [
   {
-    label: "💡 Brainstorm Ideas",
-    value: `${PromptTypeEnum.TopicWriting}-${TopicEnum.brainstormIdeas}`
+    label: "Professional",
+    value: `${PromptTypeEnum.ChangeTone}-${ToneEnum.professional}`
   },
   {
-    label: "📝 Blog Post",
-    value: `${PromptTypeEnum.TopicWriting}-${TopicEnum.blogPost}`
+    label: "Casual",
+    value: `${PromptTypeEnum.ChangeTone}-${ToneEnum.casual}`
   },
   {
-    label: "📃 Outline",
-    value: `${PromptTypeEnum.TopicWriting}-${TopicEnum.outline}`
+    label: "Straightforward",
+    value: `${PromptTypeEnum.ChangeTone}-${ToneEnum.straightforward}`
   },
   {
-    label: "📱 Social Media Post",
-    value: `${PromptTypeEnum.TopicWriting}-${TopicEnum.socialMediaPost}`
+    label: "Confident",
+    value: `${PromptTypeEnum.ChangeTone}-${ToneEnum.confident}`
   },
   {
-    label: "🗞️ Press Release",
-    value: `${PromptTypeEnum.TopicWriting}-${TopicEnum.pressRelease}`
-  },
-  {
-    label: "📖 Creative Story",
-    value: `${PromptTypeEnum.TopicWriting}-${TopicEnum.creativeStory}`
-  },
-  {
-    label: "📝 Essay",
-    value: `${PromptTypeEnum.TopicWriting}-${TopicEnum.essay}`
-  },
-  {
-    label: "📝 Poem",
-    value: `${PromptTypeEnum.TopicWriting}-${TopicEnum.poem}`
-  },
-  {
-    label: "📅 Meeting Agenda",
-    value: `${PromptTypeEnum.TopicWriting}-${TopicEnum.meetingAgenda}`
-  },
-  {
-    label: "✅ Pros Cons List",
-    value: `${PromptTypeEnum.TopicWriting}-${TopicEnum.prosConsList}`
-  },
-  {
-    label: "🧑‍💼 Job Description",
-    value: `${PromptTypeEnum.TopicWriting}-${TopicEnum.jobDescription}`
-  },
-  {
-    label: "📧 Sales Email",
-    value: `${PromptTypeEnum.TopicWriting}-${TopicEnum.salesEmail}`
-  },
-  {
-    label: "📧 Recruiting Email",
-    value: `${PromptTypeEnum.TopicWriting}-${TopicEnum.recruitingEmail}`
+    label: "Friendly",
+    value: `${PromptTypeEnum.ChangeTone}-${ToneEnum.friendly}`
   }
 ]
+
+export const EditOrReviewSelectionMap: ISelectionMenuMap = {
+  label: "Edit or review selection",
+  list: [
+    {
+      icon: BoltIcon,
+      label: "Improve writing",
+      value: PromptTypeEnum.ImproveWriting
+    },
+    {
+      icon: CheckIcon,
+      label: "Fix Spelling/Grammar",
+      value: PromptTypeEnum.FixSpellingGrammar
+    },
+    {
+      icon: Bars2Icon,
+      label: "Make Shorter",
+      value: PromptTypeEnum.MakeShorter
+    },
+    {
+      icon: Bars4Icon,
+      label: "Make Longer",
+      value: PromptTypeEnum.MakeLonger
+    },
+    {
+      icon: SparklesIcon,
+      label: "Simplify Language",
+      value: PromptTypeEnum.SimplifyLanguage
+    },
+    {
+      icon: ChartPieIcon,
+      label: "Change tone",
+      value: PromptTypeEnum.ChangeTone,
+      options: ToneOptions
+    }
+  ]
+}
 
 export enum LanguageEnum {
   english = "english",
@@ -189,33 +192,126 @@ export const LanguageOptions = [
   }
 ]
 
-export enum ToneEnum {
-  professional = "professional",
-  casual = "casual",
-  straightforward = "straightforward",
-  confident = "confident",
-  friendly = "friendly"
+export const GenerateFromSelectionMap: ISelectionMenuMap = {
+  label: "Generate from selection",
+  list: [
+    {
+      icon: DocumentTextIcon,
+      label: "Summarize",
+      value: PromptTypeEnum.Summarize
+    },
+    {
+      icon: LanguageIcon,
+      label: "Translate",
+      value: PromptTypeEnum.Translate,
+      options: LanguageOptions
+    },
+    {
+      icon: QuestionMarkCircleIcon,
+      label: "Explain this",
+      value: PromptTypeEnum.ExplainThis
+    },
+    {
+      icon: DocumentMagnifyingGlassIcon,
+      label: "Find action items",
+      value: PromptTypeEnum.FindActionItems
+    }
+  ]
 }
 
-export const ToneOptions = [
-  {
-    label: "💼 Professional",
-    value: `${PromptTypeEnum.ChangeTone}-${ToneEnum.professional}`
-  },
-  {
-    label: "👤 Casual",
-    value: `${PromptTypeEnum.ChangeTone}-${ToneEnum.casual}`
-  },
-  {
-    label: "📝 Straightforward",
-    value: `${PromptTypeEnum.ChangeTone}-${ToneEnum.straightforward}`
-  },
-  {
-    label: "🦸 Confident",
-    value: `${PromptTypeEnum.ChangeTone}-${ToneEnum.confident}`
-  },
-  {
-    label: "👋 Friendly",
-    value: `${PromptTypeEnum.ChangeTone}-${ToneEnum.friendly}`
-  }
-]
+export const WriteWithAIMap: ISelectionMenuMap = {
+  label: "Write with AI",
+  list: [
+    {
+      icon: PencilIcon,
+      label: "Continue writing",
+      value: PromptTypeEnum.ContinueWriting
+    }
+  ]
+}
+export enum DraftWithAIEnum {
+  brainstormIdeas = "brainstormIdeas",
+  blogPost = "blogPost",
+  outline = "outline",
+  socialMediaPost = "socialMediaPost",
+  pressRelease = "pressRelease",
+  creativeStory = "creativeStory",
+  essay = "essay",
+  poem = "poem",
+  meetingAgenda = "meetingAgenda",
+  prosConsList = "prosConsList",
+  jobDescription = "jobDescription",
+  salesEmail = "salesEmail",
+  recruitingEmail = "recruitingEmail"
+}
+
+export const DraftWithAIMap: ISelectionMenuMap = {
+  label: "Draft with AI",
+  list: [
+    {
+      icon: PencilIcon,
+      label: "Brainstorm Ideas",
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.brainstormIdeas}`
+    },
+    {
+      icon: PencilIcon,
+      label: "Blog Post",
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.blogPost}`
+    },
+    {
+      icon: PencilIcon,
+      label: "Outline",
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.outline}`
+    },
+    {
+      icon: PencilIcon,
+      label: "Social Media Post",
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.socialMediaPost}`
+    },
+    {
+      icon: PencilIcon,
+      label: "Press Release",
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.pressRelease}`
+    },
+    {
+      icon: PencilIcon,
+      label: "Creative Story",
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.creativeStory}`
+    },
+    {
+      icon: PencilIcon,
+      label: "Essay",
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.essay}`
+    },
+    {
+      icon: PencilIcon,
+      label: "Poem",
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.poem}`
+    },
+    {
+      icon: PencilIcon,
+      label: "Meeting Agenda",
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.meetingAgenda}`
+    },
+    {
+      icon: PencilIcon,
+      label: "Pros Cons List",
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.prosConsList}`
+    },
+    {
+      icon: PencilIcon,
+      label: "Job Description",
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.jobDescription}`
+    },
+    {
+      icon: PencilIcon,
+      label: "Sales Email",
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.salesEmail}`
+    },
+    {
+      icon: PencilIcon,
+      label: "Recruiting Email",
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.recruitingEmail}`
+    }
+  ]
+}

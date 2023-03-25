@@ -6,8 +6,9 @@ import {
   useState
 } from "react"
 
-import BtnIcon from "~common/icons/notion-icon.png"
 import { IPosition, _calcPosition } from "~lib"
+
+import BtnIcon from "../icons/notion-icon.png"
 
 interface IContentEnterProps {
   showPanel?: ({

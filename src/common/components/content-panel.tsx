@@ -1,8 +1,19 @@
-// import { Combobox, Dialog, Transition } from "@headlessui/react"
-import { Switch } from "@headlessui/react"
-import { MagnifyingGlassIcon } from "@heroicons/react/20/solid"
-import { ChevronRightIcon } from "@heroicons/react/20/solid"
-import { UsersIcon } from "@heroicons/react/24/outline"
+import { Combobox, Dialog, Transition } from "@headlessui/react"
+import { ArrowUpCircleIcon } from "@heroicons/react/20/solid"
+import {
+  ArrowDownLeftIcon,
+  // ArrowUpCircleIcon,
+  ArrowUturnLeftIcon,
+  ChevronRightIcon,
+  DocumentPlusIcon,
+  FolderIcon,
+  FolderPlusIcon,
+  HashtagIcon,
+  PencilIcon,
+  TagIcon,
+  UsersIcon
+} from "@heroicons/react/24/outline"
+import classNames from "classnames"
 import {
   CSSProperties,
   Fragment,
@@ -12,41 +23,22 @@ import {
   useState
 } from "react"
 
-import { sendToBackground } from "@plasmohq/messaging"
+// import { sendToBackground } from "@plasmohq/messaging"
 import { useStorage } from "@plasmohq/storage/hook"
 
-import BtnIcon from "~assets/icon.png"
 import {
   IPosition,
   _calcPosition,
-  preventDefault,
   preventDefaultAndStopPropagation,
   stopPropagation
 } from "~lib"
-import { ConstEnum } from "~lib/enums"
+import { ConstEnum, selectionMenuList } from "~lib/enums"
 import { storage } from "~lib/storage"
 import type { INotionSpace } from "~lib/types/notion"
 
-const people = [
-  {
-    id: 1,
-    name: "Leslie Alexander",
-    phone: "1-493-747-9031",
-    email: "lesliealexander@example.com",
-    role: "Co-Founder / CEO",
-    url: "https://example.com",
-    profileUrl: "#",
-    imageUrl:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-  }
-  // More people...
-]
-const recent = [people[0], people[0], people[0], people[0], people[0]]
+import BtnIcon from "../icons/notion-icon.png"
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ")
-}
-
+const ICON_COLOR = "#a782c3"
 interface IContentPanelProps {
   position: IPosition
   selectionText: string
@@ -61,38 +53,26 @@ const ContentPanel = (props: IContentPanelProps) => {
     instance: storage
   })
 
-  //
-
   const [query, setQuery] = useState("")
 
   const [open, setOpen] = useState(true)
 
-  const filteredPeople =
-    query === ""
-      ? []
-      : people.filter((person) => {
-          return person.name.toLowerCase().includes(query.toLowerCase())
-        })
-  //
+  // const onMouseUp = useCallback((e: MouseEvent) => {
+  //   if (text) {
+  //   } else {
+  //     const ele = document.querySelector(".notion-ai-anywhere-panel")
+  //     onClose?.()
+  //   }
+  // }, [])
 
-  // console.log(notionSpace, "notionSpace")
+  // useEffect(() => {
+  //   document.addEventListener("mouseup", onMouseUp)
+  //   return () => {
+  //     document.removeEventListener("mouseup", onMouseUp)
+  //   }
+  // }, [onMouseUp])
 
-  const onMouseUp = useCallback((e: MouseEvent) => {
-    if (text) {
-    } else {
-      const ele = document.querySelector(".notion-ai-anywhere-panel")
-      console.log(ele)
-
-      onClose?.()
-    }
-  }, [])
-
-  useEffect(() => {
-    document.addEventListener("mouseup", onMouseUp)
-    return () => {
-      document.removeEventListener("mouseup", onMouseUp)
-    }
-  }, [onMouseUp])
+  const send = () => {}
 
   const panelStyle: CSSProperties = {
     width: "500px"
@@ -117,27 +97,14 @@ const ContentPanel = (props: IContentPanelProps) => {
       onKeyUp={preventDefaultAndStopPropagation}
       // style={panelStyle}
     >
-      {selectionText && (
+      {/* {selectionText && (
         <div className="card w-48 bg-base-100 shadow-xl glass mr-4">
           <div className="card-body p-2">
             <h2 className="card-title">Selection text</h2>
             <p>{selectionText}</p>
-            <Switch
-              checked={true}
-              // onChange={setEnabled}
-              className={`${
-                true ? "bg-blue-600" : "bg-gray-200"
-              } relative inline-flex h-6 w-11 items-center rounded-full`}>
-              <span className="sr-only">Enable notifications</span>
-              <span
-                className={`${
-                  true ? "translate-x-6" : "translate-x-1"
-                } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-              />
-            </Switch>
           </div>
         </div>
-      )}
+      )} */}
       {/* input */}
       {/* <div className="relative flex-1">
         <img
@@ -173,7 +140,7 @@ const ContentPanel = (props: IContentPanelProps) => {
       </div> */}
       {/* panel */}
       {/* <div></div> */}
-      {/* <Transition.Root
+      <Transition.Root
         show={open}
         as={Fragment}
         afterLeave={() => setQuery("")}
@@ -181,7 +148,10 @@ const ContentPanel = (props: IContentPanelProps) => {
         <Dialog
           as="div"
           open={true}
-          className="relative z-10"
+          className="relative"
+          style={{
+            zIndex: 999999
+          }}
           onClose={setOpen}>
           <Transition.Child
             as={Fragment}
@@ -205,78 +175,232 @@ const ContentPanel = (props: IContentPanelProps) => {
               leaveTo="opacity-0 scale-95">
               <Dialog.Panel className="mx-auto max-w-3xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
                 <Combobox
-                  onChange={(person) => (window.location = person.profileUrl)}>
+                  onChange={(item: any) => {
+                    console.log(item, "item ")
+                    setQuery(item.value || item.name)
+                  }}>
                   {({ activeOption }) => (
                     <>
-                      <div className="relative">
-                        <MagnifyingGlassIcon
+                      <div className="relative ">
+                        <img
                           className="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-gray-400"
-                          aria-hidden="true"
-                        />
+                          src={BtnIcon}></img>
                         <Combobox.Input
-                          className="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-800 placeholder-gray-400 focus:ring-0 sm:text-sm"
-                          placeholder="Search..."
+                          value={query}
+                          className="outline-none h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-800 placeholder-gray-400 focus:ring-0 sm:text-sm"
+                          placeholder="Ask Notion AI to edit or generate..."
                           onChange={(event) => setQuery(event.target.value)}
+                          onKeyDown={(event) => {
+                            if (event.key === "Enter") {
+                              send()
+                            }
+                          }}
+                        />
+                        <ArrowUpCircleIcon
+                          onClick={send}
+                          className="cursor-pointer absolute top-3.5 right-4 h-5 w-5 text-gray-400"
+                          style={
+                            query
+                              ? {
+                                  color: ICON_COLOR
+                                }
+                              : {}
+                          }
                         />
                       </div>
 
-                      {(query === "" || filteredPeople.length > 0) && (
-                        <Combobox.Options
-                          as="div"
-                          static
-                          hold
-                          className="flex divide-x divide-gray-100">
+                      <Combobox.Options
+                        as="div"
+                        static
+                        hold
+                        className="flex divide-x divide-gray-100">
+                        <>
                           <div
                             className={classNames(
-                              "max-h-96 min-w-0 flex-auto scroll-py-4 overflow-y-auto px-6 py-4",
-                              activeOption && "sm:h-96"
+                              "max-h-96 min-w-0 flex-auto scroll-py-4 overflow-y-auto px-6 py-4 divide-gray-500 divide-opacity-10",
+                              {
+                                "sm:h-96": activeOption
+                              }
                             )}>
-                            {query === "" && (
-                              <h2 className="mt-2 mb-4 text-xs font-semibold text-gray-500">
-                                Recent searches
-                              </h2>
-                            )}
+                            <h2 className="mt-2 mb-4 text-xs font-semibold text-gray-500">
+                              Recent Ask
+                            </h2>
                             <div className="-mx-2 text-sm text-gray-700">
-                              {(query === "" ? recent : filteredPeople).map(
-                                (person) => (
-                                  <Combobox.Option
-                                    as="div"
-                                    key={person.id}
-                                    value={person}
-                                    className={({ active }) =>
-                                      classNames(
-                                        "flex cursor-default select-none items-center rounded-md p-2",
-                                        active && "bg-gray-100 text-gray-900"
-                                      )
-                                    }>
-                                    {({ active }) => (
-                                      <>
-                                        <img
-                                          src={person.imageUrl}
-                                          alt=""
-                                          className="h-6 w-6 flex-none rounded-full"
-                                        />
-                                        <span className="ml-3 flex-auto truncate">
-                                          {person.name}
-                                        </span>
-                                        {active && (
-                                          <ChevronRightIcon
-                                            className="ml-3 h-5 w-5 flex-none text-gray-400"
-                                            aria-hidden="true"
-                                          />
+                              {[
+                                {
+                                  name: "Add new file...",
+                                  icon: DocumentPlusIcon,
+                                  shortcut: "N",
+                                  url: "#"
+                                },
+                                {
+                                  name: "Add new folder...",
+                                  icon: FolderPlusIcon,
+                                  shortcut: "F",
+                                  url: "#"
+                                },
+                                {
+                                  name: "Add hashtag...",
+                                  icon: HashtagIcon,
+                                  shortcut: "H",
+                                  url: "#"
+                                },
+                                {
+                                  name: "Add label...",
+                                  icon: TagIcon,
+                                  shortcut: "L",
+                                  url: "#"
+                                }
+                              ].map((item) => (
+                                <Combobox.Option
+                                  as="div"
+                                  key={item.name}
+                                  value={item}
+                                  className={({ active }) =>
+                                    classNames(
+                                      "flex cursor-default select-none items-center rounded-md p-2",
+                                      active && "bg-gray-100 text-gray-900"
+                                    )
+                                  }>
+                                  {({ active }) => (
+                                    <>
+                                      <PencilIcon
+                                        className={classNames(
+                                          "h-4 w-4 flex-none text-gray-900 text-opacity-40",
+                                          active && "text-opacity-100"
                                         )}
-                                      </>
-                                    )}
-                                  </Combobox.Option>
-                                )
-                              )}
+                                        style={{
+                                          color: ICON_COLOR
+                                        }}
+                                        aria-hidden="true"
+                                      />
+                                      <span className="ml-3 flex-auto truncate">
+                                        {item.name}
+                                      </span>
+                                      {active && (
+                                        <ArrowDownLeftIcon
+                                          className="ml-3 h-5 w-5 flex-none text-gray-400"
+                                          aria-hidden="true"
+                                        />
+                                      )}
+                                    </>
+                                  )}
+                                </Combobox.Option>
+                              ))}
                             </div>
+                            {selectionMenuList.map((menu) => {
+                              return (
+                                <>
+                                  <h2 className="mt-2 mb-4 text-xs font-semibold text-gray-500">
+                                    {menu.label}
+                                  </h2>
+                                  <div className="-mx-2 text-sm text-gray-700">
+                                    {menu.list.map((item) => (
+                                      <div className="dropdown dropdown-hover relative w-full">
+                                        <Combobox.Option
+                                          as="div"
+                                          key={item.value}
+                                          value={item}
+                                          tabIndex={0}
+                                          className={({ active }) =>
+                                            classNames(
+                                              "flex cursor-default select-none items-center rounded-md p-2",
+                                              active &&
+                                                "bg-gray-100 text-gray-900"
+                                            )
+                                          }>
+                                          {({ active }) => (
+                                            <>
+                                              {item.icon ? (
+                                                <item.icon
+                                                  className="h-4 w-4 flex-none rounded-full"
+                                                  style={{
+                                                    color: ICON_COLOR
+                                                  }}
+                                                />
+                                              ) : (
+                                                <PencilIcon
+                                                  className={classNames(
+                                                    "h-4 w-4 flex-none text-gray-900 text-opacity-40",
+                                                    active && "text-opacity-100"
+                                                  )}
+                                                  style={{
+                                                    color: ICON_COLOR
+                                                  }}
+                                                  aria-hidden="true"
+                                                />
+                                              )}
+                                              <span className="ml-3 flex-auto truncate">
+                                                {item.label}
+                                              </span>
+                                              {active &&
+                                                !item.options?.length && (
+                                                  <ArrowUturnLeftIcon
+                                                    className="ml-3 h-5 w-5 flex-none text-gray-400"
+                                                    aria-hidden="true"
+                                                  />
+                                                )}
+                                              {item.options?.length && (
+                                                <ChevronRightIcon
+                                                  className="ml-3 h-5 w-5 flex-none text-gray-400"
+                                                  aria-hidden="true"
+                                                />
+                                              )}
+                                            </>
+                                          )}
+                                        </Combobox.Option>
+                                        {item.options?.length && (
+                                          <div
+                                            tabIndex={0}
+                                            className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 right-0 ">
+                                            {item.options?.map((option) => (
+                                              <Combobox.Option
+                                                as="div"
+                                                key={option.value}
+                                                value={option}
+                                                tabIndex={0}
+                                                className={({ active }) =>
+                                                  classNames(
+                                                    "flex cursor-default select-none items-center rounded-md p-2",
+                                                    active &&
+                                                      "bg-gray-100 text-gray-900"
+                                                  )
+                                                }>
+                                                {({ active }) => (
+                                                  <>
+                                                    <span className="ml-3 flex-auto truncate">
+                                                      {option.label}
+                                                    </span>
+                                                    {active && (
+                                                      <ArrowUturnLeftIcon
+                                                        className="ml-3 h-5 w-5 flex-none text-gray-400"
+                                                        aria-hidden="true"
+                                                      />
+                                                    )}
+                                                  </>
+                                                )}
+                                              </Combobox.Option>
+                                            ))}
+                                          </div>
+                                        )}
+                                      </div>
+                                    ))}
+                                  </div>
+                                </>
+                              )
+                            })}
                           </div>
 
-                          {activeOption && (
-                            <div className="hidden h-96 w-1/2 flex-none flex-col divide-y divide-gray-100 overflow-y-auto sm:flex">
-                              <div className="flex-none p-6 text-center">
-                                <img
+                          <div className="h-96 w-1/2 flex-none flex-col divide-y divide-gray-100 overflow-y-auto sm:flex">
+                            <div className="h-1/3 flex-none p-2 text-center overflow-y-scroll">
+                              <h2 className=" font-semibold text-gray-900">
+                                Selection Text
+                              </h2>
+                              <p className="text-sm leading-6 text-gray-500">
+                                {/* {activeOption.role} */}
+                                {selectionText}
+                              </p>
+                              {/* <img
                                   src={activeOption.imageUrl}
                                   alt=""
                                   className="mx-auto h-16 w-16 rounded-full"
@@ -286,47 +410,46 @@ const ContentPanel = (props: IContentPanelProps) => {
                                 </h2>
                                 <p className="text-sm leading-6 text-gray-500">
                                   {activeOption.role}
-                                </p>
-                              </div>
-                              <div className="flex flex-auto flex-col justify-between p-6">
-                                <dl className="grid grid-cols-1 gap-x-6 gap-y-3 text-sm text-gray-700">
-                                  <dt className="col-end-1 font-semibold text-gray-900">
-                                    Phone
-                                  </dt>
-                                  <dd>{activeOption.phone}</dd>
-                                  <dt className="col-end-1 font-semibold text-gray-900">
-                                    URL
-                                  </dt>
-                                  <dd className="truncate">
-                                    <a
+                                </p> */}
+                            </div>
+                            <div className="flex flex-auto flex-col justify-between p-6">
+                              <dl className="grid grid-cols-1 gap-x-6 gap-y-3 text-sm text-gray-700">
+                                <dt className="col-end-1 font-semibold text-gray-900">
+                                  Phone
+                                </dt>
+                                {/* <dd>{activeOption.phone}</dd> */}
+                                <dt className="col-end-1 font-semibold text-gray-900">
+                                  URL
+                                </dt>
+                                <dd className="truncate">
+                                  {/* <a
                                       href={activeOption.url}
                                       className="text-indigo-600 underline">
                                       {activeOption.url}
-                                    </a>
-                                  </dd>
-                                  <dt className="col-end-1 font-semibold text-gray-900">
-                                    Email
-                                  </dt>
-                                  <dd className="truncate">
-                                    <a
-                                      href={`mailto:${activeOption.email}`}
-                                      className="text-indigo-600 underline">
-                                      {activeOption.email}
-                                    </a>
-                                  </dd>
-                                </dl>
-                                <button
-                                  type="button"
-                                  className="mt-6 w-full rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                  Send message
-                                </button>
-                              </div>
+                                    </a> */}
+                                </dd>
+                                <dt className="col-end-1 font-semibold text-gray-900">
+                                  Email
+                                </dt>
+                                <dd className="truncate">
+                                  <a
+                                    // href={`mailto:${activeOption.email}`}
+                                    className="text-indigo-600 underline">
+                                    {/* {activeOption.email} */}
+                                  </a>
+                                </dd>
+                              </dl>
+                              <button
+                                type="button"
+                                className="mt-6 w-full rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                Send message
+                              </button>
                             </div>
-                          )}
-                        </Combobox.Options>
-                      )}
+                          </div>
+                        </>
+                      </Combobox.Options>
 
-                      {query !== "" && filteredPeople.length === 0 && (
+                      {/* {query !== "" &&  filteredPeople.length === 0 && (
                         <div className="py-14 px-6 text-center text-sm sm:px-14">
                           <UsersIcon
                             className="mx-auto h-6 w-6 text-gray-400"
@@ -340,7 +463,7 @@ const ContentPanel = (props: IContentPanelProps) => {
                             again.
                           </p>
                         </div>
-                      )}
+                      )} */}
                     </>
                   )}
                 </Combobox>
@@ -349,7 +472,7 @@ const ContentPanel = (props: IContentPanelProps) => {
           </div>
         </Dialog>
       </Transition.Root>
-      ) */}
+      )
     </div>
   )
 }

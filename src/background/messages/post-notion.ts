@@ -3,7 +3,7 @@ import type { PlasmoMessaging } from "@plasmohq/messaging"
 import { PostNotion } from "~lib/api/notion"
 import { ConstEnum } from "~lib/enums"
 import { storage } from "~lib/storage"
-import type { INotionSpace } from "~types/notion"
+import type { INotionSpace } from "~lib/types/notion"
 
 // sendToContentScript({
 //   type: "post-notion"

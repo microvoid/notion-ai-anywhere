@@ -1,17 +1,16 @@
-import cssText from "data-text:~style.css"
-import type { PlasmoCSConfig } from "plasmo"
+import cssText from "data-text:~styles.css"
+import type { PlasmoContentScript } from "plasmo"
 import { useState } from "react"
 
 // import { CountButton } from "~features/count-button"
 
-import "~base.css"
-import "~style.css"
+import "~styles.css"
 
 import ContentEnter from "~common/components/content-enter"
 import ContentPanel from "~common/components/content-panel"
 import type { IPosition } from "~lib"
 
-export const config: PlasmoCSConfig = {
+export const config: PlasmoContentScript = {
   matches: ["<all_urls>"],
   all_frames: true
 }
