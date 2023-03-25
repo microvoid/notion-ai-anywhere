@@ -23,7 +23,7 @@ import {
   useState
 } from "react"
 
-// import { sendToBackground } from "@plasmohq/messaging"
+import { sendToBackground } from "@plasmohq/messaging"
 import { useStorage } from "@plasmohq/storage/hook"
 
 import {
@@ -33,59 +33,71 @@ import {
   stopPropagation
 } from "~lib"
 import { ConstEnum, selectionMenuList } from "~lib/enums"
+import { sendNotionPostToBackground } from "~lib/notion"
 import { storage } from "~lib/storage"
-import type { INotionSpace } from "~lib/types/notion"
+import type { INotionSpace, IPostNotionProgress } from "~lib/types/notion"
 
 import BtnIcon from "../icons/notion-icon.png"
 
 const ICON_COLOR = "#a782c3"
 interface IContentPanelProps {
+  show: boolean
   position: IPosition
   selectionText: string
   onClose: () => void
 }
 
 const ContentPanel = (props: IContentPanelProps) => {
-  const { position, selectionText, onClose } = props
-  const [text, setText] = useState<string>("")
-  const [notionSpace] = useStorage<INotionSpace | undefined>({
-    key: ConstEnum.USED_NOTION_SPACE,
-    instance: storage
-  })
+  const { show, position, selectionText, onClose } = props
+  // const [notionSpace] = useStorage<INotionSpace | undefined>({
+  //   key: ConstEnum.USED_NOTION_SPACE,
+  //   instance: storage
+  // })
 
   const [query, setQuery] = useState("")
 
-  const [open, setOpen] = useState(true)
+  const [result, setResult] = useState("")
 
-  // const onMouseUp = useCallback((e: MouseEvent) => {
-  //   if (text) {
-  //   } else {
-  //     const ele = document.querySelector(".notion-ai-anywhere-panel")
-  //     onClose?.()
-  //   }
-  // }, [])
-
-  // useEffect(() => {
-  //   document.addEventListener("mouseup", onMouseUp)
-  //   return () => {
-  //     document.removeEventListener("mouseup", onMouseUp)
-  //   }
-  // }, [onMouseUp])
-
-  const send = () => {}
-
-  const panelStyle: CSSProperties = {
-    width: "500px"
+  const send = async (promptType?: string) => {
+    let resultTemp = ""
+    sendNotionPostToBackground({
+      prompt: query,
+      context: selectionText,
+      promptType: promptType,
+      onProgress: (e: IPostNotionProgress) => {
+        resultTemp += e.value.completion
+        if (!e.done) {
+          setResult(resultTemp)
+        }
+      }
+    })
   }
-  if (position && position.panelX) {
-    console.log(position)
-    panelStyle.left = position.panelX
-    panelStyle.top = position.panelY
+
+  // const panelStyle: CSSProperties = {
+  // width: "500px"
+  // }
+  // if (position && position.panelX) {
+  //   console.log(position)
+  //   panelStyle.left = position.panelX
+  //   panelStyle.top = position.panelY
+  // }
+  // if (selectionText) {
+  //   const leftWidth = 192
+  //   panelStyle.width = 500 + leftWidth + "px"
+  //   panelStyle.left = `calc(${position.panelX} - ${leftWidth / 2}px)`
+  // }
+
+  const clear = () => {
+    setQuery("")
+    setResult("")
   }
-  if (selectionText) {
-    const leftWidth = 192
-    panelStyle.width = 500 + leftWidth + "px"
-    panelStyle.left = `calc(${position.panelX} - ${leftWidth / 2}px)`
+
+  const handleClose = () => {
+    // if (query || result) {
+
+    //   return;
+    // }
+    onClose()
   }
 
   return (
@@ -94,65 +106,21 @@ const ContentPanel = (props: IContentPanelProps) => {
       onMouseUp={stopPropagation}
       onMouseDown={stopPropagation}
       onKeyDown={stopPropagation}
-      onKeyUp={preventDefaultAndStopPropagation}
-      // style={panelStyle}
-    >
-      {/* {selectionText && (
-        <div className="card w-48 bg-base-100 shadow-xl glass mr-4">
-          <div className="card-body p-2">
-            <h2 className="card-title">Selection text</h2>
-            <p>{selectionText}</p>
-          </div>
-        </div>
-      )} */}
-      {/* input */}
-      {/* <div className="relative flex-1">
-        <img
-          src={BtnIcon}
-          alt="icon"
-          className="absolute w-6 h-6 top-1/2 left-2 translate-y-[-50%]"
-        />
-        <input
-          type="text"
-          placeholder="Ask Notion AI to edit or generate..."
-          className="box-border input input-bordered h-8 w-full"
-          style={{
-            paddingLeft: "40px"
-          }}
-          // autoFocus
-          onChange={(e) => {
-            setText(e.currentTarget.value)
-          }}
-          onKeyUp={async (e) => {
-            if (e.key === "Enter") {
-              const response = await sendToBackground({
-                name: "post-notion",
-                body: {
-                  context: selectionText
-                  // onProgress: () => {}
-                  // notionSpaceId: notionSpace.id
-                }
-              })
-              // setText(e.currentTarget.value)
-            }
-          }}
-        />
-      </div> */}
-      {/* panel */}
-      {/* <div></div> */}
-      <Transition.Root
-        show={open}
-        as={Fragment}
-        afterLeave={() => setQuery("")}
-        appear>
+      onKeyUp={(e) => {
+        preventDefaultAndStopPropagation(e)
+        if (e.key === "Escape") {
+          handleClose()
+        }
+      }}>
+      <Transition.Root show={show} as={Fragment} afterLeave={clear} appear>
         <Dialog
           as="div"
-          open={true}
+          open={show}
           className="relative"
           style={{
             zIndex: 999999
           }}
-          onClose={setOpen}>
+          onClose={handleClose}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -176,12 +144,15 @@ const ContentPanel = (props: IContentPanelProps) => {
               <Dialog.Panel className="mx-auto max-w-3xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
                 <Combobox
                   onChange={(item: any) => {
-                    console.log(item, "item ")
-                    setQuery(item.value || item.name)
+                    console.log(item, "item   ")
+                    // setQuery(item.value || item.name)
+                    if (!item.options?.length) {
+                      send(item.value)
+                    }
                   }}>
                   {({ activeOption }) => (
                     <>
-                      <div className="relative ">
+                      <div className="relative">
                         <img
                           className="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-gray-400"
                           src={BtnIcon}></img>
@@ -197,7 +168,7 @@ const ContentPanel = (props: IContentPanelProps) => {
                           }}
                         />
                         <ArrowUpCircleIcon
-                          onClick={send}
+                          onClick={() => send()}
                           className="cursor-pointer absolute top-3.5 right-4 h-5 w-5 text-gray-400"
                           style={
                             query
@@ -413,32 +384,7 @@ const ContentPanel = (props: IContentPanelProps) => {
                                 </p> */}
                             </div>
                             <div className="flex flex-auto flex-col justify-between p-6">
-                              <dl className="grid grid-cols-1 gap-x-6 gap-y-3 text-sm text-gray-700">
-                                <dt className="col-end-1 font-semibold text-gray-900">
-                                  Phone
-                                </dt>
-                                {/* <dd>{activeOption.phone}</dd> */}
-                                <dt className="col-end-1 font-semibold text-gray-900">
-                                  URL
-                                </dt>
-                                <dd className="truncate">
-                                  {/* <a
-                                      href={activeOption.url}
-                                      className="text-indigo-600 underline">
-                                      {activeOption.url}
-                                    </a> */}
-                                </dd>
-                                <dt className="col-end-1 font-semibold text-gray-900">
-                                  Email
-                                </dt>
-                                <dd className="truncate">
-                                  <a
-                                    // href={`mailto:${activeOption.email}`}
-                                    className="text-indigo-600 underline">
-                                    {/* {activeOption.email} */}
-                                  </a>
-                                </dd>
-                              </dl>
+                              {result}
                               <button
                                 type="button"
                                 className="mt-6 w-full rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
@@ -472,7 +418,6 @@ const ContentPanel = (props: IContentPanelProps) => {
           </div>
         </Dialog>
       </Transition.Root>
-      )
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { type } from "os"
 import { v4 as uuidv4 } from "uuid"
 
 import { PromptTypeEnum } from "~lib/enums"
-import type { INotionSpace } from "~types/notion"
+import type { INotionSpace, IPostNotionProgress } from "~lib/types/notion"
 
 const MODEL = "openai-3"
 const HOST = "https://www.notion.so"
@@ -13,17 +13,19 @@ async function PostNotion(params: {
   context?: string
   notionSpaceId?: string
   prompt?: string
-  language?: string
-  tone?: string
-  onProgress?: ({ type, text }: { type: string; text: string }) => void
+  previousContent?: string
+  // language?: string
+  // tone?: string
+  onProgress?: (params: IPostNotionProgress) => void
 }): Promise<string> {
   const {
     promptType,
     context,
     notionSpaceId,
     prompt,
-    language,
-    tone,
+    previousContent,
+    // language,
+    // tone,
     onProgress
   } = params
   if (!notionSpaceId) {
@@ -31,57 +33,75 @@ async function PostNotion(params: {
   }
 
   const url = `${HOST}/api/v3/getCompletion`
-  const data = {
-    id: uuidv4(),
-    model: MODEL,
-    spaceId: notionSpaceId,
-    isSpacePermission: false,
-    context: {
-      // pageTitle,
-      pageContent: "",
-      prompt: prompt || "帮我翻译成日文",
-      selectedText: context,
-      type: "helpMeEdit"
-    }
-  }
   // const data = {
   //   id: uuidv4(),
   //   model: MODEL,
   //   spaceId: notionSpaceId,
   //   isSpacePermission: false,
-  //   context: {}
+  //   context: {
+  //     // pageTitle,
+  //     pageContent: "",
+  //     prompt: prompt || "帮我翻译成日文",
+  //     selectedText: context,
+  //     type: "helpMeEdit"
+  //   }
   // }
+  const data = {
+    id: uuidv4(),
+    model: MODEL,
+    spaceId: notionSpaceId,
+    isSpacePermission: false,
+    context: {}
+  }
 
-  // if (promptType === PromptTypeEnum.Translate) {
-  //   data.context = {
-  //     type: "translate",
-  //     text: context,
-  //     language: language
-  //   }
-  // } else if (promptType === PromptTypeEnum.HelpMeWrite) {
-  //   data.context = {
-  //     type: "helpMeWrite",
-  //     prompt: prompt,
-  //     previousContent: context
-  //   }
-  // } else if (promptType === PromptTypeEnum.ChangeTone) {
-  //   data.context = {
-  //     type: "changeTone",
-  //     text: context,
-  //     tone: tone
-  //   }
-  // } else if (promptType === PromptTypeEnum.TopicWriting) {
-  //   data.context = {
-  //     type: prompt,
-  //     topic: context,
-  //     pageContent: ""
-  //   }
-  // } else {
-  //   data.context = {
-  //     type: promptType,
-  //     selectedText: context
-  //   }
-  // }
+  const [type, context2] = promptType?.split("-") || []
+  console.log(promptType, type, context2)
+
+  if (prompt) {
+    data.context = {
+      pageContent: "",
+      prompt: prompt,
+      selectedText: context,
+      type: "helpMeEdit"
+    }
+  }
+
+  if (type === PromptTypeEnum.Translate) {
+    data.context = {
+      type,
+      text: context,
+      language: context2
+    }
+  } else if (type === PromptTypeEnum.HelpMeWrite) {
+    data.context = {
+      type,
+      prompt: prompt,
+      previousContent: context
+    }
+  } else if (type === PromptTypeEnum.ChangeTone) {
+    data.context = {
+      type,
+      text: context,
+      tone: context2
+    }
+  } else if (type === PromptTypeEnum.TopicWriting) {
+    data.context = {
+      type: prompt,
+      topic: context,
+      pageContent: ""
+    }
+  } else if (type === PromptTypeEnum.ContinueWriting) {
+    data.context = {
+      type,
+      previousContent: previousContent || context,
+      restContent: previousContent ? context : ""
+    }
+  } else {
+    data.context = {
+      type: promptType,
+      selectedText: context
+    }
+  }
   console.log(`request body: ${JSON.stringify(data)}`)
   let headers = {
     accept: "application/x-ndjson",
@@ -105,20 +125,20 @@ async function PostNotion(params: {
         let read
         reader.read().then(
           (read = (result) => {
+            // console.log(result)
+            onProgress?.(result)
             if (result.done) {
               resolve(undefined)
               return
             }
 
-            // console.log(result.value)
-            onProgress(result.value)
             reader.read().then(read)
           })
         )
       })
     })
 
-  console.log(resp)
+  // console.log(resp)
 
   // if (resp.status == 200) {
   //   let resData = await resp.text()

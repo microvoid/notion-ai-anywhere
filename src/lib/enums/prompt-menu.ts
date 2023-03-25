@@ -8,6 +8,6 @@ import {
 export const selectionMenuList = [
   EditOrReviewSelectionMap,
   GenerateFromSelectionMap,
-  WriteWithAIMap,
-  DraftWithAIMap
+  WriteWithAIMap
+  //   DraftWithAIMap
 ]

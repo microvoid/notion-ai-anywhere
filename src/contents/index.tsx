@@ -43,15 +43,14 @@ const PlasmoOverlay = () => {
           setSelectionText(selectionText)
           setShowPanel(true)
         }}></ContentEnter>
-      {showPanel && (
-        <ContentPanel
-          selectionText={selectionText}
-          position={position}
-          onClose={() => {
-            setShowPanel(false)
-            setPosition(undefined)
-          }}></ContentPanel>
-      )}
+      <ContentPanel
+        show={showPanel}
+        selectionText={selectionText}
+        position={position}
+        onClose={() => {
+          setShowPanel(false)
+          setPosition(undefined)
+        }}></ContentPanel>
     </div>
   )
 }

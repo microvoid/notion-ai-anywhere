@@ -1,26 +1,34 @@
-import type { PlasmoMessaging } from "@plasmohq/messaging"
+import { PlasmoMessaging, sendToContentScript } from "@plasmohq/messaging"
 
 import { PostNotion } from "~lib/api/notion"
 import { ConstEnum } from "~lib/enums"
 import { storage } from "~lib/storage"
-import type { INotionSpace } from "~lib/types/notion"
+import type { INotionSpace, IPostNotionProgress } from "~lib/types/notion"
 
 // sendToContentScript({
 //   type: "post-notion"
 // })
-const handler: PlasmoMessaging.MessageHandler = async (req, res) => {
-  // console.log(1111)
+
+export const handler: PlasmoMessaging.MessageHandler = async (req, res) => {
   const space = await storage.get<INotionSpace>(ConstEnum.USED_NOTION_SPACE)
-  // console.log(space)
   const body = req.body
-  const spaces = await PostNotion({
-    context: body.context,
-    notionSpaceId: space.id
-    // onProgress: body.onProgress
+  const { promptType, prompt, context } = body
+  const text = await PostNotion({
+    promptType,
+    prompt,
+    context,
+    notionSpaceId: space.id,
+    onProgress: (data: IPostNotionProgress) => {
+      sendToContentScript({
+        tabId: req.tabId,
+        body: data,
+        name: "post-notion-progress"
+      })
+    }
   })
-  console.log(spaces)
+  // console.log(spaces)
   //   await storage.set(ConstEnum.NOTION_SPACES, JSON.stringify(spaces))
-  //   res.send(`get notion spaces success: ${spaces.length} spaces`)
+  res.send(`post notion success: ${text}`)
 }
 
 export default handler
