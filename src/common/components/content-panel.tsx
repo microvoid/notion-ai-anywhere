@@ -1,49 +1,27 @@
-// import { Combobox, Dialog, Transition } from "@headlessui/react"
 import { ArrowUpCircleIcon } from "@heroicons/react/20/solid"
-import {
-  ArrowDownLeftIcon,
-  // ArrowUpCircleIcon,
-  ArrowUturnLeftIcon,
-  ChevronRightIcon,
-  DocumentPlusIcon,
-  FolderIcon,
-  FolderPlusIcon,
-  HashtagIcon,
-  PencilIcon,
-  TagIcon,
-  UsersIcon
-} from "@heroicons/react/24/outline"
 import classNames from "classnames"
-import {
-  CSSProperties,
-  Fragment,
-  useCallback,
-  useEffect,
-  useReducer,
-  useState
-} from "react"
+import { useCallback, useEffect, useState } from "react"
 
 import { sendToBackground } from "@plasmohq/messaging"
 import { useStorage } from "@plasmohq/storage/hook"
 
-import type { IPosition, _calcPosition } from "~lib"
-import { ConstEnum, selectionMenuList } from "~lib/enums"
+import type { _calcPosition } from "~lib"
+import { selectionMenuList } from "~lib/enums"
 import { sendNotionPostToBackground } from "~lib/notion"
-import { storage } from "~lib/storage"
-import type { INotionSpace, IPostNotionProgress } from "~lib/types/notion"
+import type { IPostNotionProgress } from "~lib/types/notion"
 
 import BtnIcon from "../icons/notion-icon.png"
 import { AskMenuList } from "./ask-option-list"
 
 interface IContentPanelProps {
   show: boolean
-  position: IPosition
+  // position: IPosition
   selectionText: string
   onClose: () => void
 }
 
 const ContentPanel = (props: IContentPanelProps) => {
-  const { show, position, selectionText, onClose } = props
+  const { show, selectionText, onClose } = props
   // const [notionSpace] = useStorage<INotionSpace | undefined>({
   //   key: ConstEnum.USED_NOTION_SPACE,
   //   instance: storage
@@ -297,38 +275,9 @@ const ContentPanel = (props: IContentPanelProps) => {
                     Selection Text
                   </div>
                 </div>
-
-                {/* {promptType &&
-                  (() => {
-                    const [type, context] = promptType.split("-")
-                    return (
-                      <div className="chat chat-end">
-                        <div className="chat-bubble min-h-6">
-                          {type}
-                          {context ? `:${context}` : ""}
-                        </div>
-                      </div>
-                    )
-                  })()} */}
               </div>
             )}
           </div>
-          {/* <h3
-            className="font-bold text-lg"
-            style={{
-              width: "600px"
-            }}>
-            Congratulations random Internet user!
-          </h3>
-          <p className="py-4">
-            You've been selected for a chance to get one year of subscription to
-            use Wikipedia for free!
-          </p>
-          <div className="modal-action">
-            <label htmlFor="my-modal-6" className="btn">
-              Yay!
-            </label>
-          </div> */}
         </div>
       </div>
     </div>

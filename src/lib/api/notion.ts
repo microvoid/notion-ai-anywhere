@@ -1,5 +1,4 @@
 import ndjsonStream from "can-ndjson-stream"
-import { type } from "os"
 import { v4 as uuidv4 } from "uuid"
 
 import { PromptTypeEnum } from "~lib/enums"
@@ -14,8 +13,6 @@ async function PostNotion(params: {
   notionSpaceId?: string
   prompt?: string
   previousContent?: string
-  // language?: string
-  // tone?: string
   onProgress?: (params: IPostNotionProgress) => void
 }): Promise<any> {
   const {
@@ -24,8 +21,6 @@ async function PostNotion(params: {
     notionSpaceId,
     prompt,
     previousContent,
-    // language,
-    // tone,
     onProgress
   } = params
   if (!notionSpaceId) {
