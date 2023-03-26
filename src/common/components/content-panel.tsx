@@ -2,9 +2,6 @@ import { ArrowUpCircleIcon } from "@heroicons/react/20/solid"
 import classNames from "classnames"
 import { useCallback, useEffect, useState } from "react"
 
-import { sendToBackground } from "@plasmohq/messaging"
-import { useStorage } from "@plasmohq/storage/hook"
-
 import type { _calcPosition } from "~lib"
 import { selectionMenuList } from "~lib/enums"
 import { sendNotionPostToBackground } from "~lib/notion"
