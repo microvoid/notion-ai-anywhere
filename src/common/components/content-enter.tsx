@@ -7,6 +7,7 @@ import {
 } from "react"
 
 import { IPosition, _calcPosition } from "~lib"
+import { getMainSelectionChar, getSelectionChar, isDocs } from "~lib/docs"
 
 import BtnIcon from "../icons/notion-icon.png"
 
@@ -29,8 +30,15 @@ const ContentEnter = (props: IContentEnterProps) => {
       const selection = window.getSelection()
       const str = selection?.toString().trim()
       selectionText = str || ""
+
+      if (isDocs()) {
+        console.log(isDocs)
+        selectionText = getMainSelectionChar() || ""
+        console.log(selectionText, "selectionTex33")
+      }
+
       // 如果选区有内容，直接触发
-      if (str) {
+      if (selectionText) {
         // const range = selection?.getRangeAt(0)
         // const rect = range?.getBoundingClientRect()
         setPosition(

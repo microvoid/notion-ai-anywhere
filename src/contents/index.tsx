@@ -1,18 +1,16 @@
-// import { Switch } from "@headlessui/react"
-import { ArrowUpCircleIcon } from "@heroicons/react/24/outline"
 import cssText from "data-text:~styles.css"
-import type { PlasmoContentScript } from "plasmo"
+import type { PlasmoCSConfig } from "plasmo"
 import { useState } from "react"
-
-// import { CountButton } from "~features/count-button"
 
 // import "~base.css"
 
 import ContentEnter from "~common/components/content-enter"
 import ContentPanel from "~common/components/content-panel"
 import type { IPosition } from "~lib"
+import { ConstEnum } from "~lib/enums"
+import { setToastContainerEle } from "~lib/toast"
 
-export const config: PlasmoContentScript = {
+export const config: PlasmoCSConfig = {
   matches: ["<all_urls>"],
   all_frames: true
 }
@@ -33,6 +31,15 @@ const PlasmoOverlay = () => {
       style={{
         zIndex: 999999
       }}>
+      <div
+        id={ConstEnum.TOAST_CONTAINER}
+        className="fixed"
+        style={{
+          zIndex: 1001
+        }}
+        ref={(ref) => {
+          setToastContainerEle(ref)
+        }}></div>
       <ContentEnter
         showPanel={({
           position,

@@ -1,16 +1,24 @@
-import { ArrowUpCircleIcon } from "@heroicons/react/20/solid"
+import { ArrowUpCircleIcon, Bars3Icon } from "@heroicons/react/20/solid"
+import { Bars2Icon } from "@heroicons/react/24/outline"
 import classNames from "classnames"
 import { useCallback, useEffect, useState } from "react"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
-import { _calcPosition, storage } from "~lib"
-import { ConstEnum, selectionMenuList } from "~lib/enums"
+import {
+  _calcPosition,
+  preventDefaultAndStopPropagation,
+  stopPropagation,
+  storage
+} from "~lib"
+import { ConstEnum, HandleResultMap, selectionMenuList } from "~lib/enums"
 import { sendNotionPostToBackground } from "~lib/notion"
 import type { INotionSpace, IPostNotionProgress } from "~lib/types/notion"
 
 import BtnIcon from "../icons/notion-icon.png"
 import { AskMenuList } from "./ask-option-list"
+import HandleResultMenu from "./handle-result-menu"
+import Toast from "./toast"
 
 interface IContentPanelProps {
   show: boolean
@@ -25,7 +33,6 @@ const ContentPanel = (props: IContentPanelProps) => {
     key: ConstEnum.USED_NOTION_SPACE,
     instance: storage
   })
-
   const [isNotionLogin] = useStorage({
     key: ConstEnum.NOTION_IS_LOGIN,
     instance: storage
@@ -119,16 +126,15 @@ const ContentPanel = (props: IContentPanelProps) => {
     <div
       data-theme={"light"}
       className="flex fixed notion-ai-anywhere-panel"
-      // onMouseUp={stopPropagation}
-      // onMouseDown={stopPropagation}
-      // onKeyDown={stopPropagation}
-      // onKeyUp={(e) => {
-      //   preventDefaultAndStopPropagation(e)
-      //   if (e.key === "Escape") {
-      //     handleClose()
-      //   }
-      // }}
-    >
+      onMouseUp={stopPropagation}
+      onMouseDown={stopPropagation}
+      onKeyDown={stopPropagation}
+      onKeyUp={(e) => {
+        preventDefaultAndStopPropagation(e)
+        if (e.key === "Escape") {
+          handleClose()
+        }
+      }}>
       {/* Put this part before </body> tag */}
       <input
         type="checkbox"
@@ -155,13 +161,20 @@ const ContentPanel = (props: IContentPanelProps) => {
           }
         }}
       />
-      <div className="modal items-start pt-24">
+      <div
+        className="modal items-start pt-24"
+        onClick={() => {
+          handleClose()
+        }}>
         <div
           className="modal-box p-0"
           style={{
             maxWidth: "800px",
             maxHeight: "600px",
             width: "auto"
+          }}
+          onClick={(e) => {
+            e.stopPropagation()
           }}>
           <div className="relative w-full">
             <img
@@ -262,6 +275,9 @@ const ContentPanel = (props: IContentPanelProps) => {
                         </p>
                       </div>
                     </div>
+                    <HandleResultMenu
+                      result={result}
+                      handleClose={handleClose}></HandleResultMenu>
                     <div className="absolute w-full text-center bottom-1 text-gray-200 text-xs">
                       Result
                     </div>
@@ -295,9 +311,11 @@ const ContentPanel = (props: IContentPanelProps) => {
 
           {(!isNotionLogin || !notionSpace) && (
             <div className="absolute z-10 w-full h-full left-0 top-0 bg-black bg-opacity-80 flex items-center justify-center text-3xl text-white p-12 text-center">
-              {!isNotionLogin && "Notion not login, please login first"}
-              {!notionSpace &&
-                "Notion space not found, please select one space on extension popup"}
+              {!isNotionLogin
+                ? "Notion not login, please login first"
+                : !notionSpace
+                ? "Notion space not found, please select one space on extension popup"
+                : ""}
             </div>
           )}
         </div>

@@ -1,9 +1,11 @@
 import {
   Bars2Icon,
   Bars4Icon,
+  BarsArrowDownIcon,
   BoltIcon,
   ChartPieIcon,
   CheckIcon,
+  ClipboardDocumentIcon,
   DocumentMagnifyingGlassIcon,
   DocumentTextIcon,
   LanguageIcon,
@@ -312,6 +314,33 @@ export const DraftWithAIMap: ISelectionOptionMap = {
       icon: PencilIcon,
       label: "Recruiting Email",
       value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.recruitingEmail}`
+    }
+  ]
+}
+
+export enum HandleResultEnum {
+  ReplaceSelection = "ReplaceSelection",
+  InsertBelow = "InsertBelow",
+  Copy = "Copy"
+}
+
+export const HandleResultMap: ISelectionOptionMap = {
+  label: "Handle result",
+  list: [
+    {
+      icon: CheckIcon,
+      label: "Replace selection",
+      value: HandleResultEnum.ReplaceSelection
+    },
+    {
+      icon: BarsArrowDownIcon,
+      label: "Insert below",
+      value: HandleResultEnum.InsertBelow
+    },
+    {
+      icon: ClipboardDocumentIcon,
+      label: "Copy",
+      value: HandleResultEnum.Copy
     }
   ]
 }
