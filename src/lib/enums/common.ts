@@ -3,6 +3,7 @@ export enum ConstEnum {
   USED_NOTION_SPACE = "used-notion-space",
   NOTION_SPACES = "notion-spaces",
   NOTION_IS_LOGIN = "notion-login",
+  RECENT_ASK = "recent-ask",
 
   TOAST_CONTAINER = "nan-toast-container"
 }

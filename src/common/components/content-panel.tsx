@@ -1,5 +1,5 @@
 import { ArrowUpCircleIcon, Bars3Icon } from "@heroicons/react/20/solid"
-import { Bars2Icon } from "@heroicons/react/24/outline"
+import { Bars2Icon, PencilIcon } from "@heroicons/react/24/outline"
 import classNames from "classnames"
 import { useCallback, useEffect, useState } from "react"
 
@@ -11,7 +11,7 @@ import {
   stopPropagation,
   storage
 } from "~lib"
-import { ConstEnum, HandleResultMap, selectionMenuList } from "~lib/enums"
+import { ConstEnum, ISelectionOption, selectionMenuList } from "~lib/enums"
 import { sendNotionPostToBackground } from "~lib/notion"
 import type { INotionSpace, IPostNotionProgress } from "~lib/types/notion"
 
@@ -38,6 +38,13 @@ const ContentPanel = (props: IContentPanelProps) => {
     instance: storage
   })
 
+  const [recentAsk, setRecentAsk] = useStorage<ISelectionOption[]>({
+    key: ConstEnum.RECENT_ASK,
+    instance: storage
+  })
+
+  console.log(recentAsk, "recentAsk ")
+
   const [query, setQuery] = useState("")
 
   const [result, setResult] = useState("")
@@ -56,6 +63,16 @@ const ContentPanel = (props: IContentPanelProps) => {
       // not select notion space
 
       return
+    }
+
+    if (query) {
+      const recentAskTemp = recentAsk || []
+      const index = recentAskTemp.findIndex((item) => item.value === query)
+      if (index > -1) {
+        recentAskTemp.splice(index, 1)
+      }
+      recentAskTemp.unshift({ value: query, label: query })
+      setRecentAsk(recentAskTemp.slice(0, 5))
     }
 
     let resultTemp = ""
@@ -240,6 +257,22 @@ const ContentPanel = (props: IContentPanelProps) => {
                 {/* {selectionMenuList.map((menu) => {
                  return 
                })} */}
+                {recentAsk && recentAsk.length > 0 && (
+                  <AskMenuList
+                    list={[
+                      {
+                        label: "Recent Ask",
+                        list: recentAsk.map((item) => ({
+                          icon: PencilIcon,
+                          ...item
+                        }))
+                      }
+                    ]}
+                    onOptionClick={(option) => {
+                      // send(option.value)
+                    }}
+                  />
+                )}
                 <AskMenuList
                   list={selectionMenuList}
                   onOptionClick={(option) => {
