@@ -31,16 +31,17 @@ const ContentEnter = (props: IContentEnterProps) => {
       selectionText = str || ""
       // 如果选区有内容，直接触发
       if (str) {
-        const range = selection?.getRangeAt(0)
-        const rect = range?.getBoundingClientRect()
+        // const range = selection?.getRangeAt(0)
+        // const rect = range?.getBoundingClientRect()
         setPosition(
           _calcPosition(
-            rect
-              ? {
-                  clientX: rect.x + rect.width / 2,
-                  clientY: rect.y + rect.height
-                }
-              : e
+            e
+            // rects
+            //   ? {
+            //       clientX: rect.x + rect.width / 2,
+            //       clientY: rect.y + rect.height
+            //     }
+            //   : e
           )
         )
         setShow(true)

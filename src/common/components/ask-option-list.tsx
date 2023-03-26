@@ -102,7 +102,7 @@ const AskOptionChildList = (props: IAskOptionChildListProps) => {
                         }}
                         onClick={(e) => {
                           e.stopPropagation()
-                          onOptionClick(item)
+                          onOptionClick(option)
                         }}
                         tabIndex={0}
                         className={classNames(
