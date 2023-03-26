@@ -7,6 +7,7 @@ import { GetSpaces } from "~lib/api/notion"
 import { ConstEnum } from "~lib/enums"
 import { storage } from "~lib/storage"
 
+// import "~base.css"
 import "~styles.css"
 
 import { useEffect, useState } from "react"
@@ -184,10 +185,6 @@ function IndexPopup() {
 
   return (
     <div
-      // onClick={() => {
-      //   console.log(notionSpace)
-      //   remove()
-      // }}
       style={{
         width: "500px",
         height: "280px"

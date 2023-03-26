@@ -12,7 +12,7 @@ import {
   SparklesIcon
 } from "@heroicons/react/24/outline"
 
-export interface ISelectionMenu {
+export interface ISelectionOption {
   label: string
   icon?: React.ForwardRefExoticComponent<
     React.SVGProps<SVGSVGElement> & {
@@ -27,9 +27,9 @@ export interface ISelectionMenu {
   }[]
 }
 
-export interface ISelectionMenuMap {
+export interface ISelectionOptionMap {
   label: string
-  list: ISelectionMenu[]
+  list: ISelectionOption[]
 }
 
 export enum PromptTypeEnum {
@@ -79,7 +79,7 @@ export const ToneOptions = [
   }
 ]
 
-export const EditOrReviewSelectionMap: ISelectionMenuMap = {
+export const EditOrReviewSelectionMap: ISelectionOptionMap = {
   label: "Edit or review selection",
   list: [
     {
@@ -192,7 +192,7 @@ export const LanguageOptions = [
   }
 ]
 
-export const GenerateFromSelectionMap: ISelectionMenuMap = {
+export const GenerateFromSelectionMap: ISelectionOptionMap = {
   label: "Generate from selection",
   list: [
     {
@@ -219,7 +219,7 @@ export const GenerateFromSelectionMap: ISelectionMenuMap = {
   ]
 }
 
-export const WriteWithAIMap: ISelectionMenuMap = {
+export const WriteWithAIMap: ISelectionOptionMap = {
   label: "Write with AI",
   list: [
     {
@@ -245,7 +245,7 @@ export enum DraftWithAIEnum {
   recruitingEmail = "recruitingEmail"
 }
 
-export const DraftWithAIMap: ISelectionMenuMap = {
+export const DraftWithAIMap: ISelectionOptionMap = {
   label: "Draft with AI",
   list: [
     {

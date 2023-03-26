@@ -5,9 +5,7 @@ import { ConstEnum } from "~lib/enums"
 import { storage } from "~lib/storage"
 
 const handler: PlasmoMessaging.MessageHandler = async (req, res) => {
-  console.log(1111)
   const spaces = await GetSpaces()
-  console.log(spaces)
   //   await storage.set(ConstEnum.NOTION_SPACES, JSON.stringify(spaces))
   //   res.send(`get notion spaces success: ${spaces.length} spaces`)
 }

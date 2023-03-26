@@ -12,10 +12,10 @@ import BtnIcon from "../icons/notion-icon.png"
 
 interface IContentEnterProps {
   showPanel?: ({
-    position,
+    // position,
     selectionText
   }: {
-    position: IPosition
+    // position: IPosition
     selectionText: string
   }) => void
 }
@@ -32,11 +32,7 @@ const ContentEnter = (props: IContentEnterProps) => {
       // 如果选区有内容，直接触发
       if (str) {
         const range = selection?.getRangeAt(0)
-        console.log(range, "range", selection)
         const rect = range?.getBoundingClientRect()
-        // const obj
-        console.log(str, rect, selection, "selection")
-        //   console.log(_calcPosition(e))
         setPosition(
           _calcPosition(
             rect
@@ -79,9 +75,7 @@ const ContentEnter = (props: IContentEnterProps) => {
       style={buttonStyle}
       onClick={() => {
         setShow(false)
-        console.log(selectionText, "selectionText")
         props.showPanel?.({
-          position,
           selectionText
         })
       }}>

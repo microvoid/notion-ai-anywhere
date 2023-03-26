@@ -6,7 +6,6 @@ let onProgressHandler: ((data: IPostNotionProgress) => void) | undefined
 
 const handlePostNotionProgress = (message: any) => {
   if (message.name === "post-notion-progress") {
-    console.log("context nam2e", message.body)
     onProgressHandler?.(message.body)
   }
 
@@ -32,7 +31,6 @@ export const sendNotionPostToBackground = ({
   prompt?: string
   onProgress: (data: IPostNotionProgress) => void
 }) => {
-  console.log(promptType, prompt, context, "sendNotionPostToBackground")
   onProgressHandler = onProgress
   postNotionAddEventListener()
   return new Promise(async (resolve) => {

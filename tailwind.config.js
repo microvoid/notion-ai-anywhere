@@ -1,18 +1,21 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  mode: "jit",
+  // mode: "jit",
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
-  theme: {
-    extend: {
-      colors: {
-        main: "#333"
-      }
-    }
-  },
+  // theme: {
+  //   extend: {
+  //     colors: {
+  //       main: "#333"
+  //     }
+  //   }
+  // },
   safelist: [
     {
       pattern: /(bg|text)-(.*)-(100|800)/
     }
   ],
+  daisyui: {
+    themes: ["light", "dark"]
+  },
   plugins: [require("daisyui")]
 }

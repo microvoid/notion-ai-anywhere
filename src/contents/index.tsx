@@ -1,10 +1,12 @@
+// import { Switch } from "@headlessui/react"
+import { ArrowUpCircleIcon } from "@heroicons/react/24/outline"
 import cssText from "data-text:~styles.css"
 import type { PlasmoContentScript } from "plasmo"
 import { useState } from "react"
 
 // import { CountButton } from "~features/count-button"
 
-import "~styles.css"
+// import "~base.css"
 
 import ContentEnter from "~common/components/content-enter"
 import ContentPanel from "~common/components/content-panel"
@@ -46,7 +48,7 @@ const PlasmoOverlay = () => {
       <ContentPanel
         show={showPanel}
         selectionText={selectionText}
-        position={position}
+        // position={position}
         onClose={() => {
           setShowPanel(false)
           setPosition(undefined)

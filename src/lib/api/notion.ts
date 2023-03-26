@@ -17,7 +17,7 @@ async function PostNotion(params: {
   // language?: string
   // tone?: string
   onProgress?: (params: IPostNotionProgress) => void
-}): Promise<string> {
+}): Promise<any> {
   const {
     promptType,
     context,
@@ -33,19 +33,7 @@ async function PostNotion(params: {
   }
 
   const url = `${HOST}/api/v3/getCompletion`
-  // const data = {
-  //   id: uuidv4(),
-  //   model: MODEL,
-  //   spaceId: notionSpaceId,
-  //   isSpacePermission: false,
-  //   context: {
-  //     // pageTitle,
-  //     pageContent: "",
-  //     prompt: prompt || "帮我翻译成日文",
-  //     selectedText: context,
-  //     type: "helpMeEdit"
-  //   }
-  // }
+
   const data = {
     id: uuidv4(),
     model: MODEL,
@@ -55,7 +43,6 @@ async function PostNotion(params: {
   }
 
   const [type, context2] = promptType?.split("-") || []
-  console.log(promptType, type, context2)
 
   if (prompt) {
     data.context = {
@@ -64,9 +51,7 @@ async function PostNotion(params: {
       selectedText: context,
       type: "helpMeEdit"
     }
-  }
-
-  if (type === PromptTypeEnum.Translate) {
+  } else if (type === PromptTypeEnum.Translate) {
     data.context = {
       type,
       text: context,
@@ -137,26 +122,6 @@ async function PostNotion(params: {
         )
       })
     })
-
-  // console.log(resp)
-
-  // if (resp.status == 200) {
-  //   let resData = await resp.text()
-  //   if (!resData || resData === "" || resData === "[]") {
-  //     return "Get response error, empty response"
-  //   }
-  //   let rData = resData.match(/.+/g).map((tmp) => JSON.parse(tmp))
-  //   // console.log(rData)
-
-  //   const texts = rData.map((tmp) => {
-  //     return tmp.type == "success" ? tmp.completion : tmp.message
-  //   })
-  //   console.log(texts, "texts")
-  //   return texts.join("").trim()
-  // } else {
-  //   console.log(`fail: ${resp.status}`)
-  //   return await resp.text()
-  // }
 }
 
 async function GetSpaces() {
