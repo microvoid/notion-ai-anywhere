@@ -2,10 +2,12 @@ import { ArrowUpCircleIcon } from "@heroicons/react/20/solid"
 import classNames from "classnames"
 import { useCallback, useEffect, useState } from "react"
 
-import type { _calcPosition } from "~lib"
-import { selectionMenuList } from "~lib/enums"
+import { useStorage } from "@plasmohq/storage/hook"
+
+import { _calcPosition, storage } from "~lib"
+import { ConstEnum, selectionMenuList } from "~lib/enums"
 import { sendNotionPostToBackground } from "~lib/notion"
-import type { IPostNotionProgress } from "~lib/types/notion"
+import type { INotionSpace, IPostNotionProgress } from "~lib/types/notion"
 
 import BtnIcon from "../icons/notion-icon.png"
 import { AskMenuList } from "./ask-option-list"
@@ -19,10 +21,15 @@ interface IContentPanelProps {
 
 const ContentPanel = (props: IContentPanelProps) => {
   const { show, selectionText, onClose } = props
-  // const [notionSpace] = useStorage<INotionSpace | undefined>({
-  //   key: ConstEnum.USED_NOTION_SPACE,
-  //   instance: storage
-  // })
+  const [notionSpace] = useStorage<INotionSpace | undefined>({
+    key: ConstEnum.USED_NOTION_SPACE,
+    instance: storage
+  })
+
+  const [isNotionLogin] = useStorage({
+    key: ConstEnum.NOTION_IS_LOGIN,
+    instance: storage
+  })
 
   const [query, setQuery] = useState("")
 
@@ -33,6 +40,17 @@ const ContentPanel = (props: IContentPanelProps) => {
   const [sending, setSending] = useState(false)
 
   const send = async (promptType?: string) => {
+    if (!isNotionLogin) {
+      // notion not login
+
+      return
+    }
+    if (!notionSpace) {
+      // not select notion space
+
+      return
+    }
+
     let resultTemp = ""
     setPromptType(promptType || query)
     setResult("")
@@ -69,6 +87,7 @@ const ContentPanel = (props: IContentPanelProps) => {
   const clear = () => {
     setQuery("")
     setResult("")
+    setSending(false)
   }
 
   const handleClose = () => {
@@ -136,7 +155,7 @@ const ContentPanel = (props: IContentPanelProps) => {
           }
         }}
       />
-      <div className="modal items-start pt-56">
+      <div className="modal items-start pt-24">
         <div
           className="modal-box p-0"
           style={{
@@ -167,10 +186,8 @@ const ContentPanel = (props: IContentPanelProps) => {
             <ArrowUpCircleIcon
               onClick={() => send()}
               className={classNames(
-                "cursor-pointer absolute top-3.5 right-4 h-5 w-5 text-gray-400",
-                {
-                  "text-violet-300": query
-                }
+                "cursor-pointer absolute top-3.5 right-4 h-5 w-5 ",
+                query ? "text-violet-300" : "text-gray-400"
               )}
             />
           </div>
@@ -275,6 +292,14 @@ const ContentPanel = (props: IContentPanelProps) => {
               </div>
             )}
           </div>
+
+          {(!isNotionLogin || !notionSpace) && (
+            <div className="absolute z-10 w-full h-full left-0 top-0 bg-black bg-opacity-80 flex items-center justify-center text-3xl text-white p-12 text-center">
+              {!isNotionLogin && "Notion not login, please login first"}
+              {!notionSpace &&
+                "Notion space not found, please select one space on extension popup"}
+            </div>
+          )}
         </div>
       </div>
     </div>

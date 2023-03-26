@@ -29,6 +29,11 @@ function IndexPopup() {
     instance: storage
   })
 
+  const [isNotionLogin] = useStorage({
+    key: ConstEnum.NOTION_IS_LOGIN,
+    instance: storage
+  })
+
   const [status, setStatus] = useState<NotionStatus>(NotionStatus.UnLoad)
 
   const [spaces, setSpaces] = useState<INotionSpace[]>([])
@@ -138,6 +143,19 @@ function IndexPopup() {
               }}
               className="drawer-overlay"></label>
             <ul className="menu p-4 w-48 bg-base-100 text-base-content">
+              {!isNotionLogin && (
+                <div className="w-full h-full flex items-center">
+                  <button
+                    className="btn btn-primary w-full"
+                    onClick={() => {
+                      chrome.tabs.create({
+                        url: "https://www.notion.so/login"
+                      })
+                    }}>
+                    Login Notion
+                  </button>
+                </div>
+              )}
               {spaces.map((space) => {
                 const isSelect = space.id === notionSpace?.id
                 return (

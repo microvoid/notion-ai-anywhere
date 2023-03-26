@@ -1,5 +1,6 @@
 export enum ConstEnum {
   NOTION_SPACE_ID = "notion-space-id",
   USED_NOTION_SPACE = "used-notion-space",
-  NOTION_SPACES = "notion-spaces"
+  NOTION_SPACES = "notion-spaces",
+  NOTION_IS_LOGIN = "notion-login"
 }

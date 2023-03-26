@@ -1,7 +1,8 @@
 import ndjsonStream from "can-ndjson-stream"
 import { v4 as uuidv4 } from "uuid"
 
-import { PromptTypeEnum } from "~lib/enums"
+import { ConstEnum, PromptTypeEnum } from "~lib/enums"
+import { storage } from "~lib/storage"
 import type { INotionSpace, IPostNotionProgress } from "~lib/types/notion"
 
 const MODEL = "openai-3"
@@ -149,9 +150,14 @@ async function GetSpaces() {
         spaces
       )}}`
     )
+    storage.set(ConstEnum.NOTION_IS_LOGIN, 1)
     return spaces
   } else {
     console.log(`get notion spaces failed: ${res.status}`)
+    if (res.status === 401) {
+      storage.remove(ConstEnum.NOTION_IS_LOGIN)
+      storage.remove(ConstEnum.USED_NOTION_SPACE)
+    }
     return []
   }
 }
