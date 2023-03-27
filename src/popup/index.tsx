@@ -10,6 +10,7 @@ import { storage } from "~lib/storage"
 // import "~base.css"
 import "~styles.css"
 
+import { Cog8ToothIcon } from "@heroicons/react/24/outline"
 import { useEffect, useState } from "react"
 
 import type { INotionSpace } from "~lib/types/notion"
@@ -34,11 +35,34 @@ function IndexPopup() {
     instance: storage
   })
 
+  // const [language, setLangrage] = useStorage({
+  //   key: ConstEnum.LANG,
+  //   instance: storage
+  // })
+
+  // const [isNotionLogin] = useStorage({
+  //   key: ConstEnum.NOTION_IS_LOGIN,
+  //   instance: storage
+  // })
+
+  const [darkMode, setDarkMode, { remove: removeDarkMode }] = useStorage({
+    key: ConstEnum.DARK_MODE,
+    instance: storage
+  })
+
   const [status, setStatus] = useState<NotionStatus>(NotionStatus.UnLoad)
 
   const [spaces, setSpaces] = useState<INotionSpace[]>([])
 
+  const [showSettings, setShowSettings] = useState(false)
+
   const [showSpaces, setShowSpaces] = useState(false)
+
+  useEffect(() => {
+    if (!showSpaces) {
+      setShowSettings(false)
+    }
+  }, [showSpaces])
 
   useEffect(() => {
     if (notionSpace) {
@@ -81,15 +105,26 @@ function IndexPopup() {
     const mode = notionSpace ? "Change" : "Select"
     return (
       <>
-        <div className="drawer drawer-end">
+        <div
+          className="drawer drawer-end"
+          data-theme={darkMode ? "dark" : "light"}>
           <input
             id="my-drawer-4"
             type="checkbox"
             className="drawer-toggle"
             checked={showSpaces}
+            onChange={() => setShowSpaces(showSpaces)}
           />
           <div className="drawer-content">
             <div className="card-body">
+              <div className="absolute top-6 right-6 cursor-pointer">
+                <Cog8ToothIcon
+                  className="w-4"
+                  onClick={() => {
+                    setShowSettings(true)
+                    setShowSpaces(true)
+                  }}></Cog8ToothIcon>
+              </div>
               <h2 className="card-title">Select/Change Space</h2>
               <p className="mb-4">
                 Select/Change a space with Notion AI use times or with Notion AI
@@ -142,59 +177,103 @@ function IndexPopup() {
                 setShowSpaces(false)
               }}
               className="drawer-overlay"></label>
-            <ul className="menu p-4 w-48 bg-base-100 text-base-content">
-              {!isNotionLogin && (
-                <div className="w-full h-full flex items-center">
-                  <button
-                    className="btn btn-primary w-full"
-                    onClick={() => {
-                      chrome.tabs.create({
-                        url: "https://www.notion.so/login"
-                      })
-                    }}>
-                    Login Notion
-                  </button>
-                </div>
-              )}
-              {spaces.map((space) => {
-                const isSelect = space.id === notionSpace?.id
-                return (
-                  <li
-                    key={space.id}
-                    className={cn("flex-row", {
-                      bordered: isSelect
-                    })}
-                    onClick={() => {
-                      setNotionSpace(space)
-                      setShowSpaces(false)
-                    }}>
-                    <a
-                      className="w-full"
-                      style={{
-                        borderRadius: "unset"
+
+            {showSettings ? (
+              <ul className="menu p-4 w-48 bg-base-100 text-base-content">
+                {/* setting */}
+                <label className="cursor-pointer label">
+                  {/* <span className="label-text">Language</span>
+                  <input
+                    type="radio"
+                    name="Chinese"
+                    className="radio radio-primary"
+                  />
+                  <input
+                    type="radio"
+                    name="English"
+                    checked
+                    className="radio radio-primary"
+                  />
+                </label>
+                <label className="cursor-pointer label">
+                  <span className="label-text">Show Select Icon</span>
+                  <input
+                    type="checkbox"
+                    className="toggle toggle-primary"
+                    checked
+                />*/}
+                </label>
+                <label className="cursor-pointer label">
+                  <span className="label-text">Dark Mode</span>
+                  <input
+                    type="checkbox"
+                    checked={darkMode}
+                    onChange={() => {
+                      if (darkMode) {
+                        removeDarkMode()
+                      } else {
+                        setDarkMode(1)
+                      }
+                    }}
+                    className="toggle toggle-primary"
+                  />
+                </label>
+              </ul>
+            ) : (
+              <ul className="menu p-4 w-48 bg-base-100 text-base-content">
+                {!isNotionLogin && (
+                  <div className="w-full h-full flex items-center">
+                    <button
+                      className="btn btn-primary w-full"
+                      onClick={() => {
+                        chrome.tabs.create({
+                          url: "https://www.notion.so/login"
+                        })
                       }}>
-                      <div className="avatar">
-                        {space.icon ? (
-                          <div className="w-8 rounded">
-                            <img
-                              src={space.icon}
-                              alt="Tailwind-CSS-Avatar-component"
-                            />
-                          </div>
-                        ) : (
-                          <div className="avatar placeholder">
-                            <div className="bg-neutral-focus text-neutral-content rounded-full w-8">
-                              <span>{space.name[0]}</span>
+                      Login Notion
+                    </button>
+                  </div>
+                )}
+                {spaces.map((space) => {
+                  const isSelect = space.id === notionSpace?.id
+                  return (
+                    <li
+                      key={space.id}
+                      className={cn("flex-row", {
+                        bordered: isSelect
+                      })}
+                      onClick={() => {
+                        setNotionSpace(space)
+                        setShowSpaces(false)
+                      }}>
+                      <a
+                        className="w-full"
+                        style={{
+                          borderRadius: "unset"
+                        }}>
+                        <div className="avatar">
+                          {space.icon ? (
+                            <div className="w-8 rounded">
+                              <img
+                                src={space.icon}
+                                alt="Tailwind-CSS-Avatar-component"
+                              />
                             </div>
-                          </div>
-                        )}
-                      </div>
-                      {space.name}
-                    </a>
-                  </li>
-                )
-              })}
-            </ul>
+                          ) : (
+                            <div className="avatar placeholder">
+                              <div className="bg-neutral-focus text-neutral-content rounded-full w-8">
+                                <span>{space.name[0]}</span>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                        {space.name}
+                      </a>
+                    </li>
+                  )
+                })}
+              </ul>
+            )}
           </div>
         </div>
       </>
@@ -214,7 +293,7 @@ function IndexPopup() {
         }}>
         <figure className="flex-none">
           <img
-            className="h-full object-cover object-center"
+            className="h-full object-cover object-center "
             style={{
               width: "200px"
             }}

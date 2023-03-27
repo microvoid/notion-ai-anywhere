@@ -1,3 +1,5 @@
+import { getMainSelectionChar, isDocs } from "./docs"
+
 export * from "./position"
 export * from "./storage"
 
@@ -20,4 +22,17 @@ export const getActiveTab = async () => {
     currentWindow: true
   })
   return tab
+}
+
+export const getSelectionText = () => {
+  const selection = window.getSelection()
+  const str = selection?.toString().trim()
+  let selectionText = str || ""
+
+  if (isDocs()) {
+    console.log(isDocs)
+    selectionText = getMainSelectionChar() || ""
+    console.log(selectionText, "selectionTex33")
+  }
+  return selectionText
 }

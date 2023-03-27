@@ -12,8 +12,6 @@ export const config: PlasmoCSConfig = {
   world: "MAIN"
 }
 
-console.log(222244)
-
 const ele = document.createElement("div")
 ele.id = MainPageMessage.PAGE_CONTENT_MESSAGE_ELE
 document.body.appendChild(ele)

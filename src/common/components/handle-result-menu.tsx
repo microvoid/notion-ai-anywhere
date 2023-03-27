@@ -37,7 +37,7 @@ export default function HandleResultMenu(props: IHandleResultMenu) {
 
   return (
     <>
-      <div className="dropdown dropdown-hover absolute right-0 top-0 p-3">
+      <div className="dropdown dropdown-hover absolute right-0 top-0 p-2">
         <Bars2Icon className="w-5" tabIndex={0}></Bars2Icon>
 
         <div

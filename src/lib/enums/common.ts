@@ -4,6 +4,9 @@ export enum ConstEnum {
   NOTION_SPACES = "notion-spaces",
   NOTION_IS_LOGIN = "notion-login",
   RECENT_ASK = "recent-ask",
+  DARK_MODE = "dark-mode",
+  SHOW_SELECT_ICON = "show-select-icon",
+  LANG = "lang",
 
   TOAST_CONTAINER = "nan-toast-container"
 }

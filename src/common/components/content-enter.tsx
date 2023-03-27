@@ -1,13 +1,6 @@
-import {
-  CSSProperties,
-  useCallback,
-  useEffect,
-  useReducer,
-  useState
-} from "react"
+import { CSSProperties, useCallback, useEffect, useState } from "react"
 
-import { IPosition, _calcPosition } from "~lib"
-import { getMainSelectionChar, getSelectionChar, isDocs } from "~lib/docs"
+import { IPosition, _calcPosition, getSelectionText } from "~lib"
 
 import BtnIcon from "../icons/notion-icon.png"
 
@@ -27,15 +20,7 @@ const ContentEnter = (props: IContentEnterProps) => {
   const [position, setPosition] = useState<IPosition>()
   const onMouseUp = useCallback(
     (e: MouseEvent) => {
-      const selection = window.getSelection()
-      const str = selection?.toString().trim()
-      selectionText = str || ""
-
-      if (isDocs()) {
-        console.log(isDocs)
-        selectionText = getMainSelectionChar() || ""
-        console.log(selectionText, "selectionTex33")
-      }
+      selectionText = getSelectionText()
 
       // 如果选区有内容，直接触发
       if (selectionText) {

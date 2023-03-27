@@ -46,6 +46,15 @@
     ],
     "permissions": [
       "tabs"
-    ]
+    ],
+    "commands": {
+      "activate-panel": {
+        "suggested_key": {
+          "default": "Ctrl+K",
+          "mac": "Command+K"
+        },
+        "description": "Activate NotionAIAnywhere on page"
+      }
+    }
   }
 }

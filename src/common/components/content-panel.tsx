@@ -43,7 +43,10 @@ const ContentPanel = (props: IContentPanelProps) => {
     instance: storage
   })
 
-  console.log(recentAsk, "recentAsk ")
+  const [darkMode] = useStorage({
+    key: ConstEnum.DARK_MODE,
+    instance: storage
+  })
 
   const [query, setQuery] = useState("")
 
@@ -141,7 +144,7 @@ const ContentPanel = (props: IContentPanelProps) => {
 
   return (
     <div
-      data-theme={"light"}
+      data-theme={darkMode ? "dark" : "light"}
       className="flex fixed notion-ai-anywhere-panel"
       onMouseUp={stopPropagation}
       onMouseDown={stopPropagation}
@@ -200,7 +203,7 @@ const ContentPanel = (props: IContentPanelProps) => {
             <input
               value={query}
               type="text"
-              className="pl-12 pr-12 input input-bordered w-full rounded-none box-border"
+              className="pl-12 pr-12 input input-bordered w-full rounded-none box-border h-12"
               style={{
                 outline: "none",
                 minWidth: "500px"
@@ -283,26 +286,34 @@ const ContentPanel = (props: IContentPanelProps) => {
             )}
 
             {(selectionText || result) && (
-              <div className="relative flex-1 p-5 border-l border-gray-200">
+              <div className="relative flex-1 p-5 border-l border-gray-200 border-opacity-20">
                 {(result || sending) && (
                   <div className="indicator w-full mb-6">
                     <div className="card border w-full">
                       <div className="card-body w-full">
                         <p>
-                          <span className="text-5xl text-violet-300 absolute left-2 top-3">
+                          <span
+                            className="font-sans text-5xl text-violet-300 absolute left-2 top-3"
+                            style={{
+                              fontFamily: "arial"
+                            }}>
                             “
                           </span>
                           {/* {selectionText} */}
                           {result ? (
                             result
                           ) : (
-                            <span className="chat-typing text-center w-full">
+                            <span className="chat-typing w-full text-center">
                               <span className="chat-typing-dot"></span>
                               <span className="chat-typing-dot"></span>
                               <span className="chat-typing-dot"></span>
                             </span>
                           )}
-                          <span className="text-5xl text-violet-300 absolute bottom-0 right-2">
+                          <span
+                            className="font-sans text-5xl text-violet-300 absolute bottom-0 right-2"
+                            style={{
+                              fontFamily: "arial"
+                            }}>
                             ”
                           </span>
                         </p>
@@ -322,13 +333,21 @@ const ContentPanel = (props: IContentPanelProps) => {
                     Modify
                   </span> */}
                   <div className="card border w-full">
-                    <div className="card-body w-full">
+                    <div className="card-body w-full text-center">
                       <p>
-                        <span className="text-5xl text-violet-300 absolute left-2 top-3">
+                        <span
+                          className="font-sans text-5xl text-violet-300 absolute left-2 top-3"
+                          style={{
+                            fontFamily: "arial"
+                          }}>
                           “
                         </span>
                         {selectionText}
-                        <span className="text-5xl text-violet-300 absolute bottom-0 right-2">
+                        <span
+                          className="font-sans text-5xl text-violet-300 absolute bottom-0 right-2"
+                          style={{
+                            fontFamily: "arial"
+                          }}>
                           ”
                         </span>
                       </p>

@@ -15,7 +15,10 @@ import {
 import classNames from "classnames"
 import { useState } from "react"
 
-import type { ISelectionOption, ISelectionOptionMap } from "~lib/enums"
+import { useStorage } from "@plasmohq/storage/hook"
+
+import { storage } from "~lib"
+import { ConstEnum, ISelectionOption, ISelectionOptionMap } from "~lib/enums"
 
 interface IAskOptionChildListProps {
   label: string
@@ -34,11 +37,19 @@ const AskOptionChildList = (props: IAskOptionChildListProps) => {
     onOptionClick
   } = props
   // const [activeIndex, setActiveIndex] = useState(0)
+  const [darkMode] = useStorage({
+    key: ConstEnum.DARK_MODE,
+    instance: storage
+  })
 
   return (
     <div className="p-5 pt-0 pb-0">
       <h1 className="mt-3 mb-4 text-xs font-semibold text-gray-500">{label}</h1>
-      <div className="-mx-2 text-sm text-gray-700">
+      <div
+        className={classNames(
+          "-mx-2 text-sm",
+          darkMode ? "text-gray-300" : "text-gray-700"
+        )}>
         {list.map((item, index) => {
           const active = activeOption?.value === item.value
           return (
@@ -72,7 +83,9 @@ const AskOptionChildList = (props: IAskOptionChildListProps) => {
                       aria-hidden="true"
                     />
                   )}
-                  <span className="ml-3 flex-auto truncate">{item.label}</span>
+                  <span className="ml-3 flex-auto truncate leading-5">
+                    {item.label}
+                  </span>
                   {active && !item.options?.length && (
                     <ArrowUturnLeftIcon
                       className="ml-3 h-5 w-5 flex-none text-gray-400"
@@ -110,7 +123,7 @@ const AskOptionChildList = (props: IAskOptionChildListProps) => {
                           active && "bg-gray-100 text-gray-900"
                         )}>
                         <>
-                          <span className="ml-3 flex-auto truncate">
+                          <span className="ml-3 flex-auto truncate leading-5">
                             {option.label}
                           </span>
                           {active && (
