@@ -48,7 +48,7 @@ const ContentEnter = (props: IContentEnterProps) => {
         setShow(false)
       }
     },
-    [show]
+    [show, isPanelShow]
   )
 
   useEffect(() => {

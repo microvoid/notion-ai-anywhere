@@ -39,18 +39,15 @@ const PlasmoOverlay = () => {
     },
     any
   >(async (req, res) => {
-    console.log("show-panel1")
     if (req.name === "show-panel") {
-      console.log("show-panel", req.body)
       if (req.body?.selectionText) {
-        setSelectionText(req.body?.selectionText)
+        // setSelectionText(req.body?.selectionText)
+        const t = getSelectionText()
+        if (t) {
+          setSelectionText(t)
+          setIsPanelShow(true)
+        }
       }
-      setIsPanelShow(true)
-      // const t = getSelectionText()
-      // if (t) {
-      //   setSelectionText(t)
-      //   setIsPanelShow(true)
-      // }
     }
   })
 
@@ -58,10 +55,6 @@ const PlasmoOverlay = () => {
     key: ConstEnum.DARK_MODE,
     instance: storage
   })
-
-  // console.log(ocr, "ocr")
-
-  console.log(darkMode, "darkMode1")
 
   return (
     <div

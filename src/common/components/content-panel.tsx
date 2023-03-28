@@ -151,7 +151,7 @@ const ContentPanel = (props: IContentPanelProps) => {
   return (
     <div
       data-theme={darkMode ? "dark" : "light"}
-      className="flex fixed notion-ai-anywhere-panel"
+      className="flex fixed notion-ai-anywhere-panel text-sm "
       onMouseUp={stopPropagation}
       onMouseDown={stopPropagation}
       onKeyDown={stopPropagation}
@@ -195,8 +195,9 @@ const ContentPanel = (props: IContentPanelProps) => {
         <div
           className="modal-box p-0"
           style={{
-            maxWidth: "800px",
-            maxHeight: "600px",
+            minWidth: "600px",
+            maxWidth: "1000px",
+            height: "700px",
             width: "auto"
           }}
           onClick={(e) => {
@@ -212,7 +213,7 @@ const ContentPanel = (props: IContentPanelProps) => {
               className="pl-12 pr-12 input input-bordered w-full rounded-none box-border h-12"
               style={{
                 outline: "none",
-                minWidth: "500px"
+                minWidth: "700px"
               }}
               placeholder="Ask Notion AI to edit or generate..."
               onChange={(event) => setQuery(event.target.value)}
@@ -296,7 +297,7 @@ const ContentPanel = (props: IContentPanelProps) => {
                 {(result || sending) && (
                   <div className="indicator w-full mb-6">
                     <div className="card border w-full">
-                      <div className="card-body w-full">
+                      <div className="card-body w-full p-10">
                         <p>
                           <span
                             className="font-sans text-5xl text-violet-300 absolute left-2 top-3"
@@ -339,7 +340,7 @@ const ContentPanel = (props: IContentPanelProps) => {
                     Modify
                   </span> */}
                   <div className="card border w-full">
-                    <div className="card-body w-full text-center">
+                    <div className="card-body w-full p-10">
                       <p>
                         <span
                           className="font-sans text-5xl text-violet-300 absolute left-2 top-3"

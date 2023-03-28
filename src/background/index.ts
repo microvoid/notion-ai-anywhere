@@ -8,4 +8,9 @@ chrome.commands.onCommand.addListener(function (command) {
       name: "start-capture"
     })
   }
+  if (command === "show-panel") {
+    sendToContentScript({
+      name: "show-panel"
+    })
+  }
 })
