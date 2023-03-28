@@ -22,9 +22,6 @@ const ContentEnter = (props: IContentEnterProps) => {
   const [position, setPosition] = useState<IPosition>()
   const onMouseUp = useCallback(
     (e: MouseEvent) => {
-      if (show || isPanelShow) {
-        return
-      }
       selectionText = getSelectionText()
 
       // 如果选区有内容，直接触发
@@ -44,7 +41,7 @@ const ContentEnter = (props: IContentEnterProps) => {
         )
         setShow(true)
         return
-      } else if (show) {
+      } else if (show || isPanelShow) {
         setShow(false)
       }
     },
