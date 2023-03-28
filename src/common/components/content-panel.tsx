@@ -13,6 +13,7 @@ import {
 } from "~lib"
 import { ConstEnum, ISelectionOption, selectionMenuList } from "~lib/enums"
 import { sendNotionPostToBackground } from "~lib/notion"
+import { showToast } from "~lib/toast"
 import type { INotionSpace, IPostNotionProgress } from "~lib/types/notion"
 
 import BtnIcon from "../icons/notion-icon.png"
@@ -57,6 +58,10 @@ const ContentPanel = (props: IContentPanelProps) => {
   const [sending, setSending] = useState(false)
 
   const send = async (promptType?: string) => {
+    if (sending) {
+      showToast("There is a message being processed, please wait...")
+      return
+    }
     if (!isNotionLogin) {
       // notion not login
 
@@ -82,7 +87,7 @@ const ContentPanel = (props: IContentPanelProps) => {
     setPromptType(promptType || query)
     setResult("")
     setSending(true)
-    sendNotionPostToBackground({
+    await sendNotionPostToBackground({
       prompt: query,
       context: selectionText,
       promptType: promptType,
@@ -95,6 +100,7 @@ const ContentPanel = (props: IContentPanelProps) => {
         }
       }
     })
+    setSending(false)
   }
 
   // const panelStyle: CSSProperties = {
@@ -182,7 +188,7 @@ const ContentPanel = (props: IContentPanelProps) => {
         }}
       />
       <div
-        className="modal items-start pt-24"
+        className="modal modal-middle pt-24"
         onClick={() => {
           handleClose()
         }}>

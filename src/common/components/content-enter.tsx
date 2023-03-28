@@ -5,6 +5,7 @@ import { IPosition, _calcPosition, getSelectionText } from "~lib"
 import BtnIcon from "../icons/notion-icon.png"
 
 interface IContentEnterProps {
+  isPanelShow: boolean
   showPanel?: ({
     // position,
     selectionText
@@ -16,10 +17,14 @@ interface IContentEnterProps {
 
 let selectionText = ""
 const ContentEnter = (props: IContentEnterProps) => {
+  const { isPanelShow, showPanel } = props
   const [show, setShow] = useState(false)
   const [position, setPosition] = useState<IPosition>()
   const onMouseUp = useCallback(
     (e: MouseEvent) => {
+      if (show || isPanelShow) {
+        return
+      }
       selectionText = getSelectionText()
 
       // 如果选区有内容，直接触发
@@ -69,7 +74,7 @@ const ContentEnter = (props: IContentEnterProps) => {
       style={buttonStyle}
       onClick={() => {
         setShow(false)
-        props.showPanel?.({
+        showPanel?.({
           selectionText
         })
       }}>
