@@ -1,12 +1,20 @@
-module.exports = {
-  // plugins: {
-  //   tailwindcss: {},
-  //   autoprefixer: {}
-  // }
+// const convertRemToPixel = require("postcss-convert-rem-to-pixel")
 
-  plugins: [
-    require("postcss-convert-rem-to-pixel"),
-    require("tailwindcss"),
-    require("autoprefixer")
-  ]
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+    "postcss-convert-rem-to-pixel": {
+      baseValue: 16
+    }
+  }
+
+  // plugins: [
+  //   require("postcss-convert-rem-to-pixel"),
+  //   // new convertRemToPixel({
+  //   //   baseValue: 16
+  //   // }),
+  //   require("tailwindcss"),
+  //   require("autoprefixer")
+  // ]
 }
