@@ -8,10 +8,11 @@ import type { INotionSpace, IPostNotionProgress } from "~lib/types/notion"
 // sendToContentScript({
 //   type: "post-notion"
 // })
-
+// getActiveTab
 export const handler: PlasmoMessaging.MessageHandler = async (req, res) => {
   const space = await storage.get<INotionSpace>(ConstEnum.USED_NOTION_SPACE)
   const body = req.body
+  console.log("post-notion", req)
   const { promptType, prompt, context } = body
   const text = await PostNotion({
     promptType,

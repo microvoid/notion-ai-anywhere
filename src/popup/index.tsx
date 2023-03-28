@@ -8,7 +8,7 @@ import { ConstEnum } from "~lib/enums"
 import { storage } from "~lib/storage"
 
 // import "~base.css"
-import "~styles.css"
+import "~/styles/main.css"
 
 import { Cog8ToothIcon } from "@heroicons/react/24/outline"
 import { useEffect, useState } from "react"

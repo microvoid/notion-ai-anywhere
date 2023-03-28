@@ -12,6 +12,7 @@
   "dependencies": {
     "@heroicons/react": "^2.0.16",
     "@notionhq/client": "^2.2.3",
+    "@paddlejs-models/ocr": "^1.2.3",
     "@plasmohq/messaging": "^0.1.6",
     "@plasmohq/storage": "^1.3.1",
     "@tryfabric/martian": "^1.2.4",
@@ -24,6 +25,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "shrink-string": "^3.1.2",
+    "tesseract.js": "^4.0.2",
     "theme-change": "^2.5.0",
     "uuid": "^9.0.0"
   },
@@ -45,9 +47,29 @@
       "https://*/*"
     ],
     "permissions": [
+      "activeTab",
       "tabs"
     ],
+    "web_accessible_resources": [
+      {
+        "resources": [
+          "~tesseract-data/*.traineddata.gz",
+          "~js/tesseract-core.wasm.js",
+          "~js/worker.min.js"
+        ],
+        "matches": [
+          "<all_urls>"
+        ]
+      }
+    ],
     "commands": {
+      "start-capture": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+K",
+          "mac": "Command+Shift+K"
+        },
+        "description": "Start ocr capture on page"
+      },
       "activate-panel": {
         "suggested_key": {
           "default": "Ctrl+K",

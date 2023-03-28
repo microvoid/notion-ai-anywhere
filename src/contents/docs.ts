@@ -44,12 +44,4 @@ ele.addEventListener("click", function () {
   }
 })
 
-// window.onclick = () => {
-//   console.log("click")
-//   console.log(window.Docs)
-
-//   sendToContentScript({
-//     name: "test111",
-//     body: "window.Docs"
-//   })
-// }
+console.info("Notion AI anywhere docs loaded")

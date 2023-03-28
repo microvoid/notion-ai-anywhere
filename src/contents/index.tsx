@@ -1,7 +1,9 @@
-import cssText from "data-text:~styles.css"
+import cssText from "data-text:~styles/main.css"
 import type { PlasmoCSConfig } from "plasmo"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import Tesseract, { createWorker } from "tesseract.js"
 
+import { sendToBackground } from "@plasmohq/messaging"
 import { useMessage } from "@plasmohq/messaging/hook"
 import { useStorage } from "@plasmohq/storage/hook"
 
@@ -25,17 +27,30 @@ export const getStyle = () => {
 }
 
 const PlasmoOverlay = () => {
-  const [showPanel, setShowPanel] = useState(false)
+  const [isPanelShow, setIsPanelShow] = useState(false)
   // const [position, setPosition] = useState<IPosition>()
   const [selectionText, setSelectionText] = useState<string>("")
-
-  useMessage<string, string>(async (req, res) => {
+  useEffect(() => {
+    console.log(3333)
+  }, [])
+  useMessage<
+    {
+      selectionText: string
+    },
+    any
+  >(async (req, res) => {
+    console.log("show-panel1")
     if (req.name === "show-panel") {
-      const t = getSelectionText()
-      if (t) {
-        setSelectionText(t)
-        setShowPanel(true)
+      console.log("show-panel", req.body)
+      if (req.body?.selectionText) {
+        setSelectionText(req.body?.selectionText)
       }
+      setIsPanelShow(true)
+      // const t = getSelectionText()
+      // if (t) {
+      //   setSelectionText(t)
+      //   setIsPanelShow(true)
+      // }
     }
   })
 
@@ -43,6 +58,8 @@ const PlasmoOverlay = () => {
     key: ConstEnum.DARK_MODE,
     instance: storage
   })
+
+  // console.log(ocr, "ocr")
 
   console.log(darkMode, "darkMode1")
 
@@ -62,6 +79,7 @@ const PlasmoOverlay = () => {
           setToastContainerEle(ref)
         }}></div>
       <ContentEnter
+        isPanelShow={isPanelShow}
         showPanel={({
           // position,
           selectionText
@@ -71,18 +89,19 @@ const PlasmoOverlay = () => {
         }) => {
           // setPosition(position)
           setSelectionText(selectionText)
-          setShowPanel(true)
+          setIsPanelShow(true)
         }}></ContentEnter>
       <ContentPanel
-        show={showPanel}
+        show={isPanelShow}
         selectionText={selectionText}
         // position={position}
         onClose={() => {
-          setShowPanel(false)
+          setIsPanelShow(false)
           // setPosition(undefined)
         }}></ContentPanel>
     </div>
   )
 }
 
+console.info("Notion AI anywhere content loaded")
 export default PlasmoOverlay
