@@ -17,7 +17,7 @@ import { setToastContainerEle } from "~lib/toast"
 
 export const config: PlasmoCSConfig = {
   matches: ["<all_urls>"],
-  all_frames: true
+  all_frames: false
 }
 
 export const getStyle = () => {
@@ -30,9 +30,7 @@ const PlasmoOverlay = () => {
   const [isPanelShow, setIsPanelShow] = useState(false)
   // const [position, setPosition] = useState<IPosition>()
   const [selectionText, setSelectionText] = useState<string>("")
-  useEffect(() => {
-    console.log(3333)
-  }, [])
+
   useMessage<
     {
       selectionText: string

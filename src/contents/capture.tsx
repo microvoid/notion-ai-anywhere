@@ -9,11 +9,12 @@ import { useStorage } from "@plasmohq/storage/hook"
 
 import { IPosition, getSelectionText, storage } from "~lib"
 import { ConstEnum } from "~lib/enums"
+import { paddleOCR } from "~lib/ocr"
 import { showToast } from "~lib/toast"
 
 export const config: PlasmoCSConfig = {
   matches: ["<all_urls>"],
-  all_frames: true
+  all_frames: false
 }
 
 export const getStyle = () => {
@@ -41,16 +42,20 @@ const mousedownPosition = {
 
 let canvas: HTMLCanvasElement | null = null
 
-const crop = (
-  image: string,
+const crop = async (
+  // image: string,
   area: CaptureBoxInfo,
-  format: string,
-  onProgress: (progress: number) => void
+  format = "png",
+  onProgress?: (progress: number) => void
 ): Promise<{
   text: string
   croppedImg: string
 }> => {
-  //Dpr = device pixel ratio
+  const image = await sendToBackground({
+    name: "start-capture",
+    body: area
+  })
+
   const dpr = window.devicePixelRatio || 1
   return new Promise((resolve, reject) => {
     var top = area.y * dpr
@@ -97,30 +102,31 @@ const crop = (
         // Cropped image
         const cropped = canvas.toDataURL(`image/${format}`, 1.0)
 
-        const worker = await createWorker({
-          workerPath: chrome.runtime.getURL("js/worker.min.js"),
-          langPath: chrome.runtime.getURL("tesseract-data"),
-          corePath: chrome.runtime.getURL("js/tesseract-core.wasm.js"),
-          logger: (m) => {
-            console.log(m)
-            if (m.status === "recognizing text" && m.progress) {
-              onProgress(m.progress)
-            }
-          }
-        })
+        // const worker = await createWorker({
+        //   workerPath: chrome.runtime.getURL("js/worker.min.js"),
+        //   langPath: chrome.runtime.getURL("tesseract-data"),
+        //   corePath: chrome.runtime.getURL("js/tesseract-core.wasm.js"),
+        //   logger: (m) => {
+        //     console.log(m)
+        //     if (m.status === "recognizing text" && m.progress) {
+        //       onProgress(m.progress)
+        //     }
+        //   }
+        // })
 
-        await worker.load()
-        await worker.loadLanguage("chi_sim")
-        await worker.initialize("chi_sim")
-        const {
-          data: { text }
-        } = await worker.recognize(cropped)
+        // await worker.load()
+        // await worker.loadLanguage("chi_sim")
+        // await worker.initialize("chi_sim")
+        // const {
+        //   data: { text }
+        // } = await worker.recognize(cropped)
 
-        await worker.terminate()
+        // await worker.terminate()
 
         resolve({
-          croppedImg: cropped,
-          text
+          // croppedImg: cropped,
+          croppedImg: image,
+          text: ""
         })
       } catch (error) {
         reject(error)
@@ -130,26 +136,26 @@ const crop = (
   })
 }
 
-const startCapture = async (
-  data: {
-    x: number
-    y: number
-    width: number
-    height: number
-  },
-  onProgress: (progress: number) => void
-): Promise<{
-  text: string
-  croppedImg: string
-}> => {
-  const t = await sendToBackground({
-    name: "start-capture",
-    body: data
-  })
+// const startCapture = async (
+//   data: {
+//     x: number
+//     y: number
+//     width: number
+//     height: number
+//   },
+//   onProgress: (progress: number) => void
+// ): Promise<{
+//   text: string
+//   croppedImg: string
+// }> => {
+//   const t = await sendToBackground({
+//     name: "start-capture",
+//     body: data
+//   })
 
-  const result = await crop(t, data, "png", onProgress)
-  return result
-}
+//   const result = await crop(t, data, "png", onProgress)
+//   return result
+// }
 
 const PlasmoOverlay = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null)
@@ -198,17 +204,33 @@ const PlasmoOverlay = () => {
 
         try {
           console.log(boxInfo, "boxInfo ")
-          const t = await startCapture(boxInfo, (progress) => {
-            setProgress(progress)
-          })
-          // setImage(t)
+          // const t = await startCapture(boxInfo, (progress) => {
+          //   setProgress(progress)
+          // })
+
+          const cropped = await crop(boxInfo, "png")
+
+          setImage(cropped.croppedImg)
+
+          await paddleOCR.iframeOnLoaded
+
+          if (!iframeRef.current) {
+            return Promise.reject()
+          }
+
+          paddleOCR.setIframe(iframeRef.current)
+
+          const texts = await paddleOCR.startOCR(cropped.croppedImg)
+
+          if (!texts.length) {
+            return Promise.reject()
+          }
           sendToBackground({
             name: "show-panel",
             body: {
-              selectionText: t.text
+              selectionText: texts.join("")
             }
           })
-          setImage(t.croppedImg)
         } catch (error) {
           showToast("Recognition failed, please try again later")
         }
@@ -220,6 +242,7 @@ const PlasmoOverlay = () => {
 
   useEffect(() => {
     window.addEventListener("keyup", handleKeyup)
+
     return () => {
       window.removeEventListener("keyup", handleKeyup)
     }
@@ -257,10 +280,6 @@ const PlasmoOverlay = () => {
       height
     }
   }
-
-  useEffect(() => {
-    console.log(2222)
-  }, [])
 
   return (
     <div
