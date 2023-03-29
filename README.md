@@ -32,6 +32,10 @@ ChatGPT has become a mainstream term in 2023, and Notion has quickly launched it
 
 <img src="./assets/display2.gif" width="500px" />
 
+## Display Video
+
+<video src="./assets/display.MOV" width="500px"></video>
+
 # TODO
 
 - [ ] ChatGPT3.5
