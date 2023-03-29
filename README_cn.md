@@ -10,16 +10,16 @@ ChatGPT 已经成为 2023 年主流词汇，Notion 也很快的推出的 Notion 
 
 1. 下载最新的 [release](https://github.com/microvoid/notion-ai-anywhere/releases) 版本 zip 包。
 2. 打开 Chrome 扩展程序页面，并打开开发者模式。
-   ![image](./assets/c-extension.png)
-3. 拖拽 zip 至插件列表
-   ![image](./assets/c-extension2.png)
+   ![image](./assets/c-extension.png){width="800px"}
+3. 拖拽 zip 至插件列表。
+   ![image](./assets/c-extension2.png{width="800px"}
 4. 点击插件打开设置弹窗，如果你没有登录 Notion 会提示你去登录 Notion，然后再打开设置弹窗，选择一个 Notion 空间 （最好选择一个办理了 Notion AI Plus 的空间，否则使用次数受限）
-   ![image](./assets/c-popup.png)
+   ![image](./assets/c-popup.png){width="800px"}
 5. 现在，你可以刷新任何浏览器的页面，并选中一段内容，会有一个按钮（设置中可以关闭这个按钮，关闭后选择内容使用 cmd+k 唤起 AI 弹窗），点击就可以正常使用了。
-   ![image](./assets/c-button.png)
-   ![image](./assets/display1.gif)
+   ![image](./assets/c-button.png){width="800px"}
+   ![image](./assets/display1.gif){width="800px"}
 6. 你可以设置暗黑模式、切换语言、关闭烦人的选区 Icon（使用 cmd + k）
-   ![image](./assets/display2.gif)
+   ![image](./assets/display2.gif){width="800px"}
 
 # TODO
 
