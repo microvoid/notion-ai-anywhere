@@ -103,20 +103,6 @@ const ContentPanel = (props: IContentPanelProps) => {
     setSending(false)
   }
 
-  // const panelStyle: CSSProperties = {
-  // width: "500px"
-  // }
-  // if (position && position.panelX) {
-  //   console.log(position)
-  //   panelStyle.left = position.panelX
-  //   panelStyle.top = position.panelY
-  // }
-  // if (selectionText) {
-  //   const leftWidth = 192
-  //   panelStyle.width = 500 + leftWidth + "px"
-  //   panelStyle.left = `calc(${position.panelX} - ${leftWidth / 2}px)`
-  // }
-
   const clear = () => {
     setQuery("")
     setResult("")

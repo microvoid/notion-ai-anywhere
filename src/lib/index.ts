@@ -30,9 +30,7 @@ export const getSelectionText = () => {
   let selectionText = str || ""
 
   if (isDocs()) {
-    console.log(isDocs)
     selectionText = getMainSelectionChar() || ""
-    console.log(selectionText, "selectionTex33")
   }
   return selectionText
 }

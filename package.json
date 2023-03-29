@@ -70,6 +70,13 @@
           "mac": "Command+K"
         },
         "description": "Activate NotionAIAnywhere on page"
+      },
+      "start-capture": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+K",
+          "mac": "Command+Shift+K"
+        },
+        "description": "Start ocr capture on page"
       }
     }
   }

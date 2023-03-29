@@ -30,9 +30,7 @@ const PlasmoOverlay = () => {
   const [isPanelShow, setIsPanelShow] = useState(false)
   // const [position, setPosition] = useState<IPosition>()
   const [selectionText, setSelectionText] = useState<string>("")
-  useEffect(() => {
-    console.log(3333)
-  }, [])
+
   useMessage<
     {
       selectionText: string
@@ -41,7 +39,8 @@ const PlasmoOverlay = () => {
   >(async (req, res) => {
     if (req.name === "show-panel") {
       if (req.body?.selectionText) {
-        // setSelectionText(req.body?.selectionText)
+        setSelectionText(req.body?.selectionText)
+      } else {
         const t = getSelectionText()
         if (t) {
           setSelectionText(t)

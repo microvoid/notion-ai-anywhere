@@ -18,16 +18,6 @@ export const _calcPosition = (e: { clientX: number; clientY: number }) => {
 
   const { innerHeight, innerWidth } = window
 
-  // const offsetX = innerWidth - clientX - 655
-
-  // console.log(offsetX, "offsetX")
-
-  // if (offsetX <= 0) {
-  //   x = clientX + offsetX - 30
-  // } else {
-  //   x = clientX - 10
-  // }
-
   // 大于百分之六指高度时弹框出现在上面
   if (clientY > innerHeight * 0.8) {
     isTop = false

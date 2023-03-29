@@ -12,7 +12,7 @@ import type { INotionSpace, IPostNotionProgress } from "~lib/types/notion"
 export const handler: PlasmoMessaging.MessageHandler = async (req, res) => {
   const space = await storage.get<INotionSpace>(ConstEnum.USED_NOTION_SPACE)
   const body = req.body
-  console.log("post-notion", req)
+
   const { promptType, prompt, context } = body
   const text = await PostNotion({
     promptType,
@@ -27,7 +27,6 @@ export const handler: PlasmoMessaging.MessageHandler = async (req, res) => {
       })
     }
   })
-  // console.log(spaces)
   //   await storage.set(ConstEnum.NOTION_SPACES, JSON.stringify(spaces))
   res.send(`post notion success: ${text}`)
 }

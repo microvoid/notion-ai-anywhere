@@ -19,12 +19,9 @@ document.body.appendChild(ele)
 ele.addEventListener("click", function () {
   var type = this.getAttribute("data-type")
 
-  // console.log("click ")
-  // console.log(window.Docs, type)
   switch (type) {
     case MainPageMessage.GET_SELECTION_CHAR:
       const selectionText = getDocsSelectionChar()
-      console.log(selectionText, 5555)
       this.setAttribute(MainPageMessage.SELECTION_CHAR, selectionText)
       break
 
