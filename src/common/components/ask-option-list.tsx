@@ -38,7 +38,9 @@ const AskOptionChildList = (props: IAskOptionChildListProps) => {
 
   return (
     <div className="p-5 pt-0 pb-0">
-      <h1 className="mt-3 mb-4 text-xs font-semibold text-gray-500">{label}</h1>
+      <h1 className="mt-3 mb-4 text-xs font-semibold text-gray-500">
+        {t(label)}
+      </h1>
       <div
         className={classNames(
           "-mx-2 text-sm",
