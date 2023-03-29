@@ -42,7 +42,7 @@ async function PostNotion(params: {
 
   if (prompt) {
     data.context = {
-      pageContent: "",
+      pageContent: context,
       prompt: prompt,
       selectedText: context,
       type: "helpMeEdit"
@@ -67,9 +67,10 @@ async function PostNotion(params: {
     }
   } else if (type === PromptTypeEnum.TopicWriting) {
     data.context = {
-      type: prompt,
-      topic: context,
-      pageContent: ""
+      type: context2,
+      topic: prompt,
+      pageContent: context,
+      selectedText: context
     }
   } else if (type === PromptTypeEnum.ContinueWriting) {
     data.context = {

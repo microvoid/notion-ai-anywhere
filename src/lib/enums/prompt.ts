@@ -23,6 +23,7 @@ export interface ISelectionOption {
     }
   >
   value: string
+  description?: string
   options?: {
     label: string
     value: string
@@ -253,67 +254,80 @@ export const DraftWithAIMap: ISelectionOptionMap = {
     {
       icon: PencilIcon,
       label: "Brainstorm Ideas",
-      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.brainstormIdeas}`
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.brainstormIdeas}`,
+      description: "Brainstorm ideas on"
     },
     {
       icon: PencilIcon,
       label: "Blog Post",
-      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.blogPost}`
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.blogPost}`,
+      description: "Write a blog post about "
     },
     {
       icon: PencilIcon,
       label: "Outline",
-      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.outline}`
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.outline}`,
+      description: "Write an outline about "
     },
     {
       icon: PencilIcon,
       label: "Social Media Post",
-      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.socialMediaPost}`
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.socialMediaPost}`,
+      description: "Write a social media post about "
     },
     {
       icon: PencilIcon,
       label: "Press Release",
-      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.pressRelease}`
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.pressRelease}`,
+      description: "Write a press release about "
     },
     {
       icon: PencilIcon,
       label: "Creative Story",
-      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.creativeStory}`
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.creativeStory}`,
+      description: "Write a creative story about "
     },
     {
       icon: PencilIcon,
       label: "Essay",
-      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.essay}`
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.essay}`,
+      description: "Write an essay about "
     },
     {
       icon: PencilIcon,
       label: "Poem",
-      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.poem}`
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.poem}`,
+      description: "Write a poem about "
     },
     {
       icon: PencilIcon,
       label: "Meeting Agenda",
-      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.meetingAgenda}`
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.meetingAgenda}`,
+      description: "Write a meeting agenda about "
     },
     {
       icon: PencilIcon,
       label: "Pros Cons List",
-      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.prosConsList}`
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.prosConsList}`,
+      description: "Write a pros cons list about "
     },
     {
       icon: PencilIcon,
       label: "Job Description",
-      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.jobDescription}`
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.jobDescription}`,
+      description: "Write a job description about "
     },
     {
       icon: PencilIcon,
       label: "Sales Email",
-      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.salesEmail}`
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.salesEmail}`,
+      description: "Write a sales email about "
     },
     {
       icon: PencilIcon,
       label: "Recruiting Email",
-      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.recruitingEmail}`
+      value: `${PromptTypeEnum.TopicWriting}-${DraftWithAIEnum.recruitingEmail}`,
+      description: "Write a recruiting email about "
     }
   ]
 }

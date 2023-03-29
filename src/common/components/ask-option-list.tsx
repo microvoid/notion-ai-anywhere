@@ -1,16 +1,7 @@
-import { ArrowUpCircleIcon } from "@heroicons/react/20/solid"
 import {
-  ArrowDownLeftIcon,
-  // ArrowUpCircleIcon,
   ArrowUturnLeftIcon,
   ChevronRightIcon,
-  DocumentPlusIcon,
-  FolderIcon,
-  FolderPlusIcon,
-  HashtagIcon,
-  PencilIcon,
-  TagIcon,
-  UsersIcon
+  PencilIcon
 } from "@heroicons/react/24/outline"
 import classNames from "classnames"
 import { useState } from "react"

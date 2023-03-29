@@ -1,7 +1,8 @@
-import { ArrowUpCircleIcon, Bars3Icon } from "@heroicons/react/20/solid"
-import { Bars2Icon, PencilIcon } from "@heroicons/react/24/outline"
+import { ArrowUpCircleIcon } from "@heroicons/react/20/solid"
+import { PencilIcon } from "@heroicons/react/24/outline"
 import classNames from "classnames"
 import { useCallback, useEffect, useState } from "react"
+import ReactMarkdown from "react-markdown"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
@@ -61,7 +62,7 @@ const ContentPanel = (props: IContentPanelProps) => {
 
   const { t } = useLang()
 
-  const send = async (promptType?: string) => {
+  const send = async (p?: string) => {
     if (sending) {
       showToast(t("MessageProcessing"))
       return
@@ -88,13 +89,13 @@ const ContentPanel = (props: IContentPanelProps) => {
     }
 
     let resultTemp = ""
-    setPromptType(promptType || query)
+    setPromptType(p || promptType || query)
     setResult("")
     setSending(true)
     await sendNotionPostToBackground({
       prompt: query,
       context: selectionText,
-      promptType: promptType,
+      promptType: p || promptType,
       onProgress: (e: IPostNotionProgress) => {
         resultTemp += e.value.completion
         if (!e.done) {
@@ -111,6 +112,7 @@ const ContentPanel = (props: IContentPanelProps) => {
     setQuery("")
     setResult("")
     setSending(false)
+    setPromptType("")
   }
 
   const handleClose = () => {
@@ -157,25 +159,6 @@ const ContentPanel = (props: IContentPanelProps) => {
         checked={show}
         id="my-modal-6"
         className="modal-toggle"
-        onMouseUp={(e) => {
-          e.preventDefault()
-          e.stopPropagation()
-        }}
-        onMouseDown={(e) => {
-          e.preventDefault()
-          e.stopPropagation()
-        }}
-        onKeyDown={(e) => {
-          e.preventDefault()
-          e.stopPropagation()
-        }}
-        onKeyUp={(e) => {
-          e.preventDefault()
-          e.stopPropagation()
-          if (e.key === "Escape") {
-            handleClose()
-          }
-        }}
       />
       <div
         className="modal modal-middle pt-24"
@@ -206,53 +189,71 @@ const ContentPanel = (props: IContentPanelProps) => {
                 minWidth: "700px"
               }}
               placeholder={t("AskInputPlaceholder") as string}
-              onChange={(event) => setQuery(event.target.value)}
+              onChange={(event) => {
+                setQuery(event.target.value)
+                if (event.target.value.trim() === "") {
+                  setPromptType("")
+                }
+              }}
               onKeyDown={(event) => {
+                event.stopPropagation()
                 if (event.key === "Enter") {
                   send()
+                }
+                if (event.key === "Escape") {
+                  handleClose()
                 }
               }}
             />
             <ArrowUpCircleIcon
               onClick={() => send()}
               className={classNames(
-                "cursor-pointer absolute top-3.5 right-4 h-5 w-5 ",
+                "cursor-pointer absolute top-3.5 right-4 h-5 w-5",
                 query ? "text-violet-300" : "text-gray-400"
               )}
             />
           </div>
 
-          <div className="flex">
-            {!query && (
-              <div
-                className="overflow-auto flex-1"
-                style={{
-                  minWidth: "250px"
-                }}>
-                {recentAsk && recentAsk.length > 0 && (
-                  <AskMenuList
-                    list={[
-                      {
-                        label: t("RecentAsk"),
-                        list: recentAsk.map((item) => ({
-                          icon: PencilIcon,
-                          ...item
-                        }))
-                      }
-                    ]}
-                    onOptionClick={(option) => {
-                      // send(option.value)
-                    }}
-                  />
-                )}
+          <div
+            className="flex overflow-y-scroll"
+            style={{
+              height: "630px"
+            }}>
+            <div
+              className="overflow-auto"
+              style={{
+                // minWidth: "300px"
+                width: "300px"
+              }}>
+              {recentAsk && recentAsk.length > 0 && (
                 <AskMenuList
-                  list={selectionMenuList}
+                  list={[
+                    {
+                      label: t("RecentAsk"),
+                      list: recentAsk.map((item) => ({
+                        icon: PencilIcon,
+                        ...item
+                      }))
+                    }
+                  ]}
                   onOptionClick={(option) => {
-                    send(option.value)
+                    setQuery(option.value)
+                    // send(option.value)
                   }}
                 />
-              </div>
-            )}
+              )}
+              <AskMenuList
+                list={selectionMenuList}
+                onOptionClick={(option) => {
+                  if (option.description) {
+                    setPromptType(option.value)
+                    setQuery(t(option.description) as string)
+                  } else {
+                    send(option.value)
+                  }
+                }}
+              />
+            </div>
 
             {(selectionText || result) && (
               <div className="relative flex-1 p-5 border-l border-gray-200 border-opacity-20">
@@ -260,7 +261,7 @@ const ContentPanel = (props: IContentPanelProps) => {
                   <div className="indicator w-full mb-6">
                     <div className="card border w-full">
                       <div className="card-body w-full p-10">
-                        <p>
+                        <div>
                           <span
                             className="font-sans text-5xl text-violet-300 absolute left-2 top-3"
                             style={{
@@ -270,7 +271,13 @@ const ContentPanel = (props: IContentPanelProps) => {
                           </span>
                           {/* {selectionText} */}
                           {result ? (
-                            result
+                            <div
+                              className="overflow-x-scroll break-words"
+                              style={{
+                                maxWidth: "570px"
+                              }}>
+                              <ReactMarkdown>{result}</ReactMarkdown>
+                            </div>
                           ) : (
                             <span className="chat-typing w-full text-center">
                               <span className="chat-typing-dot"></span>
@@ -285,7 +292,7 @@ const ContentPanel = (props: IContentPanelProps) => {
                             }}>
                             ”
                           </span>
-                        </p>
+                        </div>
                       </div>
                     </div>
                     <HandleResultMenu
@@ -302,8 +309,11 @@ const ContentPanel = (props: IContentPanelProps) => {
                     Modify
                   </span> */}
                   <div className="card border w-full">
-                    <div className="card-body w-full p-10">
-                      <p>
+                    <div className="card-body w-full p-10 break-words">
+                      <div
+                        style={{
+                          maxWidth: "570px"
+                        }}>
                         <span
                           className="font-sans text-5xl text-violet-300 absolute left-2 top-3"
                           style={{
@@ -311,7 +321,7 @@ const ContentPanel = (props: IContentPanelProps) => {
                           }}>
                           “
                         </span>
-                        {selectionText}
+                        <ReactMarkdown>{selectionText}</ReactMarkdown>
                         <span
                           className="font-sans text-5xl text-violet-300 absolute bottom-0 right-2"
                           style={{
@@ -319,7 +329,7 @@ const ContentPanel = (props: IContentPanelProps) => {
                           }}>
                           ”
                         </span>
-                      </p>
+                      </div>
                     </div>
                   </div>
                   <div className="absolute w-full text-center bottom-1 text-gray-200 text-xs">
