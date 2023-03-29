@@ -1,6 +1,6 @@
 # Notion AI Anywhere
 
-[Notion AI Anywhere](https://github.com/microvoid/notion-ai-anywhere) 是一个让你浏览任何网页时都可以使用 Notion AI 能力的插件。
+[Notion AI Anywhere](https://github.com/microvoid/notion-ai-anywhere) It is a extension that allows you to use Notion AI capabilities while browsing any webpage.
 
 ## Overview
 
