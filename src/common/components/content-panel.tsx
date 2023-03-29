@@ -12,6 +12,7 @@ import {
   storage
 } from "~lib"
 import { ConstEnum, ISelectionOption, selectionMenuList } from "~lib/enums"
+import { initLang, useLang } from "~lib/hooks/useLang"
 import { sendNotionPostToBackground } from "~lib/notion"
 import { showToast } from "~lib/toast"
 import type { INotionSpace, IPostNotionProgress } from "~lib/types/notion"
@@ -19,7 +20,8 @@ import type { INotionSpace, IPostNotionProgress } from "~lib/types/notion"
 import BtnIcon from "../icons/notion-icon.png"
 import { AskMenuList } from "./ask-option-list"
 import HandleResultMenu from "./handle-result-menu"
-import Toast from "./toast"
+
+initLang()
 
 interface IContentPanelProps {
   show: boolean
@@ -57,9 +59,11 @@ const ContentPanel = (props: IContentPanelProps) => {
 
   const [sending, setSending] = useState(false)
 
+  const { t } = useLang()
+
   const send = async (promptType?: string) => {
     if (sending) {
-      showToast("There is a message being processed, please wait...")
+      showToast(t("MessageProcessing"))
       return
     }
     if (!isNotionLogin) {
@@ -201,7 +205,7 @@ const ContentPanel = (props: IContentPanelProps) => {
                 outline: "none",
                 minWidth: "700px"
               }}
-              placeholder="Ask Notion AI to edit or generate..."
+              placeholder={t("AskInputPlaceholder") as string}
               onChange={(event) => setQuery(event.target.value)}
               onKeyDown={(event) => {
                 if (event.key === "Enter") {
@@ -225,39 +229,11 @@ const ContentPanel = (props: IContentPanelProps) => {
                 style={{
                   minWidth: "250px"
                 }}>
-                {/* <AskMenuList
-                 label="Recent Ask"
-                 menuList={[
-                   {
-                     icon: FolderIcon,
-                     value: "Folder1",
-                     label: "Folder"
-                   },
-                   {
-                     icon: FolderIcon,
-                     value: "Folder2",
-                     label: "Folder"
-                   },
-                   {
-                     icon: FolderIcon,
-                     value: "Folder3",
-                     label: "Folder"
-                   },
-                   {
-                     icon: FolderIcon,
-                     value: "Folder4",
-                     label: "Folder"
-                   }
-                 ]}
-               /> */}
-                {/* {selectionMenuList.map((menu) => {
-                 return 
-               })} */}
                 {recentAsk && recentAsk.length > 0 && (
                   <AskMenuList
                     list={[
                       {
-                        label: "Recent Ask",
+                        label: t("RecentAsk"),
                         list: recentAsk.map((item) => ({
                           icon: PencilIcon,
                           ...item
@@ -316,7 +292,7 @@ const ContentPanel = (props: IContentPanelProps) => {
                       result={result}
                       handleClose={handleClose}></HandleResultMenu>
                     <div className="absolute w-full text-center bottom-1 text-gray-200 text-xs">
-                      Result
+                      {t("Result")}
                     </div>
                   </div>
                 )}
@@ -347,7 +323,7 @@ const ContentPanel = (props: IContentPanelProps) => {
                     </div>
                   </div>
                   <div className="absolute w-full text-center bottom-1 text-gray-200 text-xs">
-                    Selection Text
+                    {t("SelectionText")}
                   </div>
                 </div>
               </div>
@@ -357,9 +333,9 @@ const ContentPanel = (props: IContentPanelProps) => {
           {(!isNotionLogin || !notionSpace) && (
             <div className="absolute z-10 w-full h-full left-0 top-0 bg-black bg-opacity-80 flex items-center justify-center text-3xl text-white p-12 text-center">
               {!isNotionLogin
-                ? "Notion not login, please login first"
+                ? t("NotionNotLoginDescPanel")
                 : !notionSpace
-                ? "Notion space not found, please select one space on extension popup"
+                ? t("NotionNotSelectSpace")
                 : ""}
             </div>
           )}

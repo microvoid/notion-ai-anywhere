@@ -1,6 +1,9 @@
 import { CSSProperties, useCallback, useEffect, useState } from "react"
 
-import { IPosition, _calcPosition, getSelectionText } from "~lib"
+import { useStorage } from "@plasmohq/storage/hook"
+
+import { IPosition, _calcPosition, getSelectionText, storage } from "~lib"
+import { ConstEnum } from "~lib/enums"
 
 import BtnIcon from "../icons/notion-icon.png"
 
@@ -20,6 +23,12 @@ const ContentEnter = (props: IContentEnterProps) => {
   const { isPanelShow, showPanel } = props
   const [show, setShow] = useState(false)
   const [position, setPosition] = useState<IPosition>()
+
+  const [closeSelectionIcon] = useStorage({
+    key: ConstEnum.CLOSE_SELECTION_ICON,
+    instance: storage
+  })
+
   const onMouseUp = useCallback(
     (e: MouseEvent) => {
       selectionText = getSelectionText()
@@ -39,13 +48,13 @@ const ContentEnter = (props: IContentEnterProps) => {
             //   : e
           )
         )
-        setShow(true)
+        !closeSelectionIcon && setShow(true)
         return
       } else if (show || isPanelShow) {
         setShow(false)
       }
     },
-    [show, isPanelShow]
+    [show, isPanelShow, closeSelectionIcon]
   )
 
   useEffect(() => {

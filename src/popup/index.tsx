@@ -7,13 +7,15 @@ import { GetSpaces } from "~lib/api/notion"
 import { ConstEnum } from "~lib/enums"
 import { storage } from "~lib/storage"
 
-// import "~base.css"
 import "~/styles/main.css"
 
 import { Cog8ToothIcon } from "@heroicons/react/24/outline"
 import { useEffect, useState } from "react"
 
+import { initLang, useLang } from "~lib/hooks/useLang"
 import type { INotionSpace } from "~lib/types/notion"
+
+initLang()
 
 enum NotionStatus {
   UnLoad = "UnLoad",
@@ -30,23 +32,24 @@ function IndexPopup() {
     instance: storage
   })
 
+  const { t, lang, setLang, removeLang } = useLang()
+
   const [isNotionLogin] = useStorage({
     key: ConstEnum.NOTION_IS_LOGIN,
     instance: storage
   })
 
-  // const [language, setLangrage] = useStorage({
-  //   key: ConstEnum.LANG,
-  //   instance: storage
-  // })
-
-  // const [isNotionLogin] = useStorage({
-  //   key: ConstEnum.NOTION_IS_LOGIN,
-  //   instance: storage
-  // })
-
   const [darkMode, setDarkMode, { remove: removeDarkMode }] = useStorage({
     key: ConstEnum.DARK_MODE,
+    instance: storage
+  })
+
+  const [
+    closeSelectionIcon,
+    setCloseSelectionIcon,
+    { remove: removeCloseSelectionIcon }
+  ] = useStorage({
+    key: ConstEnum.CLOSE_SELECTION_ICON,
     instance: storage
   })
 
@@ -82,11 +85,8 @@ function IndexPopup() {
 
   const notLoginRender = () => (
     <div className="card-body">
-      <h2 className="card-title">Notion not login</h2>
-      <p>
-        Notion AI Anywhere should you login notion on your browser before. In
-        addition you need have notion ai vip account.
-      </p>
+      <h2 className="card-title">{t("NotionNotLogin")}</h2>
+      <p>{t("NotionNotLoginDesc")}</p>
       <div className="card-actions justify-end">
         <button
           className="btn btn-primary"
@@ -95,7 +95,7 @@ function IndexPopup() {
               url: "https://www.notion.so/login"
             })
           }}>
-          Login Notion
+          {t("LoginNotion")}
         </button>
       </div>
     </div>
@@ -105,9 +105,7 @@ function IndexPopup() {
     const mode = notionSpace ? "Change" : "Select"
     return (
       <>
-        <div
-          className="drawer drawer-end"
-          data-theme={darkMode ? "dark" : "light"}>
+        <div className="drawer drawer-end">
           <input
             id="my-drawer-4"
             type="checkbox"
@@ -120,7 +118,7 @@ function IndexPopup() {
               <div className="flex items-center absolute top-3 right-3 cursor-pointer">
                 <div
                   className="tooltip tooltip-primary tooltip-left"
-                  data-tip="Github Star & Readme">
+                  data-tip={t("GithubIconMessage")}>
                   <svg
                     className="icon w-4 h-4 mr-2 "
                     viewBox="0 0 1024 1024"
@@ -143,7 +141,7 @@ function IndexPopup() {
 
                 <div
                   className="tooltip tooltip-primary tooltip-left"
-                  data-tip="Setting">
+                  data-tip={t("Setting")}>
                   <Cog8ToothIcon
                     className="w-5"
                     onClick={() => {
@@ -152,33 +150,27 @@ function IndexPopup() {
                     }}></Cog8ToothIcon>
                 </div>
               </div>
-              <h2 className="card-title">Select/Change Space</h2>
-              <p className="mb-4">
-                Select/Change a space with Notion AI use times or with Notion AI
-                Plus.
-              </p>
+              <h2 className="card-title">{t("SelectChangeSpaceTitle")}</h2>
+              <p className="mb-4">{t("SelectChangeSpaceDesc")}</p>
               <div className="indicator">
                 <div className="indicator-item indicator-bottom">
                   <button
                     className="btn btn-primary"
                     onClick={() => setShowSpaces(true)}>
-                    {mode}
+                    {t(mode)}
                   </button>
                 </div>
                 <div className="card border">
                   <div className="card-body">
                     {/* <h3 className="card-title">Using space</h3> */}
                     {!notionSpace ? (
-                      <h3 className="card-title">Not select space</h3>
+                      <h3 className="card-title">{t("NotSelectSpace")}</h3>
                     ) : (
                       <div className="w-full flex items-center">
                         <div className="avatar">
                           {notionSpace.icon ? (
                             <div className="w-8 rounded">
-                              <img
-                                src={notionSpace.icon}
-                                alt="Tailwind-CSS-Avatar-component"
-                              />
+                              <img src={notionSpace.icon} />
                             </div>
                           ) : (
                             <div className="avatar placeholder">
@@ -206,7 +198,7 @@ function IndexPopup() {
               className="drawer-overlay"></label>
 
             {showSettings ? (
-              <ul className="menu p-4 w-48 bg-base-100 text-base-content">
+              <ul className="menu p-4 w-64 bg-base-100 text-base-content">
                 {/* setting */}
                 <label className="cursor-pointer label">
                   {/* <span className="label-text">Language</span>
@@ -231,19 +223,64 @@ function IndexPopup() {
                 />*/}
                 </label>
                 <label className="cursor-pointer label">
-                  <span className="label-text">Dark Mode</span>
-                  <input
-                    type="checkbox"
-                    checked={darkMode}
-                    onChange={() => {
-                      if (darkMode) {
-                        removeDarkMode()
-                      } else {
-                        setDarkMode(1)
-                      }
-                    }}
-                    className="toggle toggle-primary"
-                  />
+                  <span className="label-text">{t("DarkMode")}</span>
+                  <div
+                    className="tooltip tooltip-primary tooltip-left"
+                    data-tip={
+                      darkMode ? t("ChangeToLightMode") : t("ChangeToDarkMode")
+                    }>
+                    <input
+                      type="checkbox"
+                      checked={darkMode}
+                      onChange={() => {
+                        if (darkMode) {
+                          removeDarkMode()
+                        } else {
+                          setDarkMode(1)
+                        }
+                      }}
+                      className="toggle toggle-primary"
+                    />
+                  </div>
+                </label>
+                <label className="cursor-pointer label">
+                  <span className="label-text">{t("CloseSelectionIcon")}</span>
+                  <div
+                    className="tooltip tooltip-primary tooltip-left"
+                    data-tip="cmd+k also call the panel">
+                    <input
+                      type="checkbox"
+                      checked={closeSelectionIcon}
+                      onChange={() => {
+                        if (closeSelectionIcon) {
+                          removeCloseSelectionIcon()
+                        } else {
+                          setCloseSelectionIcon(1)
+                        }
+                      }}
+                      className="toggle toggle-primary"
+                    />
+                  </div>
+                </label>
+
+                <label className="cursor-pointer label">
+                  <span className="label-text">{t("Chinese")}</span>
+                  <div
+                    className="tooltip tooltip-primary tooltip-left"
+                    data-tip={t("Use Chinese")}>
+                    <input
+                      type="checkbox"
+                      checked={lang === "zh"}
+                      onChange={() => {
+                        if (lang === "zh") {
+                          setLang("en")
+                        } else {
+                          setLang("zh")
+                        }
+                      }}
+                      className="toggle toggle-primary"
+                    />
+                  </div>
                 </label>
               </ul>
             ) : (
@@ -257,7 +294,7 @@ function IndexPopup() {
                           url: "https://www.notion.so/login"
                         })
                       }}>
-                      Login Notion
+                      {t("LoginNotion")}
                     </button>
                   </div>
                 )}
@@ -281,10 +318,7 @@ function IndexPopup() {
                         <div className="avatar">
                           {space.icon ? (
                             <div className="w-8 rounded">
-                              <img
-                                src={space.icon}
-                                alt="Tailwind-CSS-Avatar-component"
-                              />
+                              <img src={space.icon} />
                             </div>
                           ) : (
                             <div className="avatar placeholder">
@@ -311,8 +345,9 @@ function IndexPopup() {
     <div
       style={{
         width: "500px",
-        height: "280px"
-      }}>
+        height: "310px"
+      }}
+      data-theme={darkMode ? "dark" : "light"}>
       <div
         className="card card-side bg-base-100 h-full shadow-xl"
         style={{

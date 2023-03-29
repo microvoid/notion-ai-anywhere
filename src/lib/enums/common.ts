@@ -5,6 +5,7 @@ export enum ConstEnum {
   NOTION_IS_LOGIN = "notion-login",
   RECENT_ASK = "recent-ask",
   DARK_MODE = "dark-mode",
+  CLOSE_SELECTION_ICON = "close-selection-icon",
   SHOW_SELECT_ICON = "show-select-icon",
   LANG = "lang",
 

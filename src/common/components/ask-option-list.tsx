@@ -19,6 +19,7 @@ import { useStorage } from "@plasmohq/storage/hook"
 
 import { storage } from "~lib"
 import { ConstEnum, ISelectionOption, ISelectionOptionMap } from "~lib/enums"
+import { useLang } from "~lib/hooks/useLang"
 
 interface IAskOptionChildListProps {
   label: string
@@ -41,6 +42,8 @@ const AskOptionChildList = (props: IAskOptionChildListProps) => {
     key: ConstEnum.DARK_MODE,
     instance: storage
   })
+
+  const { t } = useLang()
 
   return (
     <div className="p-5 pt-0 pb-0">
@@ -84,7 +87,7 @@ const AskOptionChildList = (props: IAskOptionChildListProps) => {
                     />
                   )}
                   <span className="ml-3 flex-auto truncate leading-5">
-                    {item.label}
+                    {t(item.label)}
                   </span>
                   {active && !item.options?.length && (
                     <ArrowUturnLeftIcon
@@ -124,7 +127,7 @@ const AskOptionChildList = (props: IAskOptionChildListProps) => {
                         )}>
                         <>
                           <span className="ml-3 flex-auto truncate leading-5">
-                            {option.label}
+                            {t(option.label)}
                           </span>
                           {active && (
                             <ArrowUturnLeftIcon

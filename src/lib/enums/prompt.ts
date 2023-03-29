@@ -91,22 +91,22 @@ export const EditOrReviewSelectionMap: ISelectionOptionMap = {
     },
     {
       icon: CheckIcon,
-      label: "Fix Spelling/Grammar",
+      label: "Fix spelling & grammar",
       value: PromptTypeEnum.FixSpellingGrammar
     },
     {
       icon: Bars2Icon,
-      label: "Make Shorter",
+      label: "Make shorter",
       value: PromptTypeEnum.MakeShorter
     },
     {
       icon: Bars4Icon,
-      label: "Make Longer",
+      label: "Make longer",
       value: PromptTypeEnum.MakeLonger
     },
     {
       icon: SparklesIcon,
-      label: "Simplify Language",
+      label: "Simplify language",
       value: PromptTypeEnum.SimplifyLanguage
     },
     {
