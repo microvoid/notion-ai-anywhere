@@ -34,9 +34,8 @@ jobs:
           cache: "pnpm"
       - name: Build and Package the extension into a zip artifact
         run: |
-          pnpm build --target=chrome-mv3 --zip
-          pnpm build --target=firefox-mv2 --zip
-          pnpm build --target=edge-mv3 --zip
+          pnpm build
+          pnpm package
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
@@ -46,8 +45,6 @@ jobs:
             Please see the [changelog](https://github.com/microvoid/notion-ai-anywhere/blob/main/CHANGELOG.md)
           files: |
             build/chrome-mv3-prod.zip
-            build/firefox-mv2-prod.zip
-            build/edge-mv3-prod.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
