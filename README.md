@@ -1,4 +1,4 @@
-[中文文档](https://github.com/microvoid/notion-ai-anywhere)
+[中文文档](https://github.com/microvoid/notion-ai-anywhere/blob/main/README_cn.md)
 
 # Notion AI Anywhere
 
