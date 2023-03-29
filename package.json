@@ -1,7 +1,7 @@
 {
   "name": "notion-ai-anywhere",
   "displayName": "Notion AI Anywhere",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "notion-ai-anywhere",
   "author": "smackgg",
   "scripts": {
@@ -10,6 +10,7 @@
     "package": "plasmo package"
   },
   "dependencies": {
+    "@changesets/cli": "^2.26.1",
     "@heroicons/react": "^2.0.16",
     "@notionhq/client": "^2.2.3",
     "@paddlejs-models/ocr": "^1.2.3",
