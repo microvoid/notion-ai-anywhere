@@ -36,6 +36,8 @@ ChatGPT has become a mainstream term in 2023, and Notion has quickly launched it
 
 - [ ] ChatGPT3.5
 - [ ] Adding OCR screenshot recognition capability (already in development)
+- [ ] Identify all text content on the website and analyze it
+- [ ] Support syncing generated content to Notion
 
 ## Contribution
 

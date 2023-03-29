@@ -30,10 +30,12 @@ ChatGPT 已经成为 2023 年主流词汇，Notion 也很快的推出的 Notion 
 
    <img src="./assets/display2.gif" width="500px" />
 
-# TODO
+## TODO
 
 - [ ] 加入 ChatGPT3.5 直接调用能力
 - [ ] 加入 OCR 截图识别能力 （已经在开发中了）
+- [ ] 识别网站所有文本内容，进行分析
+- [ ] 生成内容支持同步到 Notion
 
 ## Contribution
 
