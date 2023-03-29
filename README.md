@@ -10,16 +10,25 @@ ChatGPT has become a mainstream term in 2023, and Notion has quickly launched it
 
 1. Download the latest [release](https://github.com/microvoid/notion-ai-anywhere/releases) version zip package from here.
 2. Open the Chrome Extensions page and enable the Developer mode.
-   ![image](./assets/c-extension.png){width="800px"}
+
+<img src="./assets/c-extension.png" width="500px" />
+
 3. Drag and drop the zip file into the plugin list.
-   ![image](./assets/c-extension2.png{width="800px"}
+
+<img src="./assets/c-extension2.png" width="500px" />
+
 4. Clicking on the extension will open a settings popup. If you are not logged in to Notion, you will be prompted to log in before opening the settings popup. Select a Notion workspace (it is recommended to select a workspace that has subscribed to Notion AI Plus, otherwise the usage will be limited).
-   ![image](./assets/c-popup.png){width="800px"}
+
+<img src="./assets/c-popup.png" width="500px" />
+
 5. Now, you can refresh any browser page and select a piece of content. There will be a button (which can be disabled in settings, and after disabling it, use cmd+k to open the AI pop-up) that can be clicked to use it normally.
-   ![image](./assets/c-button.png){width="800px"}
-   ![image](./assets/display1.gif){width="800px"}
+
+<img src="./assets/c-button.png" width="500px" />
+<img src="./assets/display1.gif" width="500px" />
+
 6. You can set dark mode, switch languages, and disable the annoying selection icon (using cmd + k)
-   ![image](./assets/display2.gif){width="800px"}
+
+<img src="./assets/display2.gif" width="500px" />
 
 # TODO
 
