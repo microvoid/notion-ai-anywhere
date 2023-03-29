@@ -31,6 +31,10 @@ export const sendNotionPostToBackground = ({
   prompt?: string
   onProgress: (data: IPostNotionProgress) => void
 }) => {
+  if (onProgressHandler) {
+    return Promise.reject("posting")
+  }
+
   onProgressHandler = onProgress
   postNotionAddEventListener()
   return new Promise(async (resolve) => {

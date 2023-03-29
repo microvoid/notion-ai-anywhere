@@ -92,19 +92,26 @@ const ContentPanel = (props: IContentPanelProps) => {
     setPromptType(p || promptType || query)
     setResult("")
     setSending(true)
-    await sendNotionPostToBackground({
-      prompt: query,
-      context: selectionText,
-      promptType: p || promptType,
-      onProgress: (e: IPostNotionProgress) => {
-        resultTemp += e.value.completion
-        if (!e.done) {
-          setResult(resultTemp)
-        } else {
-          setSending(false)
+
+    try {
+      await sendNotionPostToBackground({
+        prompt: query,
+        context: selectionText,
+        promptType: p || promptType,
+        onProgress: (e: IPostNotionProgress) => {
+          resultTemp += e.value.completion
+          if (!e.done) {
+            setResult(resultTemp)
+          } else {
+            setSending(false)
+          }
         }
-      }
-    })
+      })
+    } catch (error) {
+      console.log(error, "error")
+      showToast(t("MessageProcessing"))
+    }
+
     setSending(false)
   }
 
@@ -186,7 +193,7 @@ const ContentPanel = (props: IContentPanelProps) => {
               className="pl-12 pr-12 input input-bordered w-full rounded-none box-border h-12"
               style={{
                 outline: "none",
-                minWidth: "700px"
+                minWidth: "900px"
               }}
               placeholder={t("AskInputPlaceholder") as string}
               onChange={(event) => {
