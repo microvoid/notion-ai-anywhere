@@ -39,4 +39,4 @@ ChatGPT 已经成为 2023 年主流词汇，Notion 也很快的推出的 Notion 
 
 ## Contribution
 
-Notion AI Anywhere 是一个开源项目，欢迎社区的贡献。请随时在上提交问题、功能 PR [GitHub repository](https://github.com/microvoid/notion-ai-anywhere).
+Notion AI Anywhere 是一个开源项目，欢迎社区的贡献。[GitHub repository](https://github.com/microvoid/notion-ai-anywhere).
