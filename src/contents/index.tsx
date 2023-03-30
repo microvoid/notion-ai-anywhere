@@ -44,9 +44,10 @@ const PlasmoOverlay = () => {
         const t = getSelectionText()
         if (t) {
           setSelectionText(t)
-          setIsPanelShow(true)
         }
       }
+
+      setIsPanelShow(true)
     }
   })
 
@@ -90,7 +91,8 @@ const PlasmoOverlay = () => {
         onClose={() => {
           setIsPanelShow(false)
           // setPosition(undefined)
-        }}></ContentPanel>
+        }}
+        setSelectionText={setSelectionText}></ContentPanel>
     </div>
   )
 }

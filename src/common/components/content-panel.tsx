@@ -1,5 +1,9 @@
 import { ArrowUpCircleIcon } from "@heroicons/react/20/solid"
-import { PencilIcon } from "@heroicons/react/24/outline"
+import {
+  CheckIcon,
+  PencilIcon,
+  PencilSquareIcon
+} from "@heroicons/react/24/outline"
 import classNames from "classnames"
 import { useCallback, useEffect, useState } from "react"
 import ReactMarkdown from "react-markdown"
@@ -29,10 +33,11 @@ interface IContentPanelProps {
   // position: IPosition
   selectionText: string
   onClose: () => void
+  setSelectionText: (text: string) => void
 }
 
 const ContentPanel = (props: IContentPanelProps) => {
-  const { show, selectionText, onClose } = props
+  const { show, selectionText, onClose, setSelectionText } = props
   const [notionSpace] = useStorage<INotionSpace | undefined>({
     key: ConstEnum.USED_NOTION_SPACE,
     instance: storage
@@ -59,6 +64,8 @@ const ContentPanel = (props: IContentPanelProps) => {
   const [promptType, setPromptType] = useState("")
 
   const [sending, setSending] = useState(false)
+
+  const [editSelection, setEditSelection] = useState(false)
 
   const { t } = useLang()
 
@@ -262,65 +269,12 @@ const ContentPanel = (props: IContentPanelProps) => {
               />
             </div>
 
-            {(selectionText || result) && (
-              <div className="relative flex-1 p-5 border-l border-gray-200 border-opacity-20">
-                {(result || sending) && (
-                  <div className="indicator w-full mb-6">
-                    <div className="card border w-full">
-                      <div className="card-body w-full p-10">
-                        <div>
-                          <span
-                            className="font-sans text-5xl text-violet-300 absolute left-2 top-3"
-                            style={{
-                              fontFamily: "arial"
-                            }}>
-                            “
-                          </span>
-                          {/* {selectionText} */}
-                          {result ? (
-                            <div
-                              className="overflow-x-scroll break-words"
-                              style={{
-                                maxWidth: "570px"
-                              }}>
-                              <ReactMarkdown>{result}</ReactMarkdown>
-                            </div>
-                          ) : (
-                            <span className="chat-typing w-full text-center">
-                              <span className="chat-typing-dot"></span>
-                              <span className="chat-typing-dot"></span>
-                              <span className="chat-typing-dot"></span>
-                            </span>
-                          )}
-                          <span
-                            className="font-sans text-5xl text-violet-300 absolute bottom-0 right-2"
-                            style={{
-                              fontFamily: "arial"
-                            }}>
-                            ”
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <HandleResultMenu
-                      result={result}
-                      handleClose={handleClose}></HandleResultMenu>
-                    <div className="absolute w-full text-center bottom-1 text-gray-200 text-xs">
-                      {t("Result")}
-                    </div>
-                  </div>
-                )}
-
-                <div className="indicator w-full">
-                  {/* <span className="indicator-item badge badge-primary">
-                    Modify
-                  </span> */}
+            <div className="relative flex-1 p-5 border-l border-gray-200 border-opacity-20">
+              {(result || sending) && (
+                <div className="indicator w-full mb-6">
                   <div className="card border w-full">
-                    <div className="card-body w-full p-10 break-words">
-                      <div
-                        style={{
-                          maxWidth: "570px"
-                        }}>
+                    <div className="card-body w-full p-10">
+                      <div>
                         <span
                           className="font-sans text-5xl text-violet-300 absolute left-2 top-3"
                           style={{
@@ -328,7 +282,22 @@ const ContentPanel = (props: IContentPanelProps) => {
                           }}>
                           “
                         </span>
-                        <ReactMarkdown>{selectionText}</ReactMarkdown>
+                        {/* {selectionText} */}
+                        {result ? (
+                          <div
+                            className="overflow-x-scroll break-words"
+                            style={{
+                              maxWidth: "570px"
+                            }}>
+                            <ReactMarkdown>{result}</ReactMarkdown>
+                          </div>
+                        ) : (
+                          <span className="chat-typing w-full text-center">
+                            <span className="chat-typing-dot"></span>
+                            <span className="chat-typing-dot"></span>
+                            <span className="chat-typing-dot"></span>
+                          </span>
+                        )}
                         <span
                           className="font-sans text-5xl text-violet-300 absolute bottom-0 right-2"
                           style={{
@@ -339,12 +308,83 @@ const ContentPanel = (props: IContentPanelProps) => {
                       </div>
                     </div>
                   </div>
+                  <HandleResultMenu
+                    result={result}
+                    handleClose={handleClose}></HandleResultMenu>
                   <div className="absolute w-full text-center bottom-1 text-gray-200 text-xs">
-                    {t("SelectionText")}
+                    {t("Result")}
                   </div>
                 </div>
+              )}
+
+              <div className="indicator w-full">
+                {/* <span className="indicator-item badge badge-primary">
+                    Modify
+                  </span> */}
+                <div className="card border w-full">
+                  <div className="relative card-body w-full p-10 break-words">
+                    <div
+                      style={{
+                        maxWidth: "570px"
+                      }}>
+                      <span
+                        className="font-sans text-5xl text-violet-300 absolute left-2 top-3"
+                        style={{
+                          fontFamily: "arial"
+                        }}>
+                        “
+                      </span>
+
+                      {editSelection ? (
+                        <div className="w-full relative">
+                          <textarea
+                            value={selectionText}
+                            onChange={(e) => {
+                              setSelectionText(e.target.value)
+                            }}
+                            onBlur={() => {
+                              setEditSelection(false)
+                            }}
+                            className="textarea textarea-bordered w-full "
+                            placeholder={
+                              t("Write selection text") as string
+                            }></textarea>
+                          <CheckIcon
+                            className="cursor-pointer w-6 h-6 absolute bottom-3 right-3 text-violet-300 "
+                            onClick={() => {
+                              setEditSelection(false)
+                            }}></CheckIcon>
+                        </div>
+                      ) : selectionText ? (
+                        <ReactMarkdown>{selectionText}</ReactMarkdown>
+                      ) : (
+                        <div className="flex items-center w-full text-center text-gray-300 justify-center">
+                          {t("No Selection Text")}
+                        </div>
+                      )}
+
+                      <span
+                        className="font-sans text-5xl text-violet-300 absolute bottom-0 right-2"
+                        style={{
+                          fontFamily: "arial"
+                        }}>
+                        ”
+                      </span>
+                    </div>
+                    <div
+                      className="cursor-pointer absolute right-0 top-0 p-2"
+                      onClick={() => {
+                        setEditSelection(true)
+                      }}>
+                      <PencilSquareIcon className="w-5 h-5 text-violet-300"></PencilSquareIcon>
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute w-full text-center bottom-1 text-gray-200 text-xs">
+                  {t("SelectionText")}
+                </div>
               </div>
-            )}
+            </div>
           </div>
 
           {(!isNotionLogin || !notionSpace) && (
