@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "plasmo dev && cp -r src/js build/chrome-mv3-dev && cp -r src/tesseract-data build/chrome-mv3-dev",
     "build": "plasmo build &&cp -r src/js build/chrome-mv3-prod && cp -r src/tesseract-data build/chrome-mv3-prod",
-    "package": "plasmo package"
+    "package": "plasmo package",
+    "patch": "changeset version patch"
   },
   "dependencies": {
     "@changesets/cli": "^2.26.1",
