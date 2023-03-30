@@ -32,6 +32,11 @@ ChatGPT has become a mainstream term in 2023, and Notion has quickly launched it
 
 <img src="./assets/display2.gif" width="500px" />
 
+## Shortcut Keys
+
+Mac: Command + K
+Windows: Ctrl+K
+
 ## TODO
 
 - [ ] ChatGPT3.5

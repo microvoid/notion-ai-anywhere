@@ -2,11 +2,11 @@
 
 [Notion AI Anywhere](https://github.com/microvoid/notion-ai-anywhere) 是一个让你浏览任何网页时都可以使用 Notion AI 能力的插件。
 
-## Overview
+## 概述
 
 ChatGPT 已经成为 2023 年主流词汇，Notion 也很快的推出的 Notion AI 能力。虽然不尽完美，但依然让人眼前一亮。更多的用户愿意为 AI 付费，去提升自己的工作、写作、记录的效率。如果你已经提升成为 Notion AI Plus 会员，那么现在你可以使用此插件，将 Notion AI 能力带到其他网站，比如谷歌文档、飞书、石墨、腾讯文档等。再比如浏览某些网页时使用 AI 分析一些内容等等。
 
-## Usage
+## 使用
 
 1. 下载最新的 [release](https://github.com/microvoid/notion-ai-anywhere/releases) 版本 zip 包。
 2. 打开 Chrome 扩展程序页面，并打开开发者模式。
@@ -30,13 +30,18 @@ ChatGPT 已经成为 2023 年主流词汇，Notion 也很快的推出的 Notion 
 
    <img src="./assets/display2.gif" width="500px" />
 
-## TODO
+## 即将要做的事
 
 - [ ] 加入 ChatGPT3.5 直接调用能力
 - [ ] 加入 OCR 截图识别能力 （已经在开发中了）
 - [ ] 识别网站所有文本内容，进行分析
 - [ ] 生成内容支持同步到 Notion
 
-## Contribution
+## 快捷键
+
+Mac: Command + K
+Windows: Ctrl+K
+
+## 贡献
 
 Notion AI Anywhere 是一个开源项目，欢迎社区的贡献。[GitHub repository](https://github.com/microvoid/notion-ai-anywhere).
