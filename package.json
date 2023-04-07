@@ -5,8 +5,10 @@
   "description": "notion-ai-anywhere",
   "author": "smackgg",
   "scripts": {
-    "dev": "plasmo dev && cp -r src/js build/chrome-mv3-dev && cp -r src/tesseract-data build/chrome-mv3-dev",
-    "build": "plasmo build &&cp -r src/js build/chrome-mv3-prod && cp -r src/tesseract-data build/chrome-mv3-prod",
+    "dev": "plasmo dev ",
+    "build-chrome": "plasmo build",
+    "build-ff": "plasmo build",
+    "build-edge": "plasmo build",
     "package": "plasmo package",
     "patch": "npm patch && changeset version patch"
   },
@@ -75,13 +77,6 @@
           "mac": "Command+K"
         },
         "description": "Activate NotionAIAnywhere on page"
-      },
-      "start-capture": {
-        "suggested_key": {
-          "default": "Ctrl+Shift+K",
-          "mac": "Command+Shift+K"
-        },
-        "description": "Start ocr capture on page"
       }
     }
   }
