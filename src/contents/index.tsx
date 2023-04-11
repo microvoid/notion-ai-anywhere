@@ -31,6 +31,13 @@ const PlasmoOverlay = () => {
   // const [position, setPosition] = useState<IPosition>()
   const [selectionText, setSelectionText] = useState<string>("")
 
+  useEffect(() => {
+    console.log("Notion AI anywhere content mounted")
+    return () => {
+      console.log("Notion AI anywhere content unmounted")
+    }
+  }, [])
+
   useMessage<
     {
       selectionText: string

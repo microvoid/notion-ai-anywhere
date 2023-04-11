@@ -41,4 +41,8 @@ ele.addEventListener("click", function () {
   }
 })
 
+export default () => {
+  return null
+}
+
 console.info("Notion AI anywhere docs loaded")
