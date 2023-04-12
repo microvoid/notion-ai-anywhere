@@ -1,5 +1,11 @@
 # notion-ai-anywhere
 
+## 1.1.5
+
+### Patch Changes
+
+- fix: close should remove text
+
 ## 1.1.1
 
 ### Patch Changes
