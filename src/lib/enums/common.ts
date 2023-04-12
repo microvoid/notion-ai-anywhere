@@ -21,5 +21,9 @@ export enum MainPageMessage {
 
   SELECTION_INSERT = "selection-insert",
 
-  SELECTION_REPLACE = "selection-replace"
+  SELECTION_REPLACE = "selection-replace",
+
+  GET_ABSOLUTE_POSITION_AT_CURSOR = "get-absolute-position-at-cursor",
+
+  GET_POSITION_BY_SPACER_INDEX = "getPositionBySpacerIndex"
 }

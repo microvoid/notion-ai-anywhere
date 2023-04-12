@@ -37,7 +37,7 @@ const AskOptionChildList = (props: IAskOptionChildListProps) => {
   const { t } = useLang()
 
   return (
-    <div className="p-5 pt-0 pb-0">
+    <div className="p-5 pt-0 pb-0 text-xs">
       <h1 className="mt-3 mb-4 text-xs font-semibold text-gray-500">
         {t(label)}
       </h1>
@@ -54,7 +54,7 @@ const AskOptionChildList = (props: IAskOptionChildListProps) => {
               key={item.value}>
               <div
                 // value={item}
-                tabIndex={0}
+                // tabIndex={0}
                 onMouseEnter={(e) => {
                   e.stopPropagation()
                   onOptionActive(item)
@@ -64,7 +64,7 @@ const AskOptionChildList = (props: IAskOptionChildListProps) => {
                   !item.options?.length && onOptionClick(item)
                 }}
                 className={classNames(
-                  "flex cursor-default select-none items-center rounded-md p-2",
+                  "flex cursor-default select-none items-center rounded-md p-1.5",
                   active && "bg-gray-100 text-gray-900"
                 )}>
                 <>
@@ -79,18 +79,18 @@ const AskOptionChildList = (props: IAskOptionChildListProps) => {
                       aria-hidden="true"
                     />
                   )}
-                  <span className="ml-3 flex-auto truncate leading-5">
+                  <span className="ml-3 flex-auto truncate leading-5 text-xs">
                     {t(item.label)}
                   </span>
                   {active && !item.options?.length && (
                     <ArrowUturnLeftIcon
-                      className="ml-3 h-5 w-5 flex-none text-gray-400"
+                      className="ml-3 h-4 w-4 flex-none text-gray-400"
                       aria-hidden="true"
                     />
                   )}
                   {item.options?.length && (
                     <ChevronRightIcon
-                      className="ml-3 h-5 w-5 flex-none text-gray-400"
+                      className="ml-3 h-4 w-4 flex-none text-gray-400"
                       aria-hidden="true"
                     />
                   )}
@@ -98,8 +98,8 @@ const AskOptionChildList = (props: IAskOptionChildListProps) => {
               </div>
               {item.options?.length && (
                 <div
-                  tabIndex={0}
-                  className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 right-0 ">
+                  // tabIndex={0}
+                  className="ask-list-dropdown dropdown-content menu p-1 shadow bg-base-100 rounded-box w-52 right-0 ">
                   {item.options?.map((option) => {
                     const active = activeOption?.value === option.value
                     return (
@@ -113,18 +113,18 @@ const AskOptionChildList = (props: IAskOptionChildListProps) => {
                           e.stopPropagation()
                           onOptionClick(option)
                         }}
-                        tabIndex={0}
+                        // tabIndex={0}
                         className={classNames(
-                          "flex cursor-default select-none items-center rounded-md p-2",
+                          "flex cursor-default select-none items-center rounded-md p-1",
                           active && "bg-gray-100 text-gray-900"
                         )}>
                         <>
-                          <span className="ml-3 flex-auto truncate leading-5">
+                          <span className="ml-3 flex-auto truncate leading-5 text-xs">
                             {t(option.label)}
                           </span>
                           {active && (
                             <ArrowUturnLeftIcon
-                              className="ml-3 h-5 w-5 flex-none text-gray-400"
+                              className="ml-3 h-4 w-4 flex-none text-gray-400"
                               aria-hidden="true"
                             />
                           )}

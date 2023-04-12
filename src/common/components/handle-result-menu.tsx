@@ -42,7 +42,7 @@ export default function HandleResultMenu(props: IHandleResultMenu) {
 
         <div
           tabIndex={0}
-          className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-56 right-0 ">
+          className="ask-list-dropdown dropdown-content menu p-1.5 shadow bg-base-100 rounded-box w-56 right-0 text-sx">
           {HandleResultMap.list.map((option) => {
             const active = activeOption?.value === option.value
             return (
@@ -59,7 +59,7 @@ export default function HandleResultMenu(props: IHandleResultMenu) {
                 }}
                 tabIndex={0}
                 className={classNames(
-                  "flex cursor-default select-none items-center rounded-md p-2",
+                  "flex cursor-default select-none items-center rounded-md p-1.5",
                   active && "bg-gray-100 text-gray-900"
                 )}>
                 {option.icon && (
@@ -68,7 +68,7 @@ export default function HandleResultMenu(props: IHandleResultMenu) {
                 <span className="ml-3 flex-auto truncate ">{option.label}</span>
                 {active && (
                   <ArrowUturnLeftIcon
-                    className="ml-3 h-5 w-5 flex-none text-gray-400"
+                    className="ml-3 h-4 w-4 flex-none text-gray-400"
                     aria-hidden="true"
                   />
                 )}

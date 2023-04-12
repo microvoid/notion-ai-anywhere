@@ -1,23 +1,21 @@
 import cssText from "data-text:~styles/main.css"
 import type { PlasmoCSConfig } from "plasmo"
-import { useEffect, useState } from "react"
-import Tesseract, { createWorker } from "tesseract.js"
+import { useCallback, useEffect, useState } from "react"
 
-import { sendToBackground } from "@plasmohq/messaging"
 import { useMessage } from "@plasmohq/messaging/hook"
 import { useStorage } from "@plasmohq/storage/hook"
 
 // import "~base.css"
 
 import ContentEnter from "~common/components/content-enter"
-import ContentPanel from "~common/components/content-panel"
-import { IPosition, getSelectionText, storage } from "~lib"
+import AutoPanel from "~common/components/content-panel"
+import { IPosition, getSelectionText, stopPropagation, storage } from "~lib"
 import { ConstEnum } from "~lib/enums"
 import { setToastContainerEle } from "~lib/toast"
 
 export const config: PlasmoCSConfig = {
   matches: ["<all_urls>"],
-  all_frames: true
+  all_frames: false
 }
 
 export const getStyle = () => {
@@ -28,15 +26,7 @@ export const getStyle = () => {
 
 const PlasmoOverlay = () => {
   const [isPanelShow, setIsPanelShow] = useState(false)
-  // const [position, setPosition] = useState<IPosition>()
   const [selectionText, setSelectionText] = useState<string>("")
-
-  useEffect(() => {
-    console.log("Notion AI anywhere content mounted")
-    return () => {
-      console.log("Notion AI anywhere content unmounted")
-    }
-  }, [])
 
   useMessage<
     {
@@ -54,7 +44,7 @@ const PlasmoOverlay = () => {
         }
       }
 
-      setIsPanelShow(true)
+      setIsPanelShow(!isPanelShow)
     }
   })
 
@@ -63,11 +53,22 @@ const PlasmoOverlay = () => {
     instance: storage
   })
 
+  useEffect(() => {
+    const closePanel = () => {
+      setIsPanelShow(false)
+    }
+    document.addEventListener("mouseup", closePanel)
+    return () => {
+      window.removeEventListener("mouseup", closePanel)
+    }
+  }, [])
+
   return (
     <div
       style={{
         zIndex: 999999
       }}
+      onMouseUp={stopPropagation}
       data-theme={darkMode ? "dark" : "light"}>
       <div
         id={ConstEnum.TOAST_CONTAINER}
@@ -91,15 +92,15 @@ const PlasmoOverlay = () => {
           setSelectionText(selectionText)
           setIsPanelShow(true)
         }}></ContentEnter>
-      <ContentPanel
+      <AutoPanel
         show={isPanelShow}
         selectionText={selectionText}
         // position={position}
         onClose={() => {
           setIsPanelShow(false)
-          // setPosition(undefined)
+          setSelectionText("")
         }}
-        setSelectionText={setSelectionText}></ContentPanel>
+        setSelectionText={setSelectionText}></AutoPanel>
     </div>
   )
 }

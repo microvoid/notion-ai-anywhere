@@ -78,7 +78,8 @@ const ContentEnter = (props: IContentEnterProps) => {
     <div
       className="fixed"
       style={buttonStyle}
-      onClick={() => {
+      onClick={(e) => {
+        e.stopPropagation()
         setShow(false)
         showPanel?.({
           selectionText
