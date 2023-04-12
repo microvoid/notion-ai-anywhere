@@ -45,6 +45,8 @@ jobs:
             Please see the [changelog](https://github.com/microvoid/notion-ai-anywhere/blob/main/CHANGELOG.md)
           files: |
             build/chrome-mv3-prod.zip
+            build/firefox-mv2-prod.zip
+            build/edge-mv3-prod.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

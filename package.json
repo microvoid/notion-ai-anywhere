@@ -6,9 +6,10 @@
   "author": "smackgg",
   "scripts": {
     "dev": "plasmo dev",
-    "build-chrome": "plasmo build",
-    "build-ff": "plasmo build",
-    "build-edge": "plasmo build",
+    "build": "npm run build-chrome && npm run build-ff && npm run build-edge",
+    "build-chrome": "plasmo build --target=chrome-mv3 --zip",
+    "build-ff": "plasmo build --target=firefox-mv2 --zip",
+    "build-edge": "plasmo build --target=edge-mv3 --zip",
     "package": "plasmo package",
     "patch": "npm patch && changeset version patch"
   },
