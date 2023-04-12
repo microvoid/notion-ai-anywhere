@@ -50,6 +50,12 @@ const PlasmoOverlay = () => {
   })
 
   useEffect(() => {
+    if (!isPanelShow) {
+      setSelectionText("")
+    }
+  }, [isPanelShow])
+
+  useEffect(() => {
     if (!isDocs()) {
       return
     }
