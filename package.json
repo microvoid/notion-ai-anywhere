@@ -1,7 +1,7 @@
 {
   "name": "notion-ai-anywhere",
   "displayName": "Notion AI Anywhere",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "notion-ai-anywhere",
   "author": "smackgg",
   "scripts": {
