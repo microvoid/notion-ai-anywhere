@@ -433,7 +433,7 @@ export const DropdownPanel = (props: IContentPanelProps) => {
   return (
     <div
       // data-theme={darkMode ? "dark" : "light"}
-      className={classNames("dropdown dropdown-bottom dropdown-end")}
+      // className={classNames("dropdown dropdown-bottom dropdown-end")}
       style={{
         position: "fixed",
         left: position.x + "px",
@@ -441,7 +441,7 @@ export const DropdownPanel = (props: IContentPanelProps) => {
         width: position.w + "px"
       }}>
       <div
-        className="dropdown-content shadow bg-base-100 rounded-box w-11/12 overflow-hidden"
+        className="absolute shadow bg-base-100 rounded-box w-11/12 overflow-hidden"
         style={{
           visibility: show ? "visible" : "hidden",
           opacity: show ? 1 : 0,

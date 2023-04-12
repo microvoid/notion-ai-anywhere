@@ -45,7 +45,7 @@ export default function HandleResultMenu(props: IHandleResultMenu) {
 
         <div
           tabIndex={0}
-          className="ask-list-dropdown dropdown-content menu p-1.5 shadow bg-base-100 rounded-box w-56 right-0 text-sx">
+          className="dropdown-content menu p-1.5 shadow bg-base-100 rounded-box w-56 right-0 text-sx">
           {HandleResultMap.list.map((option) => {
             const active = activeOption?.value === option.value
             return (

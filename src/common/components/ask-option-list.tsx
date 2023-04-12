@@ -54,7 +54,7 @@ const AskOptionChildList = (props: IAskOptionChildListProps) => {
               key={item.value}>
               <div
                 // value={item}
-                // tabIndex={0}
+                tabIndex={0}
                 onMouseEnter={(e) => {
                   e.stopPropagation()
                   onOptionActive(item)
@@ -98,8 +98,8 @@ const AskOptionChildList = (props: IAskOptionChildListProps) => {
               </div>
               {item.options?.length && (
                 <div
-                  // tabIndex={0}
-                  className="ask-list-dropdown dropdown-content menu p-1 shadow bg-base-100 rounded-box w-52 right-0 ">
+                  tabIndex={0}
+                  className="dropdown-content menu p-1 shadow bg-base-100 rounded-box w-52 right-0 ">
                   {item.options?.map((option) => {
                     const active = activeOption?.value === option.value
                     return (
@@ -113,7 +113,7 @@ const AskOptionChildList = (props: IAskOptionChildListProps) => {
                           e.stopPropagation()
                           onOptionClick(option)
                         }}
-                        // tabIndex={0}
+                        tabIndex={0}
                         className={classNames(
                           "flex cursor-default select-none items-center rounded-md p-1",
                           active && "bg-gray-100 text-gray-900"

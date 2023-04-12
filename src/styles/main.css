@@ -63,7 +63,7 @@
   width: 8px;
 }
 
-/* @keyframes typing-dot {
+@keyframes typing-dot {
   0% {
     transform: scale(0.57);
   }
@@ -83,7 +83,7 @@
   to {
     transform: scale(0.57);
   }
-} */
+}
 
 /* .capture-guide-1 {
   position: fixed;
@@ -122,10 +122,3 @@
   border-color: gray;
   border-image: initial;
 } */
-
-.dropdown:not(.dropdown-hover):focus .dropdown-content.ask-list-dropdown,
-.dropdown:not(.dropdown-hover):focus-within
-  .dropdown-content.ask-list-dropdown {
-  visibility: hidden !important;
-  opacity: 0 !important;
-}
