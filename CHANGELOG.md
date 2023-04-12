@@ -4,6 +4,12 @@
 
 ### Patch Changes
 
+- fixed dropdown bug
+
+## 1.1.1
+
+### Patch Changes
+
 - Optimize Docs content and improve pop-up windows.
 
 ## 1.0.7
