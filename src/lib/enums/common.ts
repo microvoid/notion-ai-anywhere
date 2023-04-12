@@ -25,5 +25,7 @@ export enum MainPageMessage {
 
   GET_ABSOLUTE_POSITION_AT_CURSOR = "get-absolute-position-at-cursor",
 
-  GET_POSITION_BY_SPACER_INDEX = "getPositionBySpacerIndex"
+  GET_POSITION_BY_SPACER_INDEX = "getPositionBySpacerIndex",
+
+  SHOW_PANEL = "show-panel"
 }

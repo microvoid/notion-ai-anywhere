@@ -3,6 +3,7 @@ import { CSSProperties, useCallback, useEffect, useState } from "react"
 import { useStorage } from "@plasmohq/storage/hook"
 
 import { IPosition, _calcPosition, getSelectionText, storage } from "~lib"
+import { isDocs } from "~lib/docs"
 import { ConstEnum } from "~lib/enums"
 
 import BtnIcon from "../icons/notion-icon.png"
@@ -48,13 +49,13 @@ const ContentEnter = (props: IContentEnterProps) => {
             //   : e
           )
         )
-        !closeSelectionIcon && setShow(true)
+        setShow(true)
         return
       } else if (show || isPanelShow) {
         setShow(false)
       }
     },
-    [show, isPanelShow, closeSelectionIcon]
+    [show, isPanelShow]
   )
 
   useEffect(() => {
@@ -64,7 +65,37 @@ const ContentEnter = (props: IContentEnterProps) => {
     }
   }, [onMouseUp])
 
-  if (!show) {
+  useEffect(() => {
+    if (show && isDocs()) {
+      setTimeout(() => {
+        const quickBar = document.querySelector(
+          ".k-vodka-plugin-selection-bar .k-plugin-quick-bar"
+        )
+
+        if (
+          quickBar &&
+          quickBar.lastChild &&
+          !quickBar.lastChild.className.includes("notion-ai-anywhere-btn")
+        ) {
+          const span = document.createElement("span")
+          span.className =
+            "notion-ai-anywhere-btn style-item common-add-comment"
+          span.style.cursor = "pointer"
+          span.innerHTML = `<img src="${BtnIcon}" width="90%" height="90%"><img>`
+          span.onclick = (e) => {
+            e.stopPropagation()
+            e.preventDefault()
+            showPanel?.({
+              selectionText
+            })
+          }
+          quickBar.appendChild(span)
+        }
+      }, 300)
+    }
+  }, [show])
+
+  if (!show || isDocs() || closeSelectionIcon) {
     return null
   }
 

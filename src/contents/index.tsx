@@ -10,7 +10,8 @@ import { useStorage } from "@plasmohq/storage/hook"
 import ContentEnter from "~common/components/content-enter"
 import AutoPanel from "~common/components/content-panel"
 import { IPosition, getSelectionText, stopPropagation, storage } from "~lib"
-import { ConstEnum } from "~lib/enums"
+import { isDocs } from "~lib/docs"
+import { ConstEnum, MainPageMessage } from "~lib/enums"
 import { setToastContainerEle } from "~lib/toast"
 
 export const config: PlasmoCSConfig = {
@@ -47,6 +48,26 @@ const PlasmoOverlay = () => {
       setIsPanelShow(!isPanelShow)
     }
   })
+
+  useEffect(() => {
+    if (!isDocs()) {
+      return
+    }
+    const ele = document.getElementById(
+      MainPageMessage.PAGE_CONTENT_MESSAGE_ELE
+    )
+    function handler() {
+      const type = this.getAttribute("data-type")
+      if (type === MainPageMessage.SHOW_PANEL) {
+        setIsPanelShow(true)
+      }
+    }
+
+    ele?.addEventListener("click", handler)
+    return () => {
+      ele?.removeEventListener("click", handler)
+    }
+  }, [])
 
   const [darkMode] = useStorage({
     key: ConstEnum.DARK_MODE,
