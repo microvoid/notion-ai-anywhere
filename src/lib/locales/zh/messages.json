@@ -84,5 +84,8 @@
   "Write a sales email about ": "写销售邮件关于：",
   "Write a recruiting email about ": "写招聘邮件关于：",
   "No Selection Text": "没有选择文本",
-  "Write selection text": "写入选区文本"
+  "Write selection text": "写入选区文本",
+  "Replace selection": "替换选区",
+  "Insert below": "插入到下面",
+  "Copy": "复制"
 }

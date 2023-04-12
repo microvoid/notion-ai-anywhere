@@ -84,5 +84,8 @@
   "Write a sales email about ": "Write a sales email about ",
   "Write a recruiting email about ": "Write a recruiting email about ",
   "No Selection Text": "No Selection Text",
-  "Write selection text": "Write selection text"
+  "Write selection text": "Write selection text",
+  "Replace selection": "Replace selection",
+  "Insert below": "Insert below",
+  "Copy": "Copy"
 }

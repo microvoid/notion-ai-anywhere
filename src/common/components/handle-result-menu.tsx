@@ -5,6 +5,7 @@ import { useState } from "react"
 
 import { insertMainSelectionChar, replaceMainSelectionChar } from "~lib/docs"
 import { HandleResultEnum, HandleResultMap, ISelectionOption } from "~lib/enums"
+import { useLang } from "~lib/hooks/useLang"
 import { showToast } from "~lib/toast"
 
 import Toast from "./toast"
@@ -34,6 +35,8 @@ export default function HandleResultMenu(props: IHandleResultMenu) {
       showToast("Replaced!")
     }
   }
+
+  const { t } = useLang()
 
   return (
     <>
@@ -65,7 +68,9 @@ export default function HandleResultMenu(props: IHandleResultMenu) {
                 {option.icon && (
                   <option.icon className="h-4 w-4 flex-none rounded-full text-violet-300" />
                 )}
-                <span className="ml-3 flex-auto truncate ">{option.label}</span>
+                <span className="ml-3 flex-auto truncate ">
+                  {t(option.label)}
+                </span>
                 {active && (
                   <ArrowUturnLeftIcon
                     className="ml-3 h-4 w-4 flex-none text-gray-400"
