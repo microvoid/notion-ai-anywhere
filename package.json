@@ -11,7 +11,7 @@
     "build-ff": "plasmo build --target=firefox-mv2 --zip",
     "build-edge": "plasmo build --target=edge-mv3 --zip",
     "package": "plasmo package",
-    "patch": "npm version patch && changeset version patch"
+    "patch": "npm version patch && npx changeset version patch"
   },
   "dependencies": {
     "@changesets/cli": "^2.26.1",
