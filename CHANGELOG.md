@@ -1,5 +1,11 @@
 # notion-ai-anywhere
 
+## 1.1.6
+
+### Patch Changes
+
+- fix: fixed docs click bug
+
 ## 1.1.5
 
 ### Patch Changes
