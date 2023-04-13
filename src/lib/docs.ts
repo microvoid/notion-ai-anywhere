@@ -3,7 +3,7 @@ import { MainPageMessage } from "./enums"
 export const isDocs = () => {
   const url = location.href
   // return url.includes("docs.corp.kuaishou.com/d")
-  return /docs.*corp\.kuaishou\.com.*\/d\/home/.test(url)
+  return /docs.*corp\.kuaishou\.com.*\/(d|k)\/home/.test(url)
 }
 
 export const getPositionBySpacerIndex = () => {
