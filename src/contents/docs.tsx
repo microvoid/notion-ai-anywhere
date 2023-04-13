@@ -22,51 +22,54 @@ const ele = document.createElement("div")
 ele.id = MainPageMessage.PAGE_CONTENT_MESSAGE_ELE
 document.body.appendChild(ele)
 
-ele.addEventListener("click", function () {
-  var type = this.getAttribute("data-type")
+document.addEventListener(
+  MainPageMessage.PAGE_CONTENT_MESSAGE_EVENT,
+  function () {
+    var type = ele.getAttribute("data-type")
 
-  console.log(type, "clicktype")
+    console.log(type, "clicktype")
 
-  switch (type) {
-    case MainPageMessage.GET_SELECTION_CHAR:
-      const selectionText = getDocsSelectionChar()
-      this.setAttribute(MainPageMessage.SELECTION_CHAR, selectionText)
-      break
+    switch (type) {
+      case MainPageMessage.GET_SELECTION_CHAR:
+        const selectionText = getDocsSelectionChar()
+        ele.setAttribute(MainPageMessage.SELECTION_CHAR, selectionText)
+        break
 
-    case MainPageMessage.SELECTION_INSERT: {
-      const text = this.getAttribute(MainPageMessage.SELECTION_CHAR) || ""
-      insertDocsSelectionChar(text)
-      break
+      case MainPageMessage.SELECTION_INSERT: {
+        const text = this.getAttribute(MainPageMessage.SELECTION_CHAR) || ""
+        insertDocsSelectionChar(text)
+        break
+      }
+
+      case MainPageMessage.SELECTION_REPLACE: {
+        const text = this.getAttribute(MainPageMessage.SELECTION_CHAR) || ""
+        replaceDocsSelectionChar(text)
+        break
+      }
+
+      case MainPageMessage.GET_POSITION_BY_SPACER_INDEX: {
+        const position = getPositionBySpacerIndex()
+        ele.setAttribute(
+          MainPageMessage.GET_POSITION_BY_SPACER_INDEX,
+          JSON.stringify(position)
+        )
+        break
+      }
+
+      case MainPageMessage.GET_ABSOLUTE_POSITION_AT_CURSOR: {
+        const position = getAbsolutePositionAtCursor()
+        ele.setAttribute(
+          MainPageMessage.GET_ABSOLUTE_POSITION_AT_CURSOR,
+          JSON.stringify(position)
+        )
+        break
+      }
+
+      case "__trackerScriptEnd__":
+        break
     }
-
-    case MainPageMessage.SELECTION_REPLACE: {
-      const text = this.getAttribute(MainPageMessage.SELECTION_CHAR) || ""
-      replaceDocsSelectionChar(text)
-      break
-    }
-
-    case MainPageMessage.GET_POSITION_BY_SPACER_INDEX: {
-      const position = getPositionBySpacerIndex()
-      this.setAttribute(
-        MainPageMessage.GET_POSITION_BY_SPACER_INDEX,
-        JSON.stringify(position)
-      )
-      break
-    }
-
-    case MainPageMessage.GET_ABSOLUTE_POSITION_AT_CURSOR: {
-      const position = getAbsolutePositionAtCursor()
-      this.setAttribute(
-        MainPageMessage.GET_ABSOLUTE_POSITION_AT_CURSOR,
-        JSON.stringify(position)
-      )
-      break
-    }
-
-    case "__trackerScriptEnd__":
-      break
   }
-})
+)
 
 export default function () {
   return null
@@ -178,7 +181,7 @@ document.addEventListener("Docs.Word.Loaded", () => {
   }, 200)
 })
 
-if (window.Docs) {
+if (window.Docs?.Word?.onLoad) {
   applyPlugin()
 }
 

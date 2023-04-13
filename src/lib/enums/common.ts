@@ -13,6 +13,8 @@ export enum ConstEnum {
 }
 
 export enum MainPageMessage {
+  PAGE_CONTENT_MESSAGE_EVENT = "nan-page-content-message-event",
+
   PAGE_CONTENT_MESSAGE_ELE = "nan-page-content-message-ele",
 
   GET_SELECTION_CHAR = "get-selection-char",

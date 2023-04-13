@@ -48,6 +48,8 @@ export const getDocsSelectionChar = () => {
   return selectionText
 }
 
+const event = new CustomEvent(MainPageMessage.PAGE_CONTENT_MESSAGE_EVENT)
+
 export const replaceDocsSelectionChar = (text: string) => {
   const selection = window.Docs.Word.editor.getSelection()
   const range = selection.selectedRanges
@@ -72,7 +74,8 @@ export const getMainSelectionChar = () => {
     return ""
   }
   ele.setAttribute("data-type", MainPageMessage.GET_SELECTION_CHAR)
-  ele?.click()
+  // ele?.click()
+  document.dispatchEvent(event)
   const selectionText = ele.getAttribute(MainPageMessage.SELECTION_CHAR) || ""
   return selectionText
 }
@@ -84,7 +87,8 @@ export const insertMainSelectionChar = (text: string) => {
   }
   ele.setAttribute(MainPageMessage.SELECTION_CHAR, text)
   ele.setAttribute("data-type", MainPageMessage.SELECTION_INSERT)
-  ele?.click()
+  // ele?.click()
+  document.dispatchEvent(event)
 }
 
 export const replaceMainSelectionChar = (text: string) => {
@@ -94,7 +98,8 @@ export const replaceMainSelectionChar = (text: string) => {
   }
   ele.setAttribute(MainPageMessage.SELECTION_CHAR, text)
   ele.setAttribute("data-type", MainPageMessage.SELECTION_REPLACE)
-  ele?.click()
+  // ele?.click()
+  document.dispatchEvent(event)
 }
 
 export const getMainAbsolutePositionAtCursor = () => {
@@ -103,7 +108,8 @@ export const getMainAbsolutePositionAtCursor = () => {
     return ""
   }
   ele.setAttribute("data-type", MainPageMessage.GET_ABSOLUTE_POSITION_AT_CURSOR)
-  ele?.click()
+  // ele?.click()
+  document.dispatchEvent(event)
   const position =
     ele.getAttribute(MainPageMessage.GET_ABSOLUTE_POSITION_AT_CURSOR) || ""
   return position ? JSON.parse(position) : ""
@@ -115,7 +121,8 @@ export const getMainPositionBySpacerIndex = () => {
     return ""
   }
   ele.setAttribute("data-type", MainPageMessage.GET_POSITION_BY_SPACER_INDEX)
-  ele?.click()
+  // ele?.click()
+  document.dispatchEvent(event)
   const position =
     ele.getAttribute(MainPageMessage.GET_POSITION_BY_SPACER_INDEX) || ""
   return position ? JSON.parse(position) : ""
