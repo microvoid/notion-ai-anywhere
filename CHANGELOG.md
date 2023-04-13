@@ -1,5 +1,11 @@
 # notion-ai-anywhere
 
+## 1.1.7
+
+### Patch Changes
+
+- feat: 支持 docs 知识库
+
 ## 1.1.6
 
 ### Patch Changes
