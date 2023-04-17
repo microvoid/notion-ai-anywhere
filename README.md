@@ -10,6 +10,12 @@ ChatGPT has become a mainstream term in 2023, and Notion has quickly launched it
 
 ## Usage
 
+### ① Chrome Web Store (Recommend)
+
+[Notion AI Anywhere](https://chrome.google.com/webstore/detail/notion-ai-anywhere/kifiejfehenpclioppfgjeginkeiaheb)
+
+### ② Download release version install (Latest)
+
 1. Download the latest [release](https://github.com/microvoid/notion-ai-anywhere/releases) version zip package from here.
 2. Open the Chrome Extensions page and enable the Developer mode.
 

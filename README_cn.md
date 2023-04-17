@@ -8,6 +8,12 @@ ChatGPT 已经成为 2023 年主流词汇，Notion 也很快的推出的 Notion 
 
 ## 使用
 
+### 方法 ① Chrome Web Store 直接安装 （推荐）
+
+[Notion AI Anywhere](https://chrome.google.com/webstore/detail/notion-ai-anywhere/kifiejfehenpclioppfgjeginkeiaheb)
+
+### 方法 ② 下载发布版本安装 （最新）
+
 1. 下载最新的 [release](https://github.com/microvoid/notion-ai-anywhere/releases) 版本 zip 包。
 2. 打开 Chrome 扩展程序页面，并打开开发者模式。
 
