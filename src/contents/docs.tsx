@@ -36,13 +36,13 @@ document.addEventListener(
         break
 
       case MainPageMessage.SELECTION_INSERT: {
-        const text = this.getAttribute(MainPageMessage.SELECTION_CHAR) || ""
+        const text = ele.getAttribute(MainPageMessage.SELECTION_CHAR) || ""
         insertDocsSelectionChar(text)
         break
       }
 
       case MainPageMessage.SELECTION_REPLACE: {
-        const text = this.getAttribute(MainPageMessage.SELECTION_CHAR) || ""
+        const text = ele.getAttribute(MainPageMessage.SELECTION_CHAR) || ""
         replaceDocsSelectionChar(text)
         break
       }

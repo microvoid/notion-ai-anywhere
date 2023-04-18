@@ -64,7 +64,7 @@ export const insertDocsSelectionChar = (text: string) => {
   const range = selection.selectedRanges
 
   const curCursor =
-    range[0].end || window.Docs.Word.editor.getCharIndexAtCursor()
+    range?.[0]?.end || window.Docs.Word.editor.getCharIndexAtCursor()
   window.Docs.Word.editor.insertText(text, curCursor)
 }
 
