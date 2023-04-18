@@ -1,5 +1,11 @@
 # notion-ai-anywhere
 
+## 1.1.8
+
+### Patch Changes
+
+- remove tabs permision
+
 ## 1.1.7
 
 ### Patch Changes
